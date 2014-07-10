@@ -1,0 +1,18 @@
+.output {
+    border: 1px solid black;
+}
+
+.logger-log, .logger-warn, .logger-err {
+    border: 1px solid gray;
+}
+
+.logger-log {
+}
+
+.logger-warn {
+    color: #C5AB43;
+}
+
+.logger-err {
+    color: red;
+}

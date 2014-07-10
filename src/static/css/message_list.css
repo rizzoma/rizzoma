@@ -1,0 +1,45 @@
+/**
+ * Классы стилей для списка сообщений пользователя
+ */
+
+/**
+ * Заголовок списка сообщений
+ */
+
+.messages, .messages-header {
+    border-radius: 5px;
+    border: 1px solid #D6D6D6;
+}
+
+.messages-header {
+    background: linear-gradient(bottom, rgb(227,227,227) 0%, rgb(255,255,255) 85%);
+    background: -o-linear-gradient(bottom, rgb(227,227,227) 0%, rgb(255,255,255) 85%);
+    background: -moz-linear-gradient(bottom, rgb(227,227,227) 0%, rgb(255,255,255) 85%);
+    background: -webkit-linear-gradient(bottom, rgb(227,227,227) 0%, rgb(255,255,255) 85%);
+    background: -ms-linear-gradient(bottom, rgb(227,227,227) 0%, rgb(255,255,255) 85%);
+    
+    background:
+        -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0, rgb(227,227,227)),
+            color-stop(0.85, rgb(255,255,255))
+        );    
+    
+    height: 40px;
+    width: 100%;
+    margin-left: -1px;
+    margin-top: -1px;
+    padding-top: 15px;
+}
+
+.search-header .create-wave-button {
+    margin: 0 10px;
+    position: absolute;
+}
+
+.message-list-error {
+    padding-left: 10px;
+    line-height: 30px;
+}

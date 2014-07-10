@@ -1,0 +1,860 @@
+/**
+ * Классы стилей сообщения
+ *
+ * Состояния (классы, которые добавляются на blip-container)
+ *      .folded - свернут
+ *      .root-blip - данное сообщение является корневым
+ *      .menu-shown - показывается всплывающее меню
+ */
+
+/*
+    Элемент, в котором расположены тредовые блипы
+*/
+.blips-container {
+    box-shadow: 0 3px 3px -3px rgba(0,0,0,0.3);
+    clear: both;
+    margin: 13px -10px 16px 0;
+    border-radius: 6px;
+}
+
+body.anonymous .blips-container {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.container-blip-editor > * > .blip-thread > .blips-container {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    margin: 0;
+}
+
+/**
+ * Элемент, в котором содержится сообщение, класс blip-container
+ */
+
+.blip-container {
+    border: 2px solid #D6D6D6;
+    border-top-width: 0;
+    display: block;
+    min-height: 32px;
+    padding: 12px 0 14px 0;
+    position: relative;
+    text-align: left;
+    white-space: pre-wrap;
+    background-color: white;
+}
+
+.blip-container.non-editable {
+    background-color: #EAEFF3;
+}
+
+.container-blip {
+    background: white;
+    border: none;
+    margin: 0;
+    padding: 17px 0 0 0;
+}
+
+.root-blip {
+    border-top: none;
+    padding-top: 25px;
+}
+
+.root-blip,
+.root-blip ~ .blip-container {
+    border-left: none;
+    border-right: none;
+    padding-left: 24px;
+    padding-right: 7px;
+}
+
+.root-blip:only-child,
+.root-blip ~ :last-child {
+    border-bottom: none;
+}
+
+.root-blip > .editor-container > .editor > :first-child {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.root-blip > .editor-container > .editor {
+    min-height: 145px;
+}
+
+.blip-container:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-width: 2px;
+}
+
+.blip-container:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/**
+ * Активный блип (класс .active)
+ */
+.blip-container.active.edit-mode,
+.default-text.blip-container.edit-mode.last-active {
+    border-color: #57AAD9;
+}
+@media screen {
+    .blip-container:not(:first-child).active.edit-mode,
+    .blip-container:not(:first-child).last-active.edit-mode {
+        border-top-width: 2px;
+        margin-top: -2px;
+    }
+
+    .root-blip .blip-container.active .blip-container,
+    .root-blip ~ .blip-container .blip-container.active .blip-container,
+    .root-blip .blip-container.last-active .blip-container,
+    .root-blip ~ .blip-container .blip-container.last-active .blip-container {
+        border-right-width: 0;
+    }
+
+    .root-blip .blip-container.active .blips-container,
+    .root-blip ~ .blip-container .blip-container.active .blips-container,
+    .root-blip .blip-container.last-active .blips-container,
+    .root-blip ~ .blip-container .blip-container.last-active .blips-container {
+        margin-right: -8px;
+    }
+}
+
+.blip-container.active > .blip-menu-container {
+    display: block;
+}
+
+.root-blip ~ .blip-container > .blip-menu-container {
+    left: 32px;
+}
+
+.blip-container.root-blip > .blip-menu-container .blip-menu {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/*
+    Кнопки в подвале
+*/
+
+.wave-blips {
+    position: relative;
+    height: 100%;
+    min-height: 277px;
+    overflow-y: auto;
+}
+
+.mindmap-view .wave-blips {
+    display: none;
+}
+
+.topic-url {
+    visibility: hidden;
+}
+
+/**
+ * Стрелочки на блипах
+ */
+.blip-arrow {
+    position: absolute;
+    height: 14px;
+    width: 8px;
+    left: -8px;
+    overflow: hidden;
+}
+
+.blip-arrow div {
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    margin-left: 3px;
+    height: 12px;
+    width: 11px;
+    border: 1px solid #D6D6D6;
+    background: white;
+}
+
+.blip-container.active > .blip-arrow div {
+    border-color: #57AAD9;
+}
+
+/**
+ * Элемент, в котором происходит редактирование текста
+ */
+.editor-container{
+    position: relative;
+}
+
+.editor {
+    margin: 0 8px;
+    min-height: 35px;
+    outline: none;
+    padding: 0;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    cursor: text;
+}
+
+.editor-el-split {
+    font-size: 1px;
+    line-height: 1px;
+    opacity: 0;
+}
+
+.container-blip-editor {
+    margin: 0;
+}
+
+.container-blip-editor > * > br {
+    display: none;
+}
+
+.container-blip-editor {
+    min-height: 170px;
+}
+
+.editor > .bulleted-type0 {
+    list-style-type: disc;
+}
+
+.editor > .bulleted-type1 {
+    list-style-type: circle;
+}
+
+.editor > .bulleted-type2 {
+    list-style-type: square;
+}
+
+.editor > .numbered {
+    list-style-type: decimal;
+}
+
+.editor > li {
+    position: relative;
+}
+
+.editor > li > .marker {
+    display: none;
+    position: absolute;
+}
+
+.wave-edit-mode .blip-container:not(.non-editable) > .editor-container > .editor > li:hover > .marker {
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: -20px;
+    width: 20px;
+}
+
+.ie .wave-edit-mode .blip-container:not(.non-editable) > .editor-container > .editor > li:hover > .marker {
+    display: none;
+}
+
+.editor > .drag-over-top {
+    border-top: 1px dashed #000;
+    margin-top: -1px;
+}
+
+.editor > .drag-over-bottom {
+    border-bottom: 1px dashed #000;
+    margin-bottom: -1px;
+}
+
+[draggable] {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.ie .editor[contentEditable="true"] > * > br {
+    display: none;
+}
+
+.ie .editor[contentEditable="true"] > ::after {
+    content: " ";
+    display: inline;
+}
+
+/**
+ * Информация о блипе, класс blip-info
+ */
+
+.blip-info {
+    float: right;
+    white-space: nowrap;
+    margin-top: -3px;
+    height: 44px;
+    position: relative;
+    z-index: 1; /* для расположения поверх редактора */
+}
+
+.blip-info .shown-contributor.back-contributor {
+    margin-bottom: -27px;
+    margin-left: 8px;
+}
+
+.blip-info .shown-contributor {
+    width: 28px;
+    height: 28px;
+    margin: -4px 7px -5px 5px;
+    position: relative;
+    z-index: 5;
+    cursor: pointer;
+    border: 1px solid black;
+    font-size: 15px;
+    line-height: 33px;
+}
+
+.blip-info > * {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.blip-info .edit-date {
+    margin-top: 4px;
+    position: absolute;
+    right: 5px;
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 12px;
+    width: 40px;
+    text-align: center;
+    z-index: 5;
+}
+
+.contributors {
+    position: absolute;
+    width: 176px;
+    background: #6D7276;
+    right: 3px;
+    top: -11px;
+    border-radius: 5px;
+    padding: 10px 7px 5px 5px;
+    display: none;
+    z-index: 6;
+}
+
+.contributors .contributor {
+    width: 28px;
+    height: 28px;
+    display: block;
+    float: right;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    border: 1px solid white;
+    font-size: 15px;
+    line-height: 33px;
+    cursor: pointer;
+}
+
+.contributors .contributor:first-child {
+    border-color: #57AAD9;
+}
+
+.menu-author-indicator {
+    background: black;
+    height: 9px;
+    position: absolute;
+    width: 27px;
+    top: 18px;
+    border-radius: 0 0 3px 3px;
+    opacity: 0.7;
+}
+
+/**
+ * Кнопка для сворачивания и разворачивания блипа, класс fold-button
+ */
+ 
+.fold-button-container {
+    border: 1px solid transparent;
+    display: inline-block;
+}
+
+.container-blip-editor > * > .blip-thread > .fold-button-container {
+    display: none;
+}
+
+.fold-button {
+    height: 20px;
+    width: 18px;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 0;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.fold-button div {
+    background: #b3b3b3;
+    display: inline-block;
+}
+
+.fold-button.unread div {
+    background: #95d529;
+}
+
+.fold-button > div {
+    border-radius: 3px;
+    color: white;
+    height: 16px;
+    position: relative;
+}
+
+.fold-button > div > div {
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    z-index: 0;
+    top: 10px;
+    left: 3px;
+    -moz-transform: rotate(-45deg) skewX(-45deg);
+    -webkit-transform: rotate(-45deg) skewX(-45deg);
+    -o-transform: rotate(-45deg) skewX(-45deg);
+    -ms-transform: rotate(-45deg) skewX(-45deg);
+    transform: rotate(-45deg) skewX(-45deg);
+}
+
+.fold-button .plus-minus {
+    left: 0;
+    margin: -17px 0 0 4px;
+    position: absolute;
+    top: 0;
+}
+
+.folded > .fold-button-container .plus-minus {
+    margin-top: 0;
+}
+
+.editor:not(.container-blip-editor) .folded > .blips-container {
+    display: none;
+}
+
+@keyframes folded {
+    50%  {background: #4A98F9;}
+}
+
+@-webkit-keyframes folded {
+    50%  {background: #4A98F9;}
+}
+
+.folded.animated > .fold-button-container .fold-button div {
+    -webkit-animation: folded 2s;
+    animation: folded 2s;
+}
+
+/*
+    Вставляемые картинки
+*/
+.js-attachment-editor {
+    position: absolute;
+    left: -1000px;
+    top: -1000px;
+    background: #ffffff;
+}
+
+.attachment-content, .file-content {
+    background-image: linear-gradient(top, rgb(192,192,192) 0%, rgb(192,192,192) 5%, rgb(248,248,248) 100%);
+    background-image: -o-linear-gradient(top, rgb(192,192,192) 0%, rgb(192,192,192) 5%, rgb(248,248,248) 100%);
+    background-image: -moz-linear-gradient(top, rgb(192,192,192) 0%, rgb(192,192,192) 5%, rgb(248,248,248) 100%);
+    background-image: -webkit-linear-gradient(top, rgb(192,192,192) 0%, rgb(192,192,192) 5%, rgb(248,248,248) 100%);
+    background-image: -ms-linear-gradient(top, rgb(192,192,192) 0%, rgb(192,192,192) 5%, rgb(248,248,248) 100%);
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, rgb(192,192,192)),
+        color-stop(0.05, rgb(192,192,192)),
+        color-stop(1, rgb(248,248,248))
+    );
+    border: 1px solid silver;
+    display: inline-block;
+    margin-top: 3px;
+    min-height: 16px;
+    min-width: 2px;
+    text-align: center;
+}
+
+.attachment-preview,
+.file-preview {
+    max-height: 150px;
+    max-width: 200px;
+}
+
+.file-content .caption {
+    padding: 0 5px;
+    max-width: 190px;
+}
+
+.file-content .caption, .file-content .file-ext {
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-content .file-ext {
+    background: white;
+    border: none;
+    padding: 10px;
+    margin: 0;
+}
+
+.file-preview .caption {
+    background: white;
+}
+
+/**
+ * Индикатор непрочитанности блипа
+ */
+
+.unread-indicator {
+    background-color: #89E340;
+    width: 3px;
+    position: absolute;
+    top: -6px;
+    bottom: 4px;
+}
+
+.unread-indicator {
+    left: 1px;
+    width: 3px;
+}
+
+.recipient-input, .tag-input {
+    border: 0;
+    outline: none;
+    margin: 0 3px;
+    padding: 1px 0;
+}
+
+.recipient-input {
+    padding-left: 12px;
+}
+
+.tag-input {
+    padding-left: 7px;
+    width: 100px;
+}
+
+.recipient-input-container,
+.tag-input-container {
+    background: #FFFFFF;
+    border: 1px solid #000;
+    padding: 0 7px 0 2px;
+    position: relative;
+    margin: 1px;
+}
+
+.recipient-input-container,
+.blip-recipient,
+.blip-recipient-container,
+.tag-input-container,
+.blip-tag-container,
+.blip-tag,
+.task-recipient-container,
+.task-recipient,
+.task-recipient-creation-form {
+    display: inline-block;
+}
+
+.task-recipient {
+    white-space: nowrap;
+}
+
+.blip-recipient-text,
+.task-recipient-text {
+    color: #5CAAF7;
+}
+
+.blip-tag-text {
+    color: black;
+}
+
+.blip-recipient,
+.task-recipient {
+    cursor: pointer;
+}
+
+.blip-recipient,
+.task-recipient, .task-recipient-creation-form,
+.blip-tag {
+    background: #eaeaea;
+    padding: 0 3px;
+    height: 20px;
+}
+
+.blip-tag.clickable {
+    cursor: pointer;
+}
+
+.blip-tag.clickable:hover {
+    text-decoration: underline;
+}
+
+.blip-recipient, .blip-recipient-container, .recipient-input-container,
+.blip-tag, .blip-tag-container, .tag-input-container,
+.task-recipient, .task-recipient-container, .task-recipient-creation-form {
+    border-radius: 3px;
+}
+
+.blip-recipient-container, .blip-tag-container, .task-recipient-container {
+    border: 2px solid white;
+}
+
+.blip-recipient .blip-recipient-text,
+.task-recipient .task-recipient-text,
+.blip-tag .blip-tag-text {
+    margin:  0 3px 0 0;
+}
+
+.task-recipient-info {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.task-date-input, .task-time-input {
+    border: 1px solid #a6b3c0;
+    height: 22px;
+    padding-left: 8px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.task-date-input {
+    width: 91px;
+}
+
+.task-time-input {
+    width: 68px;
+}
+
+.task-recipient input[type=checkbox],
+.task-recipient-popup input[type=checkbox],
+.task-recipient-creation-form input[type=checkbox] {
+    vertical-align: -2px;
+    margin-right: 3px;
+}
+
+.mention-recipient-popup .avatar,
+.task-recipient-popup .task-recipient-avatar,
+.task-recipient-popup .task-recipient-input {
+    height: 29px;
+}
+
+.mention-recipient-popup .avatar,
+.task-recipient-popup .task-recipient-avatar {
+    display: inline-block;
+    width: 29px;
+    border: 1px solid #707478;
+    line-height: 30px;
+    font-size: 16px;
+}
+
+.task-recipient-popup .task-recipient-avatar {
+    vertical-align: bottom;
+    margin-right: 5px;
+}
+
+.mention-recipient-popup .avatar {
+    position: absolute;
+    top: 4px;
+    left: 0;
+}
+
+.mention-recipient-popup .wave-participant-name-email {
+    display: inline-block;
+    margin-left: 40px;
+}
+
+.task-recipient-popup .task-recipient-input-container {
+    display: inline-block;
+}
+
+.task-recipient-popup .task-recipient-input {
+    width: 154px;
+}
+
+.task-recipient-popup .time-icon,
+.task-recipient-popup .date-icon {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.task-recipient-popup .date-icon {
+    margin-right: 7px;
+}
+
+.task-recipient-popup .time-icon {
+    margin-right: 6px;
+}
+
+.task-recipient-popup .date-icon {
+    width: 18px;
+    height: 21px;
+    background: url(/s/img/calendar.png);
+    vertical-align: -7px;
+}
+
+.task-recipient-popup .time-icon {
+    width: 16px;
+    height: 15px;
+    background: url(/s/img/clock.png);
+    margin-left: 14px;
+    vertical-align: -4px;
+}
+
+.task-recipient-popup .task-date-container {
+    margin-bottom: 12px;
+}
+
+.mention-recipient-popup .mention-bottom-container button,
+.task-recipient-popup .task-bottom-container button {
+    padding: 7px 8px 6px 7px;
+    height: auto;
+}
+
+.task-recipient-popup button:not(:last-child) {
+    margin-right: 5px;
+}
+
+.mention-recipient-popup button:not(:last-child) {
+    margin-right: 9px;
+}
+
+.task-recipient-popup .task-bottom-container {
+    margin-left: 1px;
+}
+
+.task-recipient-popup .task-is-completed-container {
+    margin-bottom: 12px;
+}
+
+.task-recipient-complete {
+    padding-left: 3px;
+    margin-right: 20px;
+}
+
+.task-recipient-creation-form .task-recipient-input {
+    border: 1px solid black;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.mention-recipient-popup .mention-bottom-container .remove-recipient,
+.task-recipient-popup .task-bottom-container .remove-task-recipient {
+    padding-left: 28px;
+    padding-right: 10px;
+    position: relative;
+}
+
+.mention-recipient-popup .remove-recipient::before,
+.task-recipient-popup .remove-task-recipient::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: url(/s/img/trashcan.png);
+    left: 8px;
+    top: 5px;
+}
+
+.mention-recipient-popup .remove-recipient[disabled]::before,
+.task-recipient-popup .remove-task-recipient[disabled]::before,
+.convert-to-task-button[disabled]::after {
+    opacity: 0.5;
+}
+
+.task-recipient-popup .close-popup {
+    padding-right: 7px;
+}
+
+.mention-recipient-popup .mention-bottom-container {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.mention-recipient-popup .mention-bottom-container .convert-to-task-button {
+    padding-left: 10px;
+    padding-right: 28px;
+    position: relative;
+}
+
+.convert-to-task-button::after {
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 12px;
+    background: url(/s/img/task.png) no-repeat;
+    right: 8px;
+    top: 8px;
+}
+
+/*
+ Попап для копирования ссылки на блип
+*/
+
+.copy-blip-link input {
+    border: 1px solid #CCC;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.link-popup {
+    background-color: #FFF;
+    border-top: 1px solid #E0E0E0;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    outline: none;
+    position: absolute;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.link-popup a {
+    display: inline-block;
+    margin: 0 10px 0 7px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.link-popup div {
+    display: none;
+    vertical-align: middle;
+    margin: -2px 4px 0 0;
+    height: 16px;
+    width: 16px;
+}
+
+.link-popup div.external,
+.link-popup div.internal {
+    background: url('/s/img/blip_menu_sprite.png') 0 0 no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.link-popup div.external {
+    background-position: -123px 0;
+}
+
+.link-popup div.internal {
+    background-position: -106px 0;
+}
+
+.link-popup .button {
+    margin: 3px;
+}
+
+.default-text {
+    font-size: 14px;
+    font-weight: normal;
+}

@@ -1,0 +1,52 @@
+#notification-settings-content {
+    margin: 0;
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: #2C2C2C;
+    line-height: 26px;
+    text-align: center;
+}
+
+#notification-settings-content a {
+    color: #187acd;
+}
+
+#notification-settings-content img {
+    border: 0;
+}
+
+#notification-settings-content.content {
+    margin: 100px auto;
+    width: 450px;
+    text-align: left;
+}
+
+#notification-settings-content .info-message {
+    color: #33ad33;
+    font-size: 13px;
+}
+
+#notification-settings-content .error-message {
+    color: red;
+    font-size: 13px;
+}
+
+#notification-settings-content .settings-footer {
+    padding-top: 40px;
+}
+
+#notification-settings-content input[type=submit] {
+    padding: 5px 10px;
+    margin: 0;
+}
+
+#notification-settings-content input[type=text],
+#notification-settings-content input[type=password] {
+    width: 130px;
+    background: white;
+    border: 1px solid #cccccc;
+    padding: 5px;
+    margin: 0;
+    font-size: 13px;
+}

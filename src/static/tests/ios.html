@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>iOs test</title>
+    <script src="util.js"></script>
+    <link rel="stylesheet" href="util.css">
+</head>
+<body>
+<div id="buttonBlock">
+    <button id="btn">Test button</button>
+</div>
+<div class="edtior" id="editor" tabindex="1"><span contentEditable="true">Test</span></div>
+
+<script>
+    var logger = new Logger().init();
+    var editor = document.getElementById('editor');
+    var button = document.getElementById('btn');
+    document.getElementById('buttonBlock').addEventListener('mousedown', function(e){e.preventDefault();e.stopPropagation();}, false);
+    function test(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        logger.log('btn click', document.activeElement, e.type);
+        var s = window.getSelection();
+        if(!s) return logger.log('no selection');
+        if(!s.rangeCount) return logger.log('no range');
+        var r = s.getRangeAt(0);
+        logger.log('have range', r.startContainer, r.startOffset);
+    }
+    button.addEventListener('mousedown', test, false);
+    button.addEventListener('click', test, false);
+    button.addEventListener('mouseup', test, false);
+    button.addEventListener('touchstart', function(e){logger.log(e.type);e.stopPropagation();}, false);
+    document.body.addEventListener('touchmove', function(e){logger.log(e.type);e.preventDefault();}, false);
+    button.addEventListener('touchend', function(e){logger.log(e.type);e.stopPropagation();}, false);
+
+    function setSelectionToElement(anchorNode, anchorOffset, prevSelected) {
+        var element = editor.firstChild;
+        var offset = 4;
+        element.contentEditable = 'true';
+        if(prevSelected){
+            prevSelected.contentEditable = 'false';
+            prevSelected.removeAttribute('contentEditable', 0);
+            prevSelected.blur();
+        }
+        element.focus();
+        var s = window.getSelection();
+        var r = document.createRange();
+        anchorNode = element.firstChild;
+        anchorOffset = offset;
+        r.setStart(anchorNode, anchorOffset);
+        r.collapse(true);
+        if(s) {
+            s.removeAllRanges();
+            s.addRange(r);
+        }
+        setTimeout( function(){
+            if(s && s.anchorNode == r.startContainer && s.anchorOffset == r.startOffset){
+                s.removeAllRanges();
+                s.addRange(r)
+            }
+        }, 0);
+        //@_bindToEditableElement(element)
+        r = s.getRangeAt(0);
+        logger.log('activeElement', document.activeElement);
+        logger.log('range after', r.startContainer, r.startOffset);
+        editor.focus();
+        setTimeout(function(){
+            editor.focus();
+            r = s.getRangeAt(0);
+            logger.log('range after timeout', r.startContainer, r.startOffset);
+            logger.log('activeElement', document.activeElement);
+        }, 1000)
+    }
+
+    function extractSelectionFromLine(line) {
+        var s = window.getSelection();
+        if(!s || !s.anchorNode){
+            line.contentEditable = 'false';
+            line.removeAttribute('contentEditable', 0);
+            return;
+        }
+        setSelectionToElement(s.anchorNode, s.anchorOffset, line);
+    }
+
+    function handleLineFocus(event){
+        event.target.removeEventListener('focus', handleLineFocus, false);
+        setTimeout(function() {
+            extractSelectionFromLine(event.target);
+        }, 0)
+    }
+
+    editor.addEventListener('mousedown', function(e) {
+        var element = e.target;
+        editor.contentEditable = 'true';
+        element.addEventListener('focus', handleLineFocus, false);
+        element.focus()
+    }, false);
+
+//    var text = editor.firstChild.firstChild;
+//            var r = document.createRange();
+//            r.setStart(text, 4);
+//            r.setEnd(text, 4);
+//            var sel = window.getSelection();
+//            if(!sel) return;
+//            sel.removeAllRanges();
+//            sel.addRange(r);
+//            editor.firstChild.focus();
+//
+//
+//
+//
+//
+//    _handleElementMouseDown: (element) ->
+//            elementType = @_renderer.getElementType(element)
+//            if elementType is ModelType.TEXT
+//                element.contentEditable = 'true'
+//                element.addEventListener(BrowserEvents.FOCUS_EVENT, @_handleTargetFocus, false)
+//                element.focus()
+//                return
+//            if elementType isnt ModelType.LINE
+//                while @_renderer.getElementType(element) isnt ModelType.LINE
+//                    element = @_renderer.getPreviousElement(element)
+//            element.contentEditable = 'true'
+//            element.addEventListener(BrowserEvents.FOCUS_EVENT, @_handleLineFocus, false)
+//            element.focus()
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+~task: {{ text|replace("\n", " ", "g")|truncatewords_with_dots(10)|raw }}

@@ -1,0 +1,17 @@
+Dear {{ name|raw }}
+
+My name is Vladimir, I'm a knowledge manager in Rizzoma.
+
+This is a digital age and education has appropriate improvements. Recently I have read your article "{{ post|raw }}" <{{ postUrl|raw }}> about new technologies in education. I find your point of view very relevant and important to the project our team is working for.
+
+Allow me to say a couple of words about what we do.
+
+Our team has created a product — Rizzoma <http://rizzoma.com/?cv=mc> that provides a first-rate technology for effective group communication and realtime collaboration. Rizzoma is used in different fields. One of them is Live Wiki for Education. We call it Live because any member of the Rizzoma topic could make changes simultaneously. The main strength of our project is an opportunity to comment and leave a @mention at any place of a document.
+
+Here is one-minute video <http://youtu.be/B6W_A6qgoKo> about our service.
+
+From this perspective, we would appreciate to hear your expert opinion about our project as an Wiki service for educators. As I said, we find your thoughts given in the article very usefull. So, we want to discuss your article with colleagues in our right up there. Would you mind if we take the text of your article and put it in our service to discuss it (of course, we'll save reference to authorities)? And would you like to join that discussion?
+
+Enthusiastically,
+Vladimir Kobzev,
+Rizzoma Squad

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+Unsubscribe — Rizzoma.com
+{% endblock title %}
+{% block styles %}
+<link type="text/css" href="/s/css/normalize-20120311.css" rel="stylesheet" />
+<link type="text/css" href="/s/css/simple_page.css" rel="stylesheet" />
+{% endblock styles %}
+{% block content %}
+<div class="content">
+    <a href="/"><img src="/s/img/logo_rizzoma.png" alt="Rizzoma logo" class="logo"/></a>
+    <div class="">
+        {% if success %}
+            You have successfully unsubscribed {{ email }} from Rizzoma notifications.
+        {% else %}
+            {% if error %}
+                Error: {{ error }}
+            {% else %}
+                <form action="?" method="POST">
+                    I don't want to get notifications for {{ email }} from Rizzoma.
+                    <input type="hidden" name="email" value="{{ email }}" />
+                    <input type="hidden" name="emailNotSent" value="{{ emailNotSent }}" />
+                    <input type="hidden" name="hash" value="{{ hash }}" />
+                    <input type="submit" name="unsubscribe_btn" value="Ok" />
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class="footer">
+        <a href="https://rizzoma.com/" title="Rizzoma">Rizzoma</a> is a real-time communication and collaboration tool.
+        Create documents, discuss in real-time, send messages, emails and assign tasks right in context.
+    </div>
+</div>
+{% endblock content %}

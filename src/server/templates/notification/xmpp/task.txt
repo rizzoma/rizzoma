@@ -1,0 +1,20 @@
+{% import 'notification/task_macroses/index.txt' as m -%}
+{%- if sender.name -%}
+    {{ sender.name|raw }}
+{%- else -%}
+    {{ sender.email|raw }}
+{%- endif %} has assigned a task to you {% if deadline.date -%}
+    on {{ deadline.date|formated_date }}
+{%- endif -%}
+{%- if deadline.datetime -%}
+    on {{ deadline.datetime|formated_date(dstUser.timezone) }} at {{ deadline.datetime|formated_time(dstUser.timezone) }}
+{%- endif %} in topic "{{ title|raw }}":
+{{ text|raw }}
+{% if dstUser.firstVisit -%}
+    {%- set fromChannel = 'jabber_taskexisting' -%}
+{%- else -%}
+    {%- set utmCampaign = 'tasknew' -%}
+    {%- set fromChannel = 'jabber_tasknew' -%}
+{%- endif -%}
+{%- set utmSource = 'jabber' -%}
+Link to message <{{ m.fullUrl(baseUrl, waveId, blipId, utmCampaign, utmSource, fromChannel) }}>

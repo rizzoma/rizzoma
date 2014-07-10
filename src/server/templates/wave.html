@@ -1,0 +1,286 @@
+{% extends "wave_base.html" %}
+{% block title %}
+    {% if pregenerated %}{{ pregenerated.title }}{% else %}{% parent %}{% endif %}
+{% endblock title %}
+{% block meta_opengraph_attrs %}
+    {% if pregenerated %}
+        <meta property="og:title" content="{{ pregenerated.title }}">
+        <meta property="og:type" content="article">
+        <meta property="og:image" content="http://rizzoma.com/s/img/logo/75.png">
+    {% else %}
+        {% parent %}
+    {% endif %}
+{% endblock %}
+{% block addition_meta1 %}
+    {% if pregenerated %}
+        <link rel="canonical" href="{{ pregenerated.url }}">
+    {% endif %}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="/s/css/normalize-20120311.css" />
+    <link rel="stylesheet" type="text/css" href="/s/css/jquery.lightbox-0.5.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/s/jquery.autocomplete/jquery.autocomplete.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/s/css/autocomplete.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/s/css/blip.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/blip_menu.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/gadget.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/wave.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/participants_panel.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/page.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/error.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/search.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/message_list.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/auth.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/connection.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/introduce.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/mindmap.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/collection.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/account_setup_wizard.css">
+    <link rel="stylesheet" type="text/css" href="/s/jquery.selectbox/jquery.selectBox.css">
+    <link rel="stylesheet" type="text/css" href="/s/jquery.calendrical/calendrical.css">
+    <link rel="stylesheet" type="text/css" href="/s/fonts/fonts.css">
+    {# -- combo split --: do not package "print" styles and "screen" styles together #}
+    <link rel="stylesheet" type="text/css" href="/s/css/print.css" media="print">
+    {% block embedded_styles %}{% endblock embedded_styles %}
+{% endblock styles %}
+{% block scripts %}
+    <script type="text/javascript" src='/s/js/jquery-1.7.2.js'></script>
+    <script type="text/javascript" src="/s/js/jquery.form.js"></script>
+    <script type="text/javascript" src='/s/js/jquery.cookies.js'></script>
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="/s/js/ie8.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        if (!($.browser.webkit || (($.browser.mozilla || $.browser.msie) && parseInt($.browser.version) >= 9)) && !$.cookie("{{ showIfUnsupportedBrowserCookie }}")){
+            loc = document.location;
+            loc.href = '/supported_browsers/?redirectUrl=' + encodeURIComponent(loc.pathname+loc.search);
+        }
+    </script>
+    {% if gadget.enabled %}
+        <script type="text/javascript" src="/s/js/core_rpc_shindig-container.c_1-min.js"></script>
+    {% endif %}
+    <script type="text/javascript" src="/s/js/historyjs/compressed/history.js"></script>
+    <script type="text/javascript" src="/s/js/historyjs/compressed/history.html4.js"></script>
+    <script type="text/javascript" src="/s/js/historyjs/compressed/history.adapter.jquery.js"></script>
+    <script type="text/javascript" src="/s/js/globalize/globalize.js"></script>
+    <script type="text/javascript" src="/s/js/globalize/globalize.culture.en-US.js"></script>
+    <script type="text/javascript" src="/s/js/visibility/mozvisibility-0.6.min.js"></script>
+    <script type="text/javascript" src="/s/js/visibility/visibility.fallback.min.js"></script>
+    <script type="text/javascript" src="/s/js/visibility/visibility.min.js"></script>
+    <script type="text/javascript" src="/s/js/jquery-lightbox/jquery.lightbox-0.5.js"></script>
+    <script type="text/javascript" src="/s/jquery.autocomplete/jquery.autocomplete.js"></script>
+    <script type="text/javascript" src="/s/js/jquery/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/s/js/jquery/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/s/jquery.selectbox/jquery.selectBox.min.js"></script>
+    <script type="text/javascript" src="/s/js/sockjs-0.3.4.js"></script>
+    <script type="text/javascript" src="/s/js/console_polyfill-0.1.0.js"></script>
+    <script type="text/javascript" src="/s/js/share.uncompressed.js"></script>
+    <script type="text/javascript" src="/s/js/coffeekup.js"></script>
+    <script type="text/javascript" src="/s/jquery.calendrical/jquery.calendrical.js"></script>
+    <script type="text/javascript" src="/s/node-date-utils/date-utils.js"></script>
+    <script type="text/javascript" src="/s/js/jquery.placeholder.min.js"></script>
+    {# -- combo split --: place client code into different package, because this code changes more often than vendor libraries #}
+    <script type="text/javascript" src="/s/js/index.js"></script>
+{% endblock scripts %}
+{% block additional_content %}
+    <div id="fb-root"></div>
+    {# Небольшие данные, которые потребуются клиенту для работы #}
+    <script>
+       (function(){
+            //load font after other components loading
+           setTimeout(function() {
+                var href = '//fonts.googleapis.com/css?family=PT+Sans+Narrow';
+                if (document.createStyleSheet)
+                    document.createStyleSheet(href);
+                else {
+                    var element = document.createElement('link');
+                    element.type = 'text/css';
+                    element.rel = 'stylesheet';
+                    element.href = href;
+                    element.async = true;
+                    document.getElementsByTagName('head')[0].appendChild(element);
+                }
+            }, 500);
+       })();
+       {% if successfulMerge %}window.showSuccessfulMergePopup=true;{% endif %}
+    </script>
+    <div class='page-content{%if not loggedIn%} anonymous{%endif%}'>
+        {% if loggedIn %}
+        <div class="js-tabs-container tabs-container">
+            <div class="js-create-wave-buttons new-topic-buttons"></div>
+            <button class="js-topics topics tab active">
+                <div class="pict topics-pict"></div>
+                Topics
+            </button>
+            <button class="js-mentions tab">
+                <div class="js-unread-mentions-count unread-mentions-count"></div>
+                <div class="pict mentions-pict"></div>
+                Mentions
+            </button>
+            <button class="js-tasks tab locked">
+                <div class="js-unread-tasks-count unread-tasks-count"></div>
+                <div class="pict tasks-pict"></div>
+                Tasks
+            </button>
+            <button class="js-publics tab">
+                <div class="pict publics-pict"></div>
+                Publics
+            </button>
+            <button class="js-market tab">
+                <div class="pict market-pict"></div>
+                Store
+            </button>
+            <button class="js-collection tab locked">
+                <div class="pict teams-pict"></div>
+                Teams
+            </button>
+            <div class="js-help tab help-tab"></div>
+        </div>
+        {% else %}
+        <div class="right-logo">
+            <a href="/?no-auth-redirect" alt="Rizzoma.com" title="Rizzoma.com">
+                <div class="right-logo-img"></div>
+                <div class="right-logo-text"></div>
+            </a>
+            <div class="js-right-logo-public-likes right-logo-public-likes"></div>
+        </div>
+        {% endif %}
+        <div class='js-navigation-container navigation-container'>
+            <div id='navigation-panel' class="js-navigation-panel{% if firstVisit %} first-visit{% endif %}"></div>
+        </div>
+        <div class="js-right-tools-panel right-tools-panel{% if not loggedIn %} anonymous{% endif %}">
+            {% if loggedIn %}
+            <div class="js-account-container account-container"></div>
+            <div>
+                <button class="js-next-unread-blip js-local-next-unread next-unread-blip disabled" title="Next unread in this topic (Ctrl+Space)">
+                    <span>Next</span>
+                    <img src="/s/img/next_ico.png">
+                </button>
+                <button class="js-global-next-unread next-unread-blip global-next-unread disabled"
+                        id="global-next-unread" title="Next unread in list" style="display: none;">
+                    Next topic
+                </button>
+            </div>
+            {% endif %}
+            <button class="js-hide-replies hide-replies" title="Hide replies (Ctrl+Shift+Up)"></button>
+            <button class="js-show-replies show-replies" title="Show replies (Ctrl+Shift+Down)"></button>
+            <button class="js-text-view text-view" title="Switch to text view">
+                <div class="icon"></div>
+                <span class="description">Text view</span>
+            </button>
+            <button class="js-mindmap-view mindmap-view" title="Switch to mindmap view">
+                <div class="icon"></div>
+                <span class="description">Mind map</span>
+            </button>
+            <div class="js-mindmap-view-switch-buttons mindmap-view-switch-buttons unvisible">
+                <button class="js-mindmap-short-view mindmap-short-view" title="Switch to short view">short</button>
+                <button class="js-mindmap-long-view mindmap-long-view" title="Switch to expanded view">expanded</button>
+            </div>
+            {% if loggedIn %}
+            <div class="js-active-blip-controls active-blip-controls unvisible">
+                {% if isEmbedded %}<div class="js-active-blip-controls-group active-blip-controls-group">{% endif %}
+                <div class="active-blip-control insert-reply js-insert-reply" title="Insert reply (Ctrl+Enter)"></div>
+                <div class="active-blip-control insert-mention js-insert-mention" title="Insert mention (@)"></div>
+                <div class="active-blip-control insert-task js-insert-task" title="Insert task (~)"></div>
+                <div class="active-blip-control insert-tag js-insert-tag" title="Insert tag (#)"></div>
+                {% if isEmbedded %}
+                    <div class="active-blip-control insert js-insert" title="Insert">
+                        <div class="icon"></div>
+                        <div>Insert</div>
+                    </div>
+                    </div>
+                {% endif %}
+                {% if gadget.enabled %}
+                    <div class="js-insert-gadget-container insert-gadget-container">
+                        <div class="active-blip-control insert-gadget js-insert-gadget" title="Insert gadget">
+                            <div class="gadget-logo"></div>
+                            Gadgets
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        <div class='js-wave-container wave-container'>
+            <div class="js-inner-wave-container inner-wave-container">
+                <div id='wave' class='wave'>
+                    {% if pregenerated %}
+                        <div class="wave-export-content">{{ pregenerated.content|raw }}</div>
+                    {% endif %}
+                </div>
+                <div class="page-description">
+                    <h1>Rizzoma Active Docs</h1>
+                    <div><img src="/s/img/tips-rizzoma-logo.png" alt="Rizzoma logo" width="172" height="50" /></div>
+                    Realtime collaborative editing docs. Here you can send messages, emails and assign tasks right in context
+                </div>
+                <div class="js-wave-notifications wave-notifications">
+                    <div class='js-page-error-container error-message-container'>
+                        <div class="set-3d"></div>
+                        <img src="/s/img/error-icon.png" alt="Error" />
+                        <div class='js-page-error wave-error-text'></div>
+                        <div class="clearer" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# панель авторизации #}
+    {% include "auth/index.html" %}
+
+    <div class="js-notice notice{% if not notice %} hidden{% endif %}">
+        <div class="js-notification-overlay notification-overlay"></div>
+        <div class="notice-popup">
+            <div class="internal-container">
+                <div>
+                    {% if notice %}{{ notice }}{% endif %}
+                </div>
+                <button class="selectBox button-like">Close</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var notice = $(".js-notice");
+            var onClose = function(e) {
+                notice.addClass("hidden")
+                e.stopPropagation()
+                e.preventDefault()
+            }
+            notice.find(".js-notification-overlay").click(onClose)
+            notice.find("button").click(onClose)
+        });
+    </script>
+    <iframe name="skype-call-iframe"></iframe>
+{% endblock additional_content %}
+
+{% block site_analytics %}
+    {% parent %}
+
+    <!-- Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. For instructions on adding this tag and more information on the above requirements, read the setup guide: google.com/ads/remarketingsetup -->
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var google_conversion_id = 1009670196;
+        var google_conversion_label = "eOItCMTJrgQQtLC54QM";
+        var google_custom_params = window.google_tag_params;
+        var google_remarketing_only = true;
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+    <noscript>
+        <div style="display:inline;">
+            <img height="1" width="1" style="border-style:none;visibility:hidden;left:-1;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1009670196/?value=0&amp;label=eOItCMTJrgQQtLC54QM&amp;guid=ON&amp;script=0"/>
+        </div>
+    </noscript>
+{% endblock site_analytics %}
+
+{% block zenbox_widget %}
+{% if loggedIn %}
+    <script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.6/zenbox.js" async></script>
+    <style type="text/css" media="screen, projection">
+        @import url(//assets.zendesk.com/external/zenbox/v2.6/zenbox.css);
+    </style>
+{% endif %}
+{% endblock zenbox_widget %}

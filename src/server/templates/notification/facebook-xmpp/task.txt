@@ -1,0 +1,12 @@
+{% import 'notification/task_macroses/index.txt' as m -%}
+{{ sender.name|raw|default(sender.email) }} has assigned a task to you in topic "{{ title|raw }}":
+
+{{ text|raw }}
+
+{% if dstUser.firstVisit -%}
+    {%- set fromChannel = 'fbchat_taskexisting' -%}
+{%- else -%}
+    {%- set utmCampaign = 'tasknew' -%}
+    {%- set fromChannel = 'fbchat_tasknew' -%}
+{%- endif %}
+Direct link to task <{{ m.fullUrl(baseUrl, waveId, blipId, utmCampaign, null, fromChannel) }}>

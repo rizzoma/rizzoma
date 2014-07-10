@@ -1,0 +1,23 @@
+{% import 'notification/macroses.txt' as m %}
+Hi, {{ dstUser.name }}
+This is a summary of your discussion updates for last {% block period %}{% endblock %}:
+{% if fromType == 'weekly_changes_digest' -%}
+    {%- set fromChannel = 'email_weekly_digest' -%}
+{%- else if fromType == 'daily_changes_digest' -%}
+    {%- set fromChannel = 'email_daily_digest' -%}
+{%- else -%}
+    {%- set fromChannel = 'other_digest' -%}
+{%- endif -%}
+{% for change in digest %}{{ change.title}} <{{ baseUrl }}/topic/{{ change.waveUrl }}/{{change.blipId}}/?from={{ fromChannel }}>
+    {{ change.author }} commented
+{% endfor %}{% if otherChangesCount %}{{ otherChangesCount }} other topics were updated too: <{{ baseUrl }}/topic/?from={{ fromChannel }}>{% endif %}
+
+You can unfollow topic to remove it from email notification.
+{{ m.unsubscribeMessageTxt(baseUrl, dstUser.email, dstUser.notification.id, fromType) }}
+This message is sent by the robot, do not reply to it.
+
+
+Our mailing address is:
+Rizzoma Ltd.
+Suite 2, 20 bld 1, Belinskogo St.
+Tomsk, Russia, 634045

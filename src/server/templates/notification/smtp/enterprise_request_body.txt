@@ -1,0 +1,3 @@
+User {{ from.name|default('no name') }} ({{ from.email }}) from company "{{ companyName }}" send enterprise request:
+{{ comment }}
+Contact email: <{{ contactEmail }}>

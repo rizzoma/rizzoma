@@ -1,0 +1,13 @@
+{% import 'notification/macroses.txt' as m %}
+{# Набор макросов для уведомлений об импорте (суффикс html означает включенный автоэскейп) #}
+
+
+{# Макросы заголовка #}
+
+{% macro subject user waveTitle -%}
+    {{ user.name|raw|default(user.email) }} moved document "{{ waveTitle|raw }}" from Google Wave to rizzoma.com.
+{%- endmacro %}
+
+{% macro subjectHtml user waveTitle %}
+    {{ user.name|default(user.email) }} moved document "{{ waveTitle }}" from Google Wave to rizzoma.com.
+{% endmacro %}

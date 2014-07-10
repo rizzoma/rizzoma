@@ -1,0 +1,8 @@
+{% import 'notification/import_macroses/index.txt' as m -%}
+Hello, {{ m.subject(user, waveTitle) }}
+You are participant of this document. You can continue discussion at Rizzoma {{ waveLink }}.
+
+You have received this email because you are participant of exported wave from Google Wave.
+You can unsubscribe from any rizzoma.com notifications at {{ m.unsubscribeLink(baseUrl, toEmail, emailHash) }}.
+
+This email is sent by robot. Please do not reply to this address.

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}
+    External Reditrect: Rizzoma
+{% endblock title %}
+
+{% block content %}
+<div style="text-align: center;padding: 10px 10px;line-height: 32px;">
+    You will be redirected to external <a href="{{ url }}">{{ url }}</a>.
+    <br/>
+    <a href="{{ url }}"><button>Proceed</button></a> <button onclick="return history.back()">Cancel</button>
+</div>
+{% endblock content %}

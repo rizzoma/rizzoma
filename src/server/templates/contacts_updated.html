@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Contacts were updated{% endblock title %}
+{% block scripts %}
+    <script>
+        var contacts = {{contacts|json_script_encode|raw}};
+        if (window.opener && window.opener.updateContacts) {
+            window.opener.updateContacts(JSON.stringify(contacts));
+        }
+        window.close();
+    </script>
+{% endblock scripts %}
+{% block content %}Contacts were updated. This window should be closed automatically.{% endblock content %}

@@ -1,0 +1,30 @@
+###
+    Additional (overridden) settings, which are specific to current computer.
+    Copy this file to 'settings_local.coffee'.
+###
+settings = require './settings'
+
+# Place your changes here
+# ...
+
+###
+    For example, store sessions in Redis (so app server can be restarted without sign out)
+###
+settings.dev.session.storeType = 'redis'
+
+###
+    Or set your oAuth keys
+    NOTE: Example keys are provided here to lower entry level for
+    new developers only and SHOULD NOT be used to make any harm.
+    Obtain your own ids and secret keys at:
+    - https://developers.facebook.com/apps/ "Create a New App", App ID and App Secret values
+    - https://console.developers.google.com/project "APIS&AUTH">"Credentials"
+###
+# Application id and secret for http://localhost:8000
+settings.dev.auth.facebook.clientID = '185043741619070'
+settings.dev.auth.facebook.clientSecret ='0ba2e074fa0218e00fce39b77deee406'
+# Application id and secret for http://localhost:8000
+settings.dev.auth.google.clientID = '1072346956720.apps.googleusercontent.com'
+settings.dev.auth.google.clientSecret = 'X1cEY7AJYnhBgfl2Y3u_s2QJ'
+
+module.exports = settings

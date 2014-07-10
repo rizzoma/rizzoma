@@ -1,0 +1,12 @@
+{% if dstUser.name %}Dear {{dstUser.name}}!
+{% endif %}
+Rizzoma service failed to collect monthly payment of your {% if topics.length == 1 %}team{% else %}teams{% endif %}:
+{% for topic in topics -%}
+    "{{ topic.teamName }}": ${{ topic.amount/100}} for {% if topic.participantCount == 1 %}1 member{% else %}{{ topic.participantCount }} members{% endif %}
+{% endfor -%}
+
+Your team (and possibly all business account features) was suspended. To resume your {% if topics.length == 1 %}team{% else %}teams{% endif %} provide new payment info at <{{ baseUrl }}/settings/teams-menu/>.
+If you have any questions please contact support@rizzoma.com
+
+Sincerely,
+Rizzoma Team

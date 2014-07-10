@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Accounts merging was confirmed{% endblock title %}
+{% block scripts %}
+<script>
+    var profile = JSON.stringify({{profile|json_script_encode|raw}});
+    var code = '{{code|escape('js')}}';
+    if (window.opener) {
+        window.opener.mergeByOauth(profile, code);
+    }
+    window.close();
+</script>
+{% endblock scripts %}
+{% block content %}Accounts merging was confirmed. This window should be closed automatically.{% endblock content %}

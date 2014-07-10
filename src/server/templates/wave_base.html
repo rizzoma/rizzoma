@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}
+    Rizzoma
+{% endblock title %}
+{% block addition_meta %}
+    <meta name="google" content="notranslate" />
+    {% block meta_opengraph_attrs %}
+        <meta property="og:title" content="Rizzoma Active Docs" />
+        <meta property="og:type" content="product" />
+        <meta property="og:image" content="http://rizzoma.com/s/img/logo/75.png" />
+        <meta property="og:description" content="Realtime collaborative editing docs. Here you can send messages, emails and assign tasks right in context." />
+        <meta name="description" content="Realtime collaborative editing docs. Here you can send messages, emails and assign tasks right in context." />
+    {% endblock %}
+    <link rel="search" type="application/opensearchdescription+xml" title="Rizzoma" href="/rizzomasearch.xml" />
+{% endblock addition_meta %}
+
+{% block pre_scripts %}
+    <script type="text/javascript">
+        window.HOST = "{{ host|escape('js') }}";
+        {% if firstVisit %}
+            window.firstVisit = true;
+            window.justRegisteredForGA = true;
+        {% endif %}
+        window.openSearchQuery = "{{ openSearchQuery|escape('js') }}";
+        window.gadget = {
+            enabled: {{ gadget.enabled|escape('js') }},
+            shindigUrl: "{{ gadget.shindigUrl|escape('js') }}"
+        };
+        window.expressSession = {
+            id: "{{ session.id|escape('js') }}",
+            refreshInterval: "{{ session.refreshInterval|escape('js') }}"
+        };
+        window.welcomeWaves = {{ welcomeWaves|json_script_encode|raw }};
+        {% if welcomeTopicJustCreated %}window.welcomeTopicJustCreated = true;{% endif %}
+        {% if showAccountSelectionWizard %}window.showAccountSelectionWizard = true;{% endif %}
+        window.HEARTBEAT_INTERVAL = {{heartbeatInterval}};
+        window.PREFIX = "{{ wavePrefix|escape('js') }}";
+        window.WAVE_URL_PREFIX = "{{ waveUrl|escape('js') }}";
+        window.WAVE_EMBEDDED_URL_PREFIX = "{{ waveEmbeddedUrl|escape('js') }}";
+        window.WAVE_EMBEDDED_AUTH_URL = "{{ embeddedAuthUrl|escape('js') }}";
+        window.WAVE_DRIVE_PREFIX = "{{ waveDriveUrl|escape('js') }}";
+        window.GOOGLE_CLIENT_ID = "{{ googleClientId|escape('js') }}";
+        window.uiConf = {
+            search: {
+                refreshInterval: {
+                    visible: {{ uiConf.search.refreshInterval.visible|default(120)|escape('js') }}*1000,
+                    hidden: {{ uiConf.search.refreshInterval.hidden|default(420)|escape('js') }}*1000,
+                    hiddenTab: {
+                        lbound: {{ uiConf.search.refreshInterval.hiddenTab.lbound|default(500)|escape('js') }}*1000,
+                        ubound: {{ uiConf.search.refreshInterval.hiddenTab.ubound|default(1000)|escape('js') }}*1000
+                    }
+                }
+            }
+        };
+        window.tipList = {{ tipList|json_script_encode|raw }};
+        window.socialSharingConf = {
+            url: "{{ socialSharingConf.url|escape('js') }}",
+            signLength: {{ socialSharingConf.signLength|default(6)|escape('js') }},
+            hangoutAppId: "{{ hangoutAppId|escape('js') }}"
+        };
+        {% if loggedIn %}
+            window.loggedIn = true;
+            window.userInfo = {
+                name: "{{ user.name|default(user.email)|escape('js') }}",
+                email: "{{ user.email|escape('js') }}",
+                skypeId: "{{ user.skypeId|escape('js') }}",
+                avatar: "{{ user.avatar|default('/s/img/user/unknown.png')|escape('js') }}",
+                initials: "{{ user.initials|escape('js') }}",
+                id: "{{ user.id|escape('js') }}",
+                mergedIds: {{ mergedIds|json_script_encode|raw }},
+                authSource: "{{ user.authSource|escape('js')|default('google') }}",
+                profile: {{ profile|json_script_encode|raw }},
+                inIframe: window != window.top,
+                daysAfterFirstVisit: {{ daysAfterFirstVisit|escape('js') }},
+                referalEmailHash: "{{ referalEmailHash|escape('js') }}",
+                clientPreferences: {{ user.clientPreferences|json_script_encode|raw }},
+                installedStoreItems: {{ installedStoreItems|json_script_encode|raw }},
+                teamsCacheKey: "{{teamsCacheKey|default('none')|escape('js')}}",
+                teamTopics: {{teamTopics|json_script_encode|raw}}
+            };
+            {% if justLoggedIn %}
+                window.justLoggedIn = true;
+            {% endif %}
+            window.fileUuid = "{{ fileUuid|escape('js') }}";
+        {% else %}
+            window.loggedIn = false;
+            window.uiConf.search.refreshInterval.visible = null;
+            window.uiConf.search.refreshInterval.hidden = null;
+        {% endif %}
+        window.title = {
+            postfix: "Rizzoma",
+            unreadTopicsCount: 0,
+            topicTitle: ''
+        };
+        window.versionString = "{{ versionString|escape('js') }}";
+    </script>
+    {% if serializedTopicData %}
+    <script type="text/javascript">
+        window.getWaveWithBlipsResults = {{ serializedTopicData|json_script_encode|raw }};
+    </script>
+    {% endif %}
+{% endblock pre_scripts %}
+
+{% block content %}
+    <script>
+        {% if loggedIn %}
+            {% if firstSessionLoggedIn %}
+                mixpanel.track("Authorized", {"authSource": window.userInfo.authSource});
+                window.firstSessionLoggedIn = true;
+            {% endif %}
+            {% if firstVisit %}
+                (function() {
+                    var authSource = window.userInfo.authSource;
+                    _gaq.push(['_trackEvent', 'Authorization', 'Registered', authSource]);
+                    _gaq.push(['_trackPageview', '/registered/' + authSource + '/']);
+                    var url = "{{ cl|escape('js') }}", channel = "{{ user.creationChannel|escape('js') }}", landing = "{{ user.creationLanding|escape('js') }}", urlParams = [];
+                    var regOptions = {};
+                    if (url != '') {
+                        urlParams = url.split('?');
+                        if (urlParams.length > 1) {
+                            urlParams[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value){regOptions[key]=value;});
+                        }
+                    }
+                    mixpanel.alias(window.userInfo.id);
+                    mixpanel.people.set({
+                        "$created": new Date(),
+                        "id": window.userInfo.id,
+                        "$name": window.userInfo.id,
+                        "channel": channel,
+                        "landing": landing,
+                        "authSource": authSource
+                    });
+                    regOptions['channel'] = channel;
+                    regOptions['landing'] = landing;
+                    regOptions['authSource'] = authSource;
+                    mixpanel.track("Registered", regOptions);
+                })();
+            {% else %}
+                mixpanel.identify(window.userInfo.id);
+            {% endif %}
+        {% else %}
+            if(!$.cookie('cl')) {
+                $.cookie('cl', document.location.pathname + document.location.search, {path: '/'});
+            }
+            window.analyticsTrackUrl = '/unauthorized'+document.location.pathname+document.location.search;
+            if (!/\/topic\/[0-9a-zA-Z]{32}/.test(document.location.pathname)){
+                mixpanel.track('Visit landing', {"landing name":document.location.pathname});
+                _gaq.push(['_trackPageview', '/unauthorized'+document.location.pathname+document.location.search]);
+            }
+        {% endif %}
+
+        {% if siteAnalytics.yandexMetrika.id %}
+            window.ymId = {{ siteAnalytics.yandexMetrika.id|escape("js") }};
+        {% endif %}
+    </script>
+{% endblock content %}

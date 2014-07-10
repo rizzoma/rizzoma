@@ -1,0 +1,17 @@
+{% import 'notification/macroses.txt' as m %}
+<html>
+<head>
+    <title>Request to merge accounts</title>
+</head>
+    <body style="background-color: #ebf5fe; padding: 10px 20px;font-size: 14px;line-height: 20px;">
+        <p>
+            <img style="vertical-align: middle; margin-right: 10px; border: 1px #707478 solid;" width="39" height="39" src="{{ from.avatar|default('https://rizzoma.com/s/img/user/unknown.png') }}" title="{{ from.name|default(from.email) }}" />
+            {% if dstUser.name %}Dear {{dstUser.name}},<br>{% endif %}
+            Have you requested Rizzoma account merging?<br>
+            Requested accounts are:
+            Your account <b>{% if from.name %}{{from.name}} ({{ from.email }}){% else %}{{ from.email }}{% endif %}</b> and <b>{{ dstUser.email }}</b>.<br>
+            There is no way to revert this operation. To start merging those accounts click <a href="{{baseUrl}}{{mergeUrl}}?digest={{ digest }}">here</a>. Otherwise please ignore this email.
+        </p>
+        {{ m.logo() }}
+    </body>
+</html>

@@ -1,0 +1,12 @@
+{% import 'notification/message_macroses/index.txt' as m -%}
+{{ sender.name|raw|default(sender.email) }} has sent you a message in topic "{{ title|raw }}":
+
+{{ text|raw }}
+
+{%- if dstUser.firstVisit -%}
+    {%- set fromChannel = 'fbchat_mentionexisting' -%}
+{%- else -%}
+    {%- set utmCampaign = 'mentionnew' -%}
+    {%- set fromChannel = 'fbchat_mentionnew' -%}
+{%- endif %}
+Direct link to message <{{ m.fullUrl(baseUrl, waveId, blipId, utmCampaign, null, fromChannel) }}>

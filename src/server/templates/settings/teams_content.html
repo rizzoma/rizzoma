@@ -1,0 +1,562 @@
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  Stripe.setPublishableKey('{{ apiKey }}');
+</script>
+
+<div class="teams-content js-teams-content" id="teams-content">
+    <div class="team-topics-list">
+        {% if myTeams.length == 0 %}
+            <div>You have no teams.</div>
+        {% else %}
+            {% if sessionParams.chargeSuccessful %}
+                <div class="payment-success-message">
+                    Your card was successfully charged
+                </div>
+            {% endif %}
+            <div>
+                Teams created by you:
+            </div>
+            {% for topic in myTeams %}
+                <div class="js-team-topic-container team-topic-container" topicId="{{topic.url}}">
+                    <img class="avatar" src="{{topic.avatar|default('/s/img/user/unknown.png')}}" title="{{topic.name}}" />
+                    <a href="/topic/{{topic.url}}/" target="_blank">
+                        <div><span class="topic-title">{{topic.title}}</span>
+                        </div>
+                        <div class="topic-snippet">{{topic.snippet}}</div>
+                    </a>
+                    <div class="team-topic-controls-container">
+                        <button class="js-leave-team-topic button">Leave</button>
+                        <button class="js-edit-team-topic button">Edit</button>
+                    </div>
+                    <div class="team-payment-container">
+                        {% if topic.state == TEAM_STATES.TEAM_STATE_BLOCKED %}
+                            <span class="payment-alert-message">
+                                Team is blocked. Trial expired or payment overdue. Please pay ${{ topic.amount/100 }} for
+                                {% if topic.participants.length == 1%}1 member
+                                {% else %}{{topic.participants.length}} members{% endif %}
+                            </span>
+                        {% else if topic.state == TEAM_STATES.TEAM_STATE_DEBT %}
+                            <span class="payment-alert-message">
+                                Unable to collect monthly payment ${{ topic.amount/100 }} for
+                                {% if topic.participants.length == 1%}1 member
+                                {%- else %}{{topic.participants.length}} members{% endif %}. Please pay before
+                                {{ topic.blockingDate|formated_short_date(userInfo.timezone) }}
+                            </span>
+                        {% else if topic.state == TEAM_STATES.TEAM_STATE_TRIAL %}
+                            <span>
+                                Free trial period till {{ topic.trialTill|formated_short_date(userInfo.timezone) }}
+                            </span>
+                        {% else %}
+                            <span>
+                                Payed till {{ topic.paidTill|formated_short_date(userInfo.timezone) }} for
+                                {% if topic.participants.length == 1%}1 member
+                                {% else %}{{topic.participants.length}} members{% endif %}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="summary-payment-info">
+                {% if allAllIsTrial %}
+                    Estimated monthly payments: ${{ trialAmount/100 }} for
+                    {% if trialParticipantCount == 1 %}1 team member
+                    {% else %}{{ trialParticipantCount }} team members{% endif %}
+                {% else %}
+                    {% if !hasDebt %}
+                        Total monthly payments: ${{ regularAmount/100 }} for
+                        {% if regularParticipantCount == 1%}1 team member
+                        {% else %}{{regularParticipantCount}} team members{% endif %}
+                        {% if userInfo.card %}
+                            <button class="button js-show-card-info show-card-info">View card info</button>
+                        {% endif %}
+                    {% else %}
+                        {% if userInfo.card %}
+                            <span class="payment-alert-message">
+                                Unable to collect monthly payment ${{ debtAmount/100 }} for
+                                {% if debtParticipantCount == 1%}1 team member
+                                {% else %}{{ debtParticipantCount }} team members{% endif %}
+                            </span>
+                            <button class="button js-make-payment-button make-payment-button">Pay by card</button>
+                        {% else %}
+                            <span class="payment-alert-message">
+                                Please pay ${{ debtAmount/100 }} for
+                                {% if debtParticipantCount == 1%}1 team member
+                                {% else %}{{ debtParticipantCount }} team members{% endif %}
+                            </span>
+                            <button class="button js-make-payment-button make-payment-button">Pay by card</button>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+        <button class="js-create-team-button create-team-button button">Create new team</button>
+        {% if otherTeams.length %}
+            <div>
+                Teams created by other users:
+            </div>
+            {% for topic in otherTeams %}
+                <div class="js-team-topic-container team-topic-container" topicId="{{topic.url}}">
+                    <img class="avatar" src="{{topic.avatar|default('/s/img/user/unknown.png')}}" title="{{topic.name}}" />
+                    <a href="/topic/{{topic.url}}/" target="_blank">
+                        <div><span class="topic-title">{{topic.title}}</span> <span class="js-topic-snippet topic-snippet">
+                            {% if topic.participants.length == 1%}(1 participant)
+                            {% else %}({{topic.participants.length}} participants){% endif %}
+                        </span></div>
+                        <div class="topic-snippet">{{topic.snippet}}</div>
+                    </a>
+                    <div class="team-topic-controls-container">
+                        <button class="js-leave-team-topic button">Leave</button>
+                        <button class="js-edit-team-topic button">Edit</button>
+                    </div>
+                    <div class="team-payment-container">
+                        {% if topic.state == TEAM_STATES.TEAM_STATE_BLOCKED %}
+                            <span class="payment-alert-message">
+                                Team is blocked. Trial expired or payment overdue. Contact the owner of the topic
+                            </span>
+                        {% else if topic.state == TEAM_STATES.TEAM_STATE_DEBT %}
+                            <span class="payment-alert-message">
+                                Unable to collect monthly payment
+                            </span>
+                        {% else if topic.state == TEAM_STATES.TEAM_STATE_TRIAL %}
+                            <span>
+                                Free trial period till {{ topic.trialTill|formated_short_date(userInfo.timezone) }}
+                            </span>
+                        {% else %}
+                            <span>
+                                Payed till {{ topic.paidTill|formated_short_date(userInfo.timezone) }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="team-topic-edit-container">
+        <div class="account-setup-wizard"><div class="js-team-edit-wizard account-setup-wizard-content"></div></div>
+        <div class="submit-block">
+            <button id="save-team-btn" disabled="disabled">Save changes</button>
+        </div>
+    </div>
+    <div class="team-topic-create-container">
+        <div class="account-setup-wizard"><div class="js-team-create-wizard account-setup-wizard-content"></div></div>
+    </div>
+    <div class="payment-container">
+        <form action="" method="POST" class="payment-form js-payment-form">
+            <span>
+                Please pay ${{ debtAmount/100 }} for
+                {% if debtParticipantCount == 1%}1 team member/month
+                {% else %}{{ debtParticipantCount }} team members/month{% endif %}
+            </span>
+            <div class="payment-systems-sprite"></div>
+            <div>
+                <label>
+                    <span class="card-field-name">Name on card</span>
+                    <input type="text" data-stripe="name"/>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span class="card-field-name">Card number</span>
+                    <input type="text" size="20" data-stripe="number"/>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span class="card-field-name">CVC/CVV</span>
+                    <input type="text" size="4" data-stripe="cvc"/>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span class="card-field-name">Expiration</span>
+                    <select data-stripe="exp-month">
+                        {% for month in availableMonthNumbers %}
+                            <option>{{ month }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <span> / </span>
+                <select data-stripe="exp-year">
+                    {% for year in availableYearNumbers %}
+                        <option>{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="js-payment-error-container payment-alert-message"></div>
+            <button class="button js-submit-payment-button" type="submit">Submit Payment</button>
+        </form>
+    </div>
+    <div class="card-info-container">
+        <div>
+            <label>
+                <span class="card-field-name">Card type</span>
+                <input type="text" value="{{ userInfo.card.type }}" size="12" readonly />
+            </label>
+        </div>
+        <div>
+            <label>
+                <span class="card-field-name">Name on card</span>
+                <input type="text" value="{{ userInfo.card.holderName }}" readonly />
+            </label>
+        </div>
+        <div>
+            <label>
+                <span class="card-field-name">Card number</span>
+                <input type="text" value="XXXX XXXX XXXX {{ userInfo.card.last4 }}" size="20" readonly />
+            </label>
+        </div>
+        <div>
+            <label>
+                <span class="card-field-name">CVC/CVV</span>
+                <input type="text" value="XXX" size="4" readonly />
+            </label>
+        </div>
+        <div>
+            <label>
+                <span class="card-field-name">Expiration</span>
+                <input type="text" value="{{ userInfo.card.expMonth }}" size="2" readonly />
+            </label>
+            <span> / </span>
+            <input type="text" value="{{ userInfo.card.expYear }}" size="4" readonly />
+        </div>
+    </div>
+    <div class="payment-help-container">
+        <p>
+            All payments are processed by the <a href="https://stripe.com/" target="_blank">Stripe payment system</a> via secure highly encrypted connection.
+            You will receive a confirmation email from Stripe with your payment.
+            We do not store your payment details other than your name, expiration date and last 4 digits of your card number.
+        </p>
+        <p>
+            Once you made the first payment, next ones will be proceeded automatically.
+        </p>
+        <p>
+            When you add/delete your team members we recount the date and amount of your next payment accordingly.
+            We charge you daily amount for every team member that have been added to the team for more than 15 minutes.
+        </p>
+        <p>
+            If you want to disable your business subscription plan, delete all members and yourself from the team. It will stop your monthly payments. Note, that the Task feature will become unavailable for you.
+        </p>
+        <p>
+            If you have any questions, please contact us by email <a href="mailto:support@rizzoma.com">support@rizzoma.com</a>.
+        </p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.userTeamTopics =  {{ teamTopics|json_script_encode|raw }};
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        var DELETE_PARTICIPANT_URL = '/api/rest/1/wave/deleteParticipant/?ACCESS_TOKEN=' + encodeURIComponent(window.expressSessionId);
+        var ADD_PARTICIPANT_URL = '/api/rest/1/wave/addParticipant/?ACCESS_TOKEN=' + encodeURIComponent(window.expressSessionId);
+        var CREATE_TEAM_URL = '/api/rest/1/team/createTeamByWizard/?ACCESS_TOKEN=' + encodeURIComponent(window.expressSessionId);
+        var MAKE_PAYMENT_URL = '/payment';
+        var ACCOUNT_MENU_URL = '/settings/account-menu/'
+        var ROLE_EDITOR =  window.waveParticipantsConstantsExports.ROLE_EDITOR;
+        var EditTeam = window.createTeamExports.EditTeam;
+        var BusinessCreateTeam = window.createTeamExports.BusinessCreateTeam;
+        var AccountSetupProcessor = window.accountSetupProcessorExports.instance;
+        var User = window.userModelExports.User;
+        var onParticipantIdCallbacks = {};
+
+        function processParticipants() {
+            for (var i = 0; i < window.userTeamTopics.length; i++) {
+                var processedParticipants = [];
+                var topic = window.userTeamTopics[i];
+                for (var j = 0; j < topic.participants.length; j++) {
+                    var p = topic.participants[j];
+                    processedParticipants.push(new User(p.id, p.email, p.name, p.avatar, null, null, p.skypeId));
+                }
+                topic.participants = processedParticipants;
+            }
+        }
+        processParticipants();
+
+        function copyParticipants(participants) {
+            // Просто копирует массив
+            var res = [];
+            // То же самое, что и res.splice(0, 9e9, participants[0], participants[1], ...)
+            [].splice.apply(res, [0, 9e9].concat(participants));
+            return res;
+        }
+        function getTeamId(button) {
+            var curElement = button;
+            while (curElement != document && !$(curElement).attr('topicId'))
+                curElement = curElement.parentNode;
+            return $(curElement).attr('topicId');
+        }
+        function leaveTeamTopic(topicId) {
+            if (!topicId) return;
+            var topic = getTeamTopic(topicId);
+            if (!window.confirm("Are you sure you want to leave team \"" + topic.title + '\"?')) return;
+            var data = {waveId: topicId, participantId: window.userInfo.id};
+            $.post(DELETE_PARTICIPANT_URL, data, function(res) {
+                AccountSetupProcessor.clearCachedTeamTopics();
+                var index = getTeamTopicIndex(topicId);
+                window.userTeamTopics.splice(index, 1);
+                window.userTeamTopics.length ? location.reload() : location.href = ACCOUNT_MENU_URL
+            })
+        }
+        function getTeamTopic(topicId) {
+            for (var i = 0; i < window.userTeamTopics.length; i++) {
+                var curTopic = window.userTeamTopics[i];
+                if (curTopic.url == topicId) return curTopic;
+            }
+        }
+        function getTeamTopicIndex(topicId) {
+            for (var i = 0; i < window.userTeamTopics.length; i++) {
+                var curTopic = window.userTeamTopics[i];
+                if (curTopic.url == topicId) return i;
+            }
+        }
+        function addParticipant(topicId, email) {
+            var data = {waveId: topicId, participantId: email, role: ROLE_EDITOR};
+            var ajaxSettings = {
+                type: 'POST',
+                url: ADD_PARTICIPANT_URL,
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(res) {
+                    if (res.err) {
+                        showServerError(res.err);
+                    } else {
+                        if (!res.data) return;
+                        var topic = getTeamTopic(topicId);
+                        if (!topic) return;
+                        var newParticipant = new User(res.data.id, res.data.email, res.data.name, res.data.avatar, null, null, res.data.skypeId);
+                        topic.participants.push(newParticipant);
+                        emitParticipantId(topicId, email, newParticipant.getId());
+                    }
+                }
+            };
+            // Запросы шлем через ajax, т.к. обычная сериализация теряет тип данных - на сервере они все представляются
+            // строками
+            $.ajax(ajaxSettings);
+        }
+        function deleteParticipant(topicId, participantId, email) {
+            var data = {waveId: topicId, participantId: participantId};
+            $.post(DELETE_PARTICIPANT_URL, data, function(res) {
+                if (res.err) {
+                    showServerError(res.err);
+                } else {
+                    removeParticipantFromList(topicId, email);
+                }
+            });
+        }
+        function findParticipant(topicId, email) {
+            // Возвращает индекс участника в топике
+            var topic = getTeamTopic(topicId);
+            if (!topic) return null;
+            for (var i = 0; i < topic.participants.length; i++) {
+                var p = topic.participants[i];
+                if (p.getEmail() != email) continue;
+                return {topic: topic, index: i, participant: p};
+            }
+        }
+        function emitParticipantId(topicId, email, participantId) {
+            if (!onParticipantIdCallbacks[topicId]) return;
+            var topicCallbacks = onParticipantIdCallbacks[topicId];
+            if (!topicCallbacks[email]) return;
+            var emailCallbacks = topicCallbacks[email];
+            for (var i = 0; i < emailCallbacks.length; i++) {
+                emailCallbacks[i](participantId);
+            }
+            delete topicCallbacks[email];
+        }
+        function onParticipantId(topicId, email, callback) {
+            // Вызывается, когда для участника будет получен id
+            // Изменения в contact picker'е показываются сразу, а ответ от сервера на добавления участника
+            // приходит с задержкой, поэтому нужно дожидаться данных с сервера
+            // Если id есть на момент вызова этой функции, callback будет вызван сразу
+            var id = getParticipantId(topicId, email)
+            if (id != null) return callback(id);
+            if (!onParticipantIdCallbacks[topicId]) {
+                onParticipantIdCallbacks[topicId] = {}
+            }
+            var topicCallbacks = onParticipantIdCallbacks[topicId];
+            if (!topicCallbacks[email]) {
+                topicCallbacks[email] = [];
+            }
+            topicCallbacks[email].push(callback);
+        }
+        function getParticipantId(topicId, email) {
+            var searchResults = findParticipant(topicId, email);
+            if (!searchResults) return null;
+            return searchResults.participant.getId();
+        }
+        function removeParticipantFromList(topicId, email) {
+            var searchResults = findParticipant(topicId, email);
+            if (!searchResults) return null;
+            searchResults.topic.participants.splice(searchResults.index, 1);
+        }
+        var teamEditor;
+        var editedTopicId;
+        function editTeamTopic(topicId) {
+            var neededTopic = getTeamTopic(topicId);
+            if (!neededTopic) return;
+            editedTopicId = topicId;
+            teamEditor = new EditTeam($('.js-team-edit-wizard'), topicId, neededTopic.title, copyParticipants(neededTopic.participants));
+            teamEditor.renderAndInit();
+            teamEditor.on('add-participant', function(email) {
+                addParticipant(topicId, email);
+                enable($('#save-team-btn'));
+            });
+            teamEditor.on('remove-participant', function(email) {
+                onParticipantId(topicId, email, function(participantId) {
+                    deleteParticipant(topicId, participantId, email);
+                });
+                enable($('#save-team-btn'));
+            });
+            $('.js-teams-content').addClass('team-topic-edit');
+            $('.js-teams-menu-item').addClass('submenu-selected edit');
+            $('.js-menu-item').on('click.cancel-team-creation', function(e) {
+                if (e.which != 1) return;
+                cancelTeamTopicEdition();
+            });
+            $('.js-current-topic-name').text(neededTopic.title);
+        }
+        function cancelTeamTopicEdition() {
+            document.location.reload()
+        }
+        function createTeamTopic(emails, teamName) {
+            var data = {emails: emails, teamName: teamName};
+            var ajaxSettings = {
+                type: 'PUT',
+                url: CREATE_TEAM_URL,
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(res) {
+                    if (res.err) {
+                        showServerError();
+                    } else {
+                        AccountSetupProcessor.forceIsBusinessUpdate();
+                        location.reload();
+                    }
+                }
+            }
+            $.ajax(ajaxSettings);
+        }
+        var teamCreator;
+        function hideTeamCreationForm() {
+            $('.js-teams-menu-item').removeClass('submenu-selected new');
+            $('.js-teams-content').removeClass('team-topic-create');
+            teamCreator.destroy();
+            $('.js-menu-item').off('click.cancel-team-creation');
+        }
+        function showTeamCreationForm() {
+            teamCreator = new BusinessCreateTeam($('.js-team-create-wizard'));
+            teamCreator.renderAndInit();
+            teamCreator.on('create-team', createTeamTopic);
+            $('.js-menu-item').on('click.cancel-team-creation', function(e) {
+                if (e.which != 1) return;
+                hideTeamCreationForm();
+            });
+            $('.js-teams-content').addClass('team-topic-create');
+            $('.js-teams-menu-item').addClass('submenu-selected new');
+        }
+        window.showTeamCreationForm = showTeamCreationForm;
+        function showCardInfo() {
+            $('.js-teams-content').addClass('card-info');
+            $('.js-teams-menu-item').addClass('submenu-selected card-info');
+            $('.js-menu-item').on('click.cancel-team-creation', function(e) {
+                if (e.which != 1) return;
+                $('.js-teams-content').removeClass('card-info');
+                $('.js-teams-menu-item').removeClass('submenu-selected card-info');
+            });
+        }
+        function showPaymentForm() {
+            $('.js-teams-content').addClass('payment');
+            $('.js-teams-menu-item').addClass('submenu-selected payment');
+            $('.js-payment-form').on('change', 'input', function(e) {
+                var $target = $(e.target);
+                var fieldType = $target.attr('data-stripe');
+                var showVerificationState = function(verified, target) {
+                    if (verified) {
+                        target.removeClass('incorrect-field');
+                        return;
+                    }
+                    target.addClass('incorrect-field');
+                };
+                if (fieldType=='number') {
+                    showVerificationState(Stripe.card.validateCardNumber($target.val()), $target);
+                }
+                if (fieldType=='cvc') {
+                    showVerificationState(Stripe.card.validateCVC($target.val()), $target);
+                }
+                if (fieldType=='exp-month' || fieldType=='exp-year') {
+                    var $form = $(e.delegateTarget);
+                    var $month = $form.find('[data-stripe=exp-month]');
+                    var $year = $form.find('[data-stripe=exp-year]');
+                    showVerificationState(Stripe.card.validateExpiry($month.val(), $year.val()), $month.add($year));
+                }
+            });
+            $('.js-menu-item').on('click.cancel-team-creation', function(e) {
+                if (e.which != 1) return;
+                $('.js-teams-menu-item').removeClass('submenu-selected payment');
+                $('.js-teams-content').removeClass('payment');
+                $('.js-menu-item').off('click.cancel-team-creation');
+                $('.js-payment-form').off('change', 'input')
+            });
+        }
+        function onPaymentSubmit(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var $form = $(this);
+            var $submitButton = $form.find('.js-submit-payment-button');
+            var $errorContainer = $form.find('.js-payment-error-container');
+            $submitButton.prop('disabled', true);
+            $submitButton.text('Processing payment...');
+            Stripe.createToken($form, function(status, response) {
+                var showError = function(message) {
+                    $errorContainer.text(message);
+                    $submitButton.text('Submit payment');
+                    $submitButton.prop('disabled', false);
+                };
+                if (response.error) {
+                    showError(response.error.message);
+                } else {
+                    var ajaxSettings = {
+                        type: 'POST',
+                        url: MAKE_PAYMENT_URL,
+                        data: JSON.stringify(response),
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if (response.err) {
+                                $form.find('.js-submit-payment-button').prop('disabled', false);
+                                showError(response.err);
+                            } else {
+                                $submitButton.text('Submit payment');
+                                $submitButton.prop('disabled', false);
+                                document.location.reload()
+                            }
+                        }
+                    }
+                    $.ajax(ajaxSettings);
+                }
+            });
+        }
+        $(document).ready(function() {
+            $('.js-teams-content').on('click', '.js-leave-team-topic', function(e) {
+                leaveTeamTopic(getTeamId(e.target));
+            });
+            $('.js-teams-content').on('click', '.js-edit-team-topic', function(e) {
+                editTeamTopic(getTeamId(e.target));
+            });
+            $('#save-team-btn').click(function() {
+                cancelTeamTopicEdition();
+            });
+            $('.js-teams-content').on('click', '.js-make-payment-button', function(e) {
+               showPaymentForm();
+            });
+            $('.js-teams-content').on('click', '.js-show-card-info', function(e) {
+               showCardInfo();
+            });
+            $('.js-teams-content').on('submit', '.js-payment-form', function(e) {
+               onPaymentSubmit.call(this, e);
+            });
+            $('.js-create-team-button').click(showTeamCreationForm);
+            if (window.settings && window.settings.action == 'new') showTeamCreationForm();
+        });
+    });
+</script>

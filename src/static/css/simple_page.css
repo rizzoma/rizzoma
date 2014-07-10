@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: #2C2C2C;
+    line-height: 26px;
+    text-align: center;
+}
+
+a, a:visited {
+    color: #187acd;
+}
+
+img {
+    border: 0;
+}
+
+.content {
+    margin: 100px auto;
+    width: 450px;
+    text-align: left;
+}
+
+.info-message {
+    color: #33ad33;
+}
+
+.error-message {
+    color: red;
+}
+
+.footer {
+    color: #555;
+    padding-top: 40px;
+}

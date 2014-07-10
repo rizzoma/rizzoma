@@ -1,0 +1,2 @@
+{% extends 'notification/smtp/changes_digest_body.txt' %}
+{% block period %}24 hours{% endblock %}

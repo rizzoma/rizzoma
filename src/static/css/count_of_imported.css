@@ -1,0 +1,35 @@
+body, table {
+    margin: 0;
+    font-family: arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    direction: ltr;
+    overflow-y: auto;
+    min-width: 1024px;
+}
+
+.content {
+    width: 600px;
+    margin: 40px auto 0 auto;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 1px solid #ECECEC;
+    text-align: left;
+    font-weight: normal;
+    padding: 7px;
+}
+
+th {
+    color: #2588D4;
+    min-width: 30px;
+}
+
+tr:nth-child(even) td, th {
+    background: #F5F5F5;
+}

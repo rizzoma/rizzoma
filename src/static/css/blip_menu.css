@@ -1,0 +1,648 @@
+.blip-menu,
+.blip-menu button,
+.bottom-blip-menu button {
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.blip-menu button,
+.bottom-blip-menu button {
+    border: none;
+    border-radius: 0;
+    vertical-align: top;
+}
+
+.edit-menu > button,
+.edit-menu > * > button,
+.read-only-menu > button,
+.read-only-menu > * > button,
+.blip-menu .icon {
+    height: 30px;
+}
+
+.edit-menu > button,
+.edit-menu > * > button {
+    color: #FFF;
+}
+
+.edit-menu > button:hover,
+.edit-menu > * > button:hover {
+    background: #3D93DA;
+}
+
+.edit-menu > button:active,
+.edit-menu > * > button:active,
+.edit-menu > button.pressed,
+.edit-menu > * > button.pressed {
+    background: #3089c8;
+}
+
+.read-only-menu > button:hover,
+.read-only-menu > * > button:hover {
+    background: #BDC5CA;
+}
+
+.read-only-menu > button:active,
+.read-only-menu > * > button:active {
+    background: #B4BCC2;
+}
+
+.edit-menu > button,
+.edit-menu > * > button,
+.edit-menu > button[disabled],
+.edit-menu > * > button[disabled] {
+    background: #4EA0F1;
+}
+
+.read-only-menu > button,
+.read-only-menu > * > button,
+.read-only-menu > button[disabled],
+.read-only-menu > * > button[disabled] {
+    background: #DDD;
+}
+
+.blip-menu button[disabled] .icon,
+.other-blip-menu button[disabled] {
+    opacity: 0.5;
+}
+
+.blip-menu .other-blip-menu button {
+    background: none;
+}
+
+.blip-menu .icon-button {
+    width: 30px;
+}
+
+.blip-menu .icon {
+    height: 30px;
+    width: 25px;
+    display: inline-block;
+    background: url(/s/img/wave_buttons.png) no-repeat;
+    vertical-align: middle;
+}
+
+.read-only-menu .hide-all-inlines .icon {
+    background-position: -394px 0;
+}
+
+.read-only-menu .show-all-inlines .icon {
+    background-position: -421px 0;
+}
+
+.read-only-menu .get-blip-link .icon {
+    background-position: -542px 0;
+}
+
+.read-only-menu .delete-blip .icon {
+    background-position: -452px 0;
+}
+
+.edit-menu .delete-blip .icon {
+    background-position: -452px -30px;
+}
+
+.edit-menu .undo .icon {
+    background-position: -273px -30px;
+}
+
+.edit-menu .redo .icon {
+    background-position: -302px -30px;
+}
+
+.edit-menu .add-url .icon {
+    background-position: -153px -30px;
+}
+
+.edit-menu .insert-image .icon {
+    background-position: -92px -30px;
+}
+
+.edit-menu .insert-file .icon {
+    background-position: -123px -30px;
+}
+
+.edit-menu .make-bold .icon {
+    background-position: -3px -30px;
+}
+
+.edit-menu .italic .icon {
+    background-position: -33px -30px;
+}
+
+.edit-menu .make-underlined .icon {
+    background-position: -62px -30px;
+}
+
+.edit-menu .make-struckthrough .icon {
+    background-position: -363px -30px;
+}
+
+.edit-menu .make-background-color .icon {
+    background: #fff url(/s/img/wave_buttons_text_background.png) -14px -7px no-repeat; /* TODO: merge with other icons*/
+    width: 16px;
+    height: 16px;
+    vertical-align: top;
+}
+
+.edit-menu .clear-formatting .icon {
+    background-position: -182px -30px;
+}
+
+.edit-menu .bulleted .icon {
+    background-position: -243px -30px;
+}
+
+.edit-menu .numbered .icon {
+    background-position: -212px -30px;
+}
+
+.read-only-menu .gearwheel .icon {
+    background-position: -332px 0;
+}
+
+.edit-menu .gearwheel .icon {
+    background-position: -332px -30px;
+}
+
+.blip-menu .change-mode,
+.bottom-blip-menu .finish-edit-button {
+    width: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.blip-menu .gearwheel-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 30px;
+}
+
+.bottom-blip-menu button div.text {
+    color: #B8C4CF;
+    margin-left: 10px;
+}
+.bottom-blip-menu button div.avatar {
+    width: 30px;
+    height: 28px;
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    border: 1px solid #000;
+}
+.bottom-blip-menu button div.gradient {
+    margin: 0;
+    background: -moz-linear-gradient(top, rgba(242,245,248,0) 30%, rgba(242,245,248,1) 80%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,rgba(242,245,248,0)), color-stop(80%,rgba(242,245,248,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(242,245,248,0) 30%,rgba(242,245,248,1) 80%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(242,245,248,0) 30%,rgba(242,245,248,1) 80%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(242,245,248,0) 30%,rgba(242,245,248,1) 80%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(242,245,248,0) 30%,rgba(242,245,248,1) 80%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00f2f5f8', endColorstr='#f2f5f8',GradientType=0 ); /* IE6-9 */
+    height: 32px;
+    position: absolute;
+    top: -1px;
+    right: 6px;
+    width: 34px;
+}
+
+.bottom-blip-menu button div.text {
+    margin-left: 5px;
+}
+
+.edit-mode > .bottom-blip-menu {
+    border-color: #4EA0F1;
+}
+
+.blip-menu .color-panel {
+    background: #DCDCDC;
+    border-radius: 3px;
+    cursor: default;
+    display: none;
+    padding: 7px 2px 0 2px;
+    position: absolute;
+    top: 22px;
+    left: -62px;
+    white-space: nowrap;
+    z-index: 2;
+    line-height: 19px;
+}
+
+.blip-menu .color-panel .color-choice {
+    border: none;
+    border-radius: 2px;
+    box-shadow: inset 0 0 0 1px rgba(150, 150, 150, 0.5);
+    height: 14px;
+    margin: 0 4px;
+    width: 14px;
+}
+
+.blip-menu .color-panel .color-choice.active {
+    border: 1px solid black;
+}
+
+.blip-menu .is-folded-by-default {
+    position: relative;
+    width: auto;
+    text-align: right;
+    padding-right: 5px;
+    padding-left: 24px;
+}
+
+.blip-menu .is-folded-by-default::before {
+    content: '';
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    background: url(/s/img/blip-menu-v.png) 0 0 no-repeat;
+    z-index: 3;
+    top: 8px;
+    left: 5px;
+}
+
+.folded-by-default .read-only-menu .is-folded-by-default::before {
+    background-position: 0 -14px;
+}
+
+.edit-menu .is-folded-by-default::before {
+    background-position: 0 -28px;
+}
+
+.folded-by-default .edit-menu .is-folded-by-default::before {
+    background-position: 0 -42px;
+}
+
+.blip-container:not(:first-child).active > .blip-menu-container .is-folded-by-default { /* TODO: ? */
+    display: none;
+}
+
+.blip-menu .other-blipmenu-container {
+    position: absolute;
+    background: white;
+    border: 1px solid #C5C5C5;
+    border-radius: 3px;
+    top: 27px;
+    left: -12px;
+    display: none;
+}
+
+.blip-menu .other-blipmenu-container button {
+    padding: 5px 10px 5px 10px;
+    width: auto;
+}
+
+.blip-menu .other-blipmenu-container .list-menu-button:hover,
+.blip-menu .other-blipmenu-container .list-menu-button:hover > button {
+    background: #4ea0f1;
+    color: #fff;
+}
+.blip-menu .other-blipmenu-container .triangle {
+    position: relative;
+    cursor: auto;
+}
+
+.show-other-menu .other-blipmenu-container {
+    display: block;
+}
+
+.blip-menu .fold-unfold-block,
+.undo-button-hidden .gearwheel-container .undo,
+.redo-button-hidden .gearwheel-container .redo,
+.insert-file-button-hidden .gearwheel-container .insert-file,
+.insert-image-button-hidden .gearwheel-container .insert-image,
+.manage-link-button-hidden .gearwheel-container .add-url,
+.bold-button-hidden .gearwheel-container .make-bold,
+.italic-button-hidden .gearwheel-container .italic,
+.underline-button-hidden .gearwheel-container .make-underlined,
+.struckthrough-button-hidden .gearwheel-container .make-struckthrough,
+.bulleted-list-button-hidden .gearwheel-container .bulleted,
+.numbered-list-button-hidden .gearwheel-container .numbered,
+.clear-formatting-button-hidden .gearwheel-container .clear-formatting,
+.is-folded-by-default-button-hidden .edit-menu .gearwheel-container .is-folded-by-default,
+.delete-button-hidden .edit-menu .gearwheel-container .delete-blip {
+    display: inline-block;
+}
+
+.fold-unfold-block-hidden .fold-unfold-block,
+.undo-button-hidden .undo,
+.redo-button-hidden .redo,
+.insert-file-button-hidden .insert-file,
+.insert-image-button-hidden .insert-image,
+.manage-link-button-hidden .add-url,
+.bold-button-hidden .make-bold,
+.italic-button-hidden .italic,
+.underline-button-hidden .make-underlined,
+.struckthrough-button-hidden .make-struckthrough,
+.bg-color-button-hidden .make-background-color,
+.bulleted-list-button-hidden .bulleted,
+.numbered-list-button-hidden .numbered,
+.clear-formatting-button-hidden .clear-formatting,
+.is-folded-by-default-button-hidden .edit-menu .is-folded-by-default,
+.is-folded-by-default-button-hidden-force .is-folded-by-default,
+.is-folded-by-default-button-hidden.is-folded-by-default-button-hidden-force .edit-menu .is-folded-by-default,
+.delete-button-hidden .edit-menu .delete-blip,
+.delete-button-hidden-force .delete-blip,
+.delete-button-hidden.delete-button-hidden-force .edit-menu .delete-blip {
+    display: none;
+}
+
+.blip-menu .triangle > div {
+    position: absolute;
+    width: 13px;
+    height: 8px;
+    top: -8px;
+    left: 22px;
+    overflow: hidden;
+}
+
+.at-right .other-blipmenu-container {
+    left: auto;
+    right: 0;
+}
+
+.at-right.blip-menu .triangle > div {
+    left: auto;
+    right: 7px;
+}
+
+.blip-menu .triangle > div > div {
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    background: white;
+    top: 3px;
+    left: 0;
+    border: 1px solid #C5C5C5;
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.blip-menu .gearwheel {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.blip-menu .change-mode,
+.non-editable > * > .blip-menu .hide-all-inlines,
+.non-editable > * > .fold-unfold-block-hidden .get-blip-link {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.wave-panel > .blip-menu .gearwheel,
+.wave-panel > .blip-menu .change-mode {
+    border-radius: 0;
+}
+
+.wave-panel > .blip-menu .edit-menu {
+    background: #4EA0F1;
+}
+
+.wave-panel > .blip-menu .read-only-menu {
+    background: #DDD;
+}
+
+.blip-menu .paste-as-reply,
+.blip-menu .paste-at-cursor,
+.hide-copy-paste .copy-blip-button,
+.has-buffer .hide-copy-paste .paste-as-reply,
+.has-buffer.has-cursor .hide-copy-paste .paste-at-cursor {
+    display: none;
+}
+
+.has-buffer .paste-as-reply,
+.has-buffer.has-cursor .paste-at-cursor {
+    display: inline-block;
+}
+
+.bottom-blip-menu,
+.bottom-blip-menu button {
+    height: 26px;
+}
+
+.bottom-blip-menu {
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    bottom: -16px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    display: none;
+    z-index: 1;
+    border: 2px solid #D6D6D6;
+    border-top-width: 1px;
+    background: #F2F5F8;
+    overflow: hidden;
+}
+.wave:not(.read-only) .blip-container:last-child.active > .bottom-blip-menu,
+.collection-topic-container:not(.read-only) .blip-container:last-child.active > .bottom-blip-menu {
+    display: block;
+}
+
+.wave:not(.read-only) .blip-container:not(:last-child).active.edit-mode > .bottom-blip-menu {
+    border: none;
+    display: block;
+    background: none;
+}
+
+.wave:not(.read-only) .blip-container:not(:last-child).active.edit-mode > .bottom-blip-menu .finish-edit-button {
+    border-radius: 4px;
+}
+
+.wave:not(.read-only) .blip-container:not(:last-child) > .bottom-blip-menu .blip-reply-button{
+    display: none;
+}
+
+.root-thread > .blips-container > .blip-container > .bottom-blip-menu .text {
+    margin-left: 32px;
+}
+.root-thread > .blips-container > .blip-container > .bottom-blip-menu {
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+}
+.root-thread > .blips-container > .blip-container > .bottom-blip-menu button div.gradient {
+    right: 12px;
+}
+.root-thread > .blips-container > .blip-container > .bottom-blip-menu button div.avatar {
+    right: 13px;
+}
+
+.bottom-blip-menu .finish-edit-button {
+    position: relative;
+    display: none;
+    z-index: 1;
+    background: #4EA0F1;
+    color: white;
+}
+
+.edit-mode > .bottom-blip-menu .finish-edit-button {
+    display: inline-block;
+}
+
+.bottom-blip-menu .blip-reply-button {
+    background: none;
+    text-align: left;
+    width: 100%;
+    border: none;
+    position: relative;
+}
+
+.edit-mode > .bottom-blip-menu .blip-reply-button {
+    padding-left: 50px;
+    margin-left: -50px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.read-only-menu .delimitered-right {
+    border-right: 1px solid #C5C9CD;
+}
+
+.edit-menu .delimitered-right {
+    border-right: 1px solid #4691DA;
+}
+
+.blip-menu-item img {
+    vertical-align: middle;
+}
+.blip-menu-container {
+    position: absolute;
+    top: -19px;
+    left: -2px;
+    display: none;
+    /* для перекрытия:
+      - иконки пользователя в блипе
+      - выпадающим из под шестеренки меню нижнего меню при маленькой высоте блипа
+      при этом менюшка должна залезать под типсы
+    */
+    z-index: 2;
+}
+
+.blip-menu-container.fixed {
+    position: fixed;
+    top: 50px;
+}
+
+.tip-shown .blip-menu-container.fixed {
+    top: 80px;
+}
+
+.range-menu {
+    position: absolute;
+    z-index: 2;
+    border-radius: 4px;
+    border: 1px solid #2E72BB;
+    white-space: nowrap;
+}
+
+.range-menu button {
+    background: rgb(102, 169, 233);
+    background: -moz-linear-gradient(top, rgba(102, 169, 233, 1) 0%, rgba(80, 146, 211, 1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(102, 169, 233, 1)), color-stop(100%,rgba(80, 146, 211, 1)));
+    background: -webkit-linear-gradient(top, rgba(102, 169, 233, 1) 0%,rgba(80, 146, 211, 1) 100%);
+    background: -o-linear-gradient(top, rgba(102, 169, 233, 1) 0%,rgba(80, 146, 211, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(102, 169, 233, 1) 0%,rgba(80, 146, 211, 1) 100%);
+    background: linear-gradient(top, rgba(102, 169, 233, 1) 0%,rgba(80, 146, 211, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66a9e9', endColorstr='#5092d3',GradientType=0 );
+    border: none;
+    border-radius: 0;
+    color: white;
+    height: auto;
+    padding: 0;
+    text-shadow: none;
+}
+.range-menu button:not([disabled]):hover {
+    background: rgb(102, 169, 233);
+    filter: none;
+}
+
+.range-menu .button:not(:first-child)::before,
+.range-menu .button:not(:last-child)::after {
+    content: "";
+    display: inline-block;
+    height: 25px;
+    width: 1px;
+    vertical-align: middle;
+}
+
+.range-menu .button:not(:first-child)::before {
+    background: #76ade4;
+    background: -moz-radial-gradient(center, ellipse cover, rgba(118,173, 228, 1) 0%, rgba(118,173, 228, 0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(118,173, 228, 1)), color-stop(100%,rgba(118,173, 228, 0))); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(118,173, 228, 1) 0%,rgba(118,173, 228, 0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover, rgba(118,173, 228, 1) 0%,rgba(118,173, 228, 0) 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, rgba(118,173, 228, 1) 0%,rgba(118,173, 228, 0) 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center, rgba(118,173, 228, 1) 0%,rgba(118,173, 228, 0) 100%); /* W3C */
+}
+
+.range-menu .button:not(last-child)::after {
+    background: #4D8AC6;
+    background: -moz-radial-gradient(center, ellipse cover, rgba(78,140,201,1) 0%, rgba(78,140,201,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(78,140,201,1)), color-stop(100%,rgba(78,140,201,0))); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(78,140,201,1) 0%,rgba(78,140,201,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover, rgba(78,140,201,1) 0%,rgba(78,140,201,0) 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, rgba(78,140,201,1) 0%,rgba(78,140,201,0) 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center, rgba(78,140,201,1) 0%,rgba(78,140,201,0) 100%); /* W3C */
+}
+
+.range-menu::after,
+.range-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    height: 0;
+    margin-left: -9px;
+    border-left: 8px solid rgba(0, 0, 0, 0);
+    border-right: 8px solid rgba(0, 0, 0, 0);
+    border-bottom: 8px solid rgb(102, 169, 233);
+}
+
+.range-menu.edit::after,
+.range-menu.edit::before {
+    left: 28px;
+}
+
+.range-menu::after {
+    top: -9px;
+    border-bottom: 8px solid #2E72BB;
+}
+
+.range-menu::before {
+    z-index: 1;
+}
+
+.range-menu .icon {
+    background: url(/s/img/range_menu_icons.png) no-repeat;
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    vertical-align: middle;
+    margin: 5px;
+}
+
+.range-menu button span {
+    margin-right: 5px;
+}
+
+.range-menu .edit-icon {
+    background-position: 0 0;
+}
+
+.range-menu .comment-icon {
+    background-position: -18px 0;
+}

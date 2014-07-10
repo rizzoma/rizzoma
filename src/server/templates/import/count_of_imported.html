@@ -1,0 +1,46 @@
+<html itemscope itemtype="http://schema.org/Product">
+<head>
+    <title>Imported waves</title>
+    <link rel="stylesheet" type="text/css" href="/s/css/count_of_imported.css">
+</head>
+<body>
+    <div class="content">
+        <h2>Count of imported waves by date</h2>
+        <table>
+            <tr>
+                <th rowspan="2">Date</th>
+                <th rowspan="2">Count of waves</th>
+                <th colspan="4">Count of participants</th>
+                <th colspan="4">Count of blips</th>
+            </tr>
+            <tr>
+                <th>1- 5</th>
+                <th>6 - 10</th>
+                <th>11 - 20</th>
+                <th>21 +</th>
+                <th>1 - 10</th>
+                <th>11 - 30</th>
+                <th>31 - 50</th>
+                <th>51 +</th>
+            </tr>
+            {% for item in table %}
+            <tr>
+                <td>{{ item.date|date("d.m.Y") }}</td>
+                <td>{{ item.value.cc }}</td>
+                
+                <td>{{ item.value.pc.less5 }}</td>
+                <td>{{ item.value.pc.f6to10 }}</td>
+                <td>{{ item.value.pc.f11to20 }}</td>
+                <td>{{ item.value.pc.more20 }}</td>
+                
+                <td>{{ item.value.bc.less10 }}</td>
+                <td>{{ item.value.bc.f11to30 }}</td>
+                <td>{{ item.value.bc.f31to50 }}</td>
+                <td>{{ item.value.bc.more50 }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,153 @@
+.introduce {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+    text-align: center;
+    font-size: 18px;
+}
+.introduce .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.8;
+    height: 100%;
+    width: 100%;
+}
+.introduce .slider-header {
+    color: #787D81;
+    font-size: 17px;
+    border-collapse: collapse;
+    width: 100%;
+    padding-top: 15px;
+    height: 35px;
+}
+.introduce .slides-container {
+    margin-top: 30px;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    border: 1px solid white;
+    border-radius: 9px;
+    background: #f4f4f4;
+    padding: 0 10px 5px 10px;
+    min-width: 900px;
+}
+.introduce .slide {
+    background: url('/s/img/introduce/background.png') 0 0 no-repeat;
+    position: relative;
+    width: 940px;
+    height: 530px;
+}
+.introduce .slide .callout,
+.introduce .slide .callout-ru {
+    height: 530px;
+}
+.introduce .slide .callout {
+    background: url('/s/img/introduce/callouts.png') 0 0 no-repeat;
+}
+.introduce .slide .callout-ru {
+    background: url('/s/img/introduce/callouts_ru.png') 0 0 no-repeat;
+}
+.introduce .slide .callout.slide1 {
+    background-position: 0 -530px;
+}
+.introduce .slide .callout.slide2 {
+    background-position: 0 -1060px;
+}
+.introduce .slide .callout.slide3 {
+    background-position: 0 -1590px;
+}
+.introduce .hide, .introduce .video {
+    display: none;
+}
+.introduce .video {
+    background: #4D4D4D;
+}
+.introduce .video iframe {
+    margin-top: 20px;
+    display: none;
+}
+.introduce .video-button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: #5CAAF7;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+.introduce .progressbar {
+    margin-right: 10px;
+    white-space: nowrap;
+    margin-top: 1px;
+}
+.introduce .progressbar-round {
+    width: 17px;
+    height: 17px;
+    background: #E7E7E7;
+    border-radius: 10px;
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.introduce .progressbar-round.active {
+    background: #728AA3;
+}
+.introduce .closer {
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.introduce .close-txt,
+.introduce .close-img {
+    float: left;
+}
+.introduce .close-img {
+    height: 18px;
+    margin: 1px 0 0 10px;
+}
+.introduce .switch-to-video .switch-link {
+    color: #4DC74D;
+    cursor: pointer;
+}
+.introduce .next,
+.introduce .prev,
+.introduce .switch-link,
+.introduce .close-txt {
+    font-size: 16px;
+}
+.introduce .switch-link img {
+    margin-top: 2px;
+    margin-left: 3px;
+}
+.introduce .switch-link div {
+    float: left;
+    text-decoration: underline;
+}
+.introduce .next,
+.introduce .prev,
+.introduce .progressbar,
+.introduce .switch-to-video,
+.introduce .navigation {
+    float: left;
+}
+.introduce button {
+    border: none;
+    background: transparent;
+    text-decoration: underline;
+    color: #728AA3;
+}
+.introduce .next,
+.introduce .prev {
+}
+.introduce .next[disabled="disabled"],
+.introduce .prev[disabled="disabled"] {
+    color: #D6DDE4
+}
+.introduce .navigation {
+    margin-left: 259px;
+}

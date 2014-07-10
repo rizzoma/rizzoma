@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta property="og:title" content="{{ waveTitle }}" /> 
+        <meta property="og:description" content="{{ waveSnippet }}" /> 
+        <meta property="og:image" content="http://rizzoma.com/s/img/logo/75.png" />
+        <title>{{ waveTitle|default("Try rizzoma.com for communicate and collaborate in real-time!") }}</title>
+        <script type="text/javascript">
+            if ('{{ waveUrl }}')
+                document.location.href = '{{ waveUrl }}?utm_source={{ utm }}&utm_medium=userfeed&utm_campaign=topicshare&from=topicshare';
+            else
+                document.location.href = '/topic/?from=topicshare'
+        </script>
+    </head>
+    <body>
+        {% if waveTitle %}
+            <img src="/s/img/logo/75.png" />
+            <h1>{{ waveTitle }}</h1>
+            <div>{{ waveSnippet }}</div>
+        {% else %}
+            <img src="/s/img/logo/75.png" />
+            <h1>Try rizzoma.com for communicate and collaborate in real-time!</h1>
+            <div>
+                Rizzoma is a collaborative tool that tracks the context of your conversation automatically,
+                allowing you to grow a conversation wherever you need and keep track of all the changes and
+                additions in one place. Rizzoma also helps information stay organized by allowing you to structure
+                your documents in ways that make sense to you.
+            </div>
+        {% endif %}
+    </body>
+</html>

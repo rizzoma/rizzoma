@@ -1,0 +1,20 @@
+{% include 'notification/macroses.txt'%}
+{# Набор макросов для уведомлений о сообщениях (суффикс html означает включенный автоэскейп) #}
+
+{# Макросы заголовка #}
+
+{% macro subject senderName senderEmail text -%}
+    {% if senderName  -%}
+        {{ senderName|raw }} ({{ senderEmail }})
+    {%- else -%}
+        {{ senderEmail }}
+    {%- endif %}: "{{ text|raw|truncatewords(4) }}..."
+{%- endmacro %}
+
+{% macro subjectHtml title senderName senderEmail text %}
+    {% if senderName  %}
+        {{ senderName }} ({{ senderEmail }})
+    {% else %}
+        {{ senderEmail }}
+    {% endif %}: "{{ text|truncatewords(4) }}..."
+{% endmacro %}

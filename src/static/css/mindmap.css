@@ -1,0 +1,282 @@
+/**
+ * Стили mindmap'ов, которые отрисовываются при помощи svg
+ */
+
+.topic-mindmap-container {
+    height: 100%;
+    display: none;
+    padding-top: 33px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    background: rgb(247,247,247);
+}
+
+.topic-mindmap-container .svg-container {
+    height: 100%;
+    overflow: auto;
+}
+
+.topic-mindmap-container .svg-container.scrollable {
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+}
+
+.topic-mindmap-container .svg-container.moving {
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+}
+
+.mindmap-view .topic-mindmap-container {
+    display: block;
+}
+
+svg.mindmap {
+    min-width: 100%;
+    min-height: 100%;
+    display: block;
+}
+
+svg.mindmap text {
+    text-anchor: start;
+}
+
+svg.mindmap .root-node {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+svg.mindmap .hidden {
+    display: none;
+}
+
+svg.mindmap .paragraph-label,
+svg.mindmap .blip-drag-zone,
+svg.mindmap .thread-drag-zone {
+    cursor: pointer;
+}
+
+svg.mindmap .paragraph-label:hover text {
+    text-decoration: underline;
+}
+
+svg.mindmap .blip-size-box {
+    fill: url(#blipSizeBoxOddGradient);
+}
+
+svg.mindmap .thread-container.virtual .blip-size-box {
+    fill: url(#virtualBlipSizeBoxGradient);
+}
+
+svg.mindmap .thread-container:not(.root-thread):not(.virtual) .blip-container:nth-of-type(even) .blip-size-box {
+    fill: url(#blipSizeBoxEvenGradient);
+}
+
+svg.mindmap .blip-background-box {
+    fill: #7CBA6C;
+    opacity: 0;
+    -webkit-animation-duration: 4s;
+    -webkit-animation-name: blip-background-hide-animation;
+    -moz-animation-duration: 4s;
+    -moz-animation-name: blip-background-hide-animation;
+    animation-duration: 4s;
+    animation-name: blip-background-hide-animation;
+}
+
+svg.mindmap .ghost {
+    opacity: 0.5;
+}
+
+.moved-node {
+    position: absolute;
+}
+
+svg.mindmap .task-recipient,
+svg.mindmap .blip-recipient,
+svg.mindmap input.custom[type='checkbox'] + label {
+    cursor: default;
+}
+
+svg.mindmap .node-container.virtual {
+    fill: grey;
+}
+
+svg.mindmap .thread-container.virtual .node-container.virtual {
+    fill: #999933;
+}
+
+svg.mindmap .blip-container.virtual,
+svg.mindmap .thread-container.virtual,
+svg.mindmap .node-container.virtual {
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-name: virtual-appear-animation;
+    -moz-animation-duration: 0.3s;
+    -moz-animation-name: virtual-appear-animation;
+    animation-duration: 0.3s;
+    animation-name: virtual-appear-animation;
+}
+
+svg.mindmap .description-arrow-line {
+    stroke-width: 1px;
+}
+
+svg.mindmap .description-arrow.to-top {
+    fill: rgb(220,226,231);
+}
+
+svg.mindmap .description-arrow.to-top .description-arrow-line {
+    stroke: rgb(220,226,231);
+}
+
+svg.mindmap .description-arrow.to-mid {
+    fill: rgb(207,213,218);
+}
+
+svg.mindmap .description-arrow.to-mid .description-arrow-line {
+    stroke: rgb(207,213,218);
+}
+
+svg.mindmap .description-arrow.to-bottom {
+    fill: rgb(192,199,204);
+}
+
+svg.mindmap .description-arrow.to-bottom .description-arrow-line {
+    stroke:rgb(192,199,204);
+}
+
+svg.mindmap .thread-container.virtual .description-arrow.to-top {
+    fill: #F7F2B9;
+}
+
+svg.mindmap .thread-container.virtual .description-arrow.to-top .description-arrow-line {
+    stroke: #F7F2B9;
+}
+
+svg.mindmap .thread-container.virtual .description-arrow.to-mid {
+    fill: #E9E3A4;
+}
+
+svg.mindmap .thread-container.virtual .description-arrow.to-mid .description-arrow-line {
+    stroke: #E9E3A4;
+}
+
+svg.mindmap .thread-container.virtual .description-arrow.to-bottom {
+    fill: #D8D18B;
+}
+
+svg.mindmap .thread-container.virtual .description-arrow.to-bottom .description-arrow-line {
+    stroke: #D8D18B;
+}
+
+svg.mindmap .description-arrow.selected {
+    fill: #ABBFCF;
+}
+
+svg.mindmap .description-arrow.selected .description-arrow-line {
+    stroke: #ABBFCF;
+}
+
+svg.mindmap .paragraph-line {
+    stroke: white;
+    stroke-width: 2px;
+}
+
+svg.mindmap .unread .paragraph-line {
+    stroke: #7cba6c;
+}
+
+svg.mindmap .paragraph-label:hover .paragraph-line {
+    stroke-width: 3px;
+}
+
+svg.mindmap .paragraph-size-box {
+    fill: transparent;
+}
+
+svg.mindmap .selected .paragraph-size-box {
+    fill: #ABBFCF;
+}
+
+svg.mindmap .block-line-top {
+    fill: rgb(120,120,120);
+}
+
+svg.mindmap .block-line-bottom {
+    fill: rgb(230,230,230);
+}
+
+svg.mindmap .blip-height-line {
+    fill: rgb(200,200,200);
+}
+
+svg.mindmap linearGradient stop {
+    stop-opacity: 1;
+}
+
+svg.mindmap #blipSizeBoxOddGradient .start-color {
+    stop-color: rgb(220,226,231);
+}
+
+svg.mindmap #blipSizeBoxOddGradient .end-color {
+    stop-color: rgb(192,199,204);
+}
+
+svg.mindmap #blipSizeBoxEvenGradient .start-color {
+    stop-color: rgb(225,225,225);
+}
+
+svg.mindmap #blipSizeBoxEvenGradient .end-color {
+    stop-color: rgb(199,199,199);
+}
+
+svg.mindmap #virtualBlipSizeBoxGradient .start-color {
+    stop-color: #F7F2B9;
+}
+
+svg.mindmap #virtualBlipSizeBoxGradient .end-color {
+    stop-color: #D8D18B;
+}
+
+svg.mindmap .blip-drag-zone,
+svg.mindmap .thread-drag-zone {
+    opacity: 0;
+}
+
+svg.mindmap .blip-text-container:hover .blip-drag-zone,
+svg.mindmap .blip-size-box:hover + .blip-text-container .blip-drag-zone,
+svg.mindmap .blip-drag-zone:hover,
+svg.mindmap .thread-container:hover > .thread-drag-zone,
+svg.mindmap .thread-drag-zone:hover {
+    opacity: 1;
+}
+
+@-webkit-keyframes virtual-appear-animation {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@-moz-keyframes virtual-appear-animation {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes virtual-appear-animation {
+    from {opacity: 1;}
+    to {opacity: 1;}
+}
+
+@-webkit-keyframes blip-background-hide-animation {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+@-moz-keyframes blip-background-hide-animation {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+@keyframes blip-background-hide-animation {
+    from {opacity: 1;}
+    to {opacity: 1;}
+}

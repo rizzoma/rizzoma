@@ -1,0 +1,176 @@
+{% extends "wave_base.html" %}
+
+{% block addition_meta1 %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+{% endblock addition_meta1 %}
+
+{% block styles %}
+    <link rel="stylesheet" href="/s/css/reset.css">
+    <link rel="stylesheet" href="/s/jquery.autocomplete/jquery.autocomplete.css">
+    <link rel="stylesheet" href="/s/css/autocomplete.css">
+    <link rel="stylesheet" href="/s/jquery.selectbox/jquery.selectBox.css">
+    <link rel="stylesheet" href="/s/jquery.calendrical/calendrical.css">
+    <link rel="stylesheet" href="/s/css/mobile.css">
+    <link rel="stylesheet" href="/s/css/gadget.css">
+{% endblock styles %}
+{% block scripts %}
+    <script src="/s/js/ios-orientationchange-fix.js"></script>
+    <script src="/s/node-date-utils/date-utils.min.js"></script>
+    <script src="/s/js/diff_match_patch_20121119/diff_match_patch.js"></script>
+    {% if gadget.enabled %}
+        <script type="text/javascript" src="/s/js/core_rpc_shindig-container.c_1-min.js"></script>
+    {% endif %}
+
+    <script type="text/javascript" src='/s/js/jquery-1.7.2.min.js'></script>
+    <script type="text/javascript" src="/s/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/s/js/historyjs/compressed/history.js"></script>
+    <script type="text/javascript" src="/s/js/historyjs/compressed/history.html4.js"></script>
+    <script type="text/javascript" src="/s/js/historyjs/compressed/history.adapter.jquery.js"></script>
+
+    <script type="text/javascript" src="/s/js/globalize/globalize.js"></script>
+    <script type="text/javascript" src="/s/js/globalize/globalize.culture.en-US.js"></script>
+    <script type="text/javascript" src="/s/js/visibility/visibility.fallback.min.js"></script>
+    <script type="text/javascript" src="/s/js/visibility/visibility.min.js"></script>
+    <script type="text/javascript" src="/s/js/jquery-lightbox/jquery.lightbox-0.5.js"></script>
+    <script type="text/javascript" src="/s/jquery.autocomplete/jquery.autocomplete.js"></script>
+    <script type="text/javascript" src="/s/jquery.selectbox/jquery.selectBox.min.js"></script>
+    <script type="text/javascript" src="/s/js/sockjs-0.3.4.js"></script>
+    <script type="text/javascript" src="/s/js/share.uncompressed.js"></script>
+    <script type="text/javascript" src="/s/js/coffeekup.js"></script>
+
+    <script type="text/javascript" src="/s/jquery.calendrical/jquery.calendrical.js"></script>
+
+    <script type="text/javascript" src='/s/js/jquery.cookies.js'></script>
+    <script type="text/javascript" src="/s/js/console_polyfill-0.1.0.js"></script>
+
+    {# -- combo split --: place client code into different package, because this code changes often than vendor libraries #}
+    <script src="/s/js/mobile_index.js"></script>
+{% endblock scripts %}
+
+{% block additional_content %}
+<section id="main-content">
+    <section id="navigation-panel" class="navigation-panel no-tap-highlight{%if not loggedIn%} anonymous{%endif%}">
+        <ul class="header hidden-tasks">
+            <li><input id="tab-topics" type="radio" name="radio-set" class="js-tab-selector">
+            <label for="tab-topics" class="tab" onclick="">
+                <div class="column left">
+                    <button class="button js-create-wave-button">New</button>
+                </div><div class="column right">
+                    <div class="icon-block">
+                        <div class="icon"><div id="topics-counter" class="counter"></div></div>
+                        <div>TOPICS</div>
+                    </div>
+                </div>
+            </label>
+            <li><input id="tab-messages" type="radio" name="radio-set" class="js-tab-selector">
+            <label for="tab-messages" class="tab" onclick="">
+                <div class="icon-block">
+                    <div class="icon"><div id="messages-counter" class="counter"></div></div>
+                    <div>MENTIONS</div>
+                </div>
+            </label>
+            <li class="hidden"><input id="tab-tasks" type="radio" name="radio-set" class="js-tab-selector">
+            <label for="tab-tasks" class="tab" onclick="">
+                <div class="icon-block">
+                    <div class="icon"><div id="tasks-counter" class="counter"></div></div>
+                    <div>TASKS</div>
+                </div>
+            </label>
+            <li><input id="tab-public-topics" type="radio" name="radio-set" class="js-tab-selector">
+            <label for="tab-public-topics" class="tab" onclick="">
+                <div class="icon-block">
+                    <div class="icon"><div id="publics-counter" class="counter"></div></div>
+                    <div>PUBLIC</div>
+                </div>
+            </label>
+        </ul>
+        
+        <div class="content">
+            <div id="tab-topics-content">
+                <div class="search-header">
+                    <div class="input-with-button-container">
+                        <button class="js-run-search-button search-icon"></button>
+                        <div class="input-wrapper">
+                            <input class="js-search-query search-query" placeholder="Search Topic" type="search">
+                        </div>
+                    </div>
+                </div>
+                <div class="js-search-results search-results">
+                    
+                </div>
+            </div>
+            <div id="tab-messages-content">
+                <div class="search-header">
+                    <div class="input-with-button-container">
+                        <button class="js-run-search-button search-icon"></button>
+                        <div class="input-wrapper">
+                            <input class="js-search-query search-query" placeholder="Search Mention" type="search">
+                        </div>
+                    </div>
+                </div>
+                <div class="js-search-results search-results">
+                    
+                </div>
+            </div>
+            <div id="tab-tasks-content">
+                <div class="search-header">
+                    <div class="input-with-button-container">
+                        <button class="js-run-search-button search-icon"></button>
+                        <div class="input-wrapper">
+                            <input class="js-search-query search-query" placeholder="Search Task" type="search">
+                        </div>
+                    </div>
+                </div>
+                <div class="js-search-results search-results">
+                </div>
+            </div>
+            <div id="tab-public-topics-content">
+                <div class="search-header">
+                    <div class="input-with-button-container">
+                        <button class="js-run-search-button search-icon"></button>
+                        <div class="input-wrapper">
+                            <input class="js-search-query search-query" placeholder="Search Public" type="search">
+                        </div>
+                    </div>
+                </div>
+                <div class="js-search-results search-results">
+                    
+                </div>
+            </div>
+            <ul class="footer">
+                <li class="view-in-desktop"><a href="#" onclick="window.location.search = '?mode=desktop'">View in Desktop</a>
+                <li><a href="https://rizzoma.zendesk.com">Help</a>
+                <li><a href="/logout">Sign out</a>
+            </ul>
+        </div>
+    </section>
+    <section id="wave-panel" class="js-wave-container wave-panel{%if not loggedIn%} anonymous{%endif%}">
+        <div id="wave" class="wave{%if not loggedIn%} anonymous{%endif%}"></div>
+        <div class="js-wave-notifications wave-notifications">
+            <div class='js-page-error-container error-message-container {% if notice %}error-shown {% endif %}'>
+                <div class="set-3d"></div>
+                <img src="/s/img/error-icon.png" alt="Error" />
+                <div class='js-page-error wave-error-text'>{% if notice %}{{ notice }}{% endif %}</div>
+                <div class="clearer" ></div>
+            </div>
+        </div>
+    </section>
+</section>
+<section id="session-view">
+    <div class="container">
+        <div>
+            <img class="logo" width="232px" height="43px" src="/s/img/logo/logo_mobile.png">
+        </div>
+        <div class="intro-text">
+            Realtime collaborative editing docs.
+            Here you can send messages, emails and assign tasks right in context.
+        </div>
+        <div class="signin-block">
+            {# панель авторизации #}
+            {% include "auth/index.html" %}
+        </div>
+    </div>
+</section>
+{% endblock additional_content %}

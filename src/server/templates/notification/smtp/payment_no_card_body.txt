@@ -1,0 +1,12 @@
+{% if dstUser.name %}Dear {{dstUser.name}}!
+{% endif %}
+You need to make a monthly payment for your Rizzoma {% if topics.length == 1 %}team{% else %}teams:{% endif %})
+{% for topic in topics -%}
+    {{ topic.teamName }}: ${{ topic.amount/100}} for {% if topic.participantCount == 1 %}1 member{% else %}{{ topic.participantCount }} members{% endif %}.
+{%- endfor -%}
+
+Please submit your payment at <{{baseUrl}}/settings/teams-menu/>. If no payment provided by {{ blockingDate|formated_short_date(dstUser.timezone) }} your {% if topics.length == 1 %}team{% else %}teams{% endif %} (and possibly all business account features) will be suspended.
+If you have any questions please contact support@rizzoma.com
+
+Sincerely,
+Rizzoma Team

@@ -1,0 +1,76 @@
+{# базовый набор макросов для нотификаций #}
+
+{% macro unsubscribeLink baseUrl email hash fromType -%}
+    {{ baseUrl }}/notification/unsubscribe/?email={{ email|url_encode }}&hash={{ hash|url_encode }}&fromsettings={{ fromType|url_encode }}
+{%- endmacro %}
+
+{% macro settingsLink baseUrl email hash fromType -%}
+    {{ baseUrl }}/notification/settings/?email={{ email|url_encode }}&hash={{ hash|url_encode }}&fromsettings={{ fromType|url_encode }}
+{%- endmacro %}
+
+{% macro unsubscribeMessageTxt baseUrl email hash fromType %}You can unsubscribe from notifications or change notification settings here: <{{ settingsLink(baseUrl, email, hash, fromType) }}>
+{% endmacro %}
+
+{% macro unsubscribeMessageHtml baseUrl email hash fromType %}
+    <a href="{{ settingsLink(baseUrl, email, hash, fromType) }}">Change notification settings</a>
+{% endmacro %}
+
+{% macro fullUrl siteUrl waveId blipId utmCampaign utmSource fromChannel -%}
+    {{ siteUrl }}/topic/{{ waveId }}/{% if blipId %}{{ blipId }}/{% endif %}?from={{ fromChannel }}{% if utmCampaign %}&utm_source={{ utmSource|default('email') }}&utm_medium=body&utm_campaign={{ utmCampaign }}{% endif %}
+{%- endmacro %}
+
+{% macro addParticipantFullUrl siteUrl waveId referalEmailHash utmCampaign fromChannel -%}
+    {{ siteUrl }}/topic/{{ waveId }}/{% if blipId %}{{ blipId }}/{% endif %}?from={{ fromChannel }}{% if utmCampaign %}&utm_source={{ utmSource|default('email') }}&utm_medium=body&utm_campaign={{ utmCampaign }}{% endif %}{% if referalEmailHash %}&referalEmailHash={{ referalEmailHash }}{% endif %}
+{%- endmacro %}
+
+{% macro settingsLinkHtml baseUrl email hash fromType %}
+    <a href="{{ settingsLink(baseUrl, email, hash, fromType) }}">Change notification settings</a>
+{% endmacro %}
+
+{% macro logo %}
+    <img width="110" height="23" src="https://rizzoma.com/s/img/logo/mail-logo.png" alt="RIZZOMA"/>
+{% endmacro %}
+
+{% macro logoAndSettingsLinkHtml baseUrl email hash fromType %}
+    <table width="100%" cellspacing="0" cellpadding="0" style="margin:0">
+        <tr>
+            <td>
+                {{ logo() }}
+            </td>
+            <td style="text-align:right; font-size: 10px;">
+                {{ settingsLinkHtml(baseUrl, email, hash, fromType) }}
+            </td>
+        </tr>
+    </table>
+{% endmacro %}
+
+{% macro replyOrViewInRizzomaMessageHtml baseUrl waveId blipId utmCampaign fromChannel replyTo %}
+    <p style="padding: 7px 0 20px 0;font-size: 20px;line-height: 30px;">
+        <span>Answer this e-mail or </span>
+        <a href="{{ fullUrl(baseUrl, waveId, blipId, utmCampaign, null, fromChannel) }}" style="color: white; background-color: #18b0b2; border: 1px solid #178182; border-radius: 4px; text-decoration: none; padding: 5px 10px; font-size: 14px;">
+            reply&nbsp;{% if replyTo %}to&nbsp;{{replyTo|replace(" ", " ", "g")}}{% else %}in&nbsp;topic{% endif %}
+        </a>
+    </p>
+{% endmacro %}
+
+{% macro bubbleMessageHtml text from time timezone %}
+    <div style="border: 2px solid #5caaf5; border-radius: 6px; background-color: white;padding: 3px 2px;">
+        <table width="100%" >
+            <tr>
+                <td style="border-left: 3px solid #5cea52;padding: 0 10px 0 5px">
+                    {{ text|raw|escape_and_nl2br }}
+                </td>
+                <td width="40" valign="top" style="padding: 0 3px;">
+                     <img style="float: left; border: 1px #707478 solid;" width="39" height="39" src="{{ from.avatar|default('https://rizzoma.com/s/img/user/unknown.png') }}" title="{{ from.name|default(from.email) }}" />
+                    <br />
+                    <span style="font-family: verdana; font-size: 10px;white-space: nowrap;" title="{{ time|date("l, F d, Y g:i A") }} {{ timezone }}" >{{ time|date("g:i A") }}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endmacro %}
+
+{# ссылка для добавления пользователя в топик с указанной ролью #}
+{% macro grantAccessUrl baseUrl waveId utmCampaign fromChannel email -%}
+    {{ fullUrl(baseUrl, waveId, null, utmCampaign, null, fromChannel) }}&grant_access_to={{email|url_encode}}
+{%- endmacro %}

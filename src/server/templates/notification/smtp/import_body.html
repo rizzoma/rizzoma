@@ -1,0 +1,21 @@
+{% import 'notification/import_macroses/index.txt' as m %}
+<html>
+    <head>
+        <title>
+            {{ m.subjectHtml(user, waveTitle) }}
+        </title>
+    </head>
+    <body>
+        <h3>Hello, {{ m.subjectHtml(user, waveTitle) }}</h3>
+        <p>
+            You are participant of this document. You can <a href="{{ waveLink }}">continue discussion at Rizzoma</a>.
+        </p>
+        <p>
+            You have received this email because you are participant of exported wave from Google Wave.
+            You can unsubscribe from any rizzoma.com notifications <a href="{{ m.unsubscribeLink(baseUrl, dstUser.notification.id) }}">here</a>.
+        </p>
+        <p>
+            This email is sent by robot. Please do not reply to this address.
+        </p>
+    </body>
+</html>
