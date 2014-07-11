@@ -63,6 +63,7 @@ task 'build-server', 'Compile server side code to javascript', (options)->
         cmd "#{bin}coffee -c -o #{out} #{src}"
 
     # 2. push CouchDB views and handlers
+    invoke "couch-push-all"
 
     # 3. process node_modules
     invoke 'build-node_modules'
