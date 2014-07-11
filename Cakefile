@@ -488,17 +488,19 @@ task 'test-cucumis', 'Test certain features with cucumis (.feature files)', (opt
     invoke 'build-server'
     invoke 'build-sharejs'
     invoke 'build-tests'
-    testFolder = "./lib/tests/share/features/"
-    runTest = (folder) ->
-        cmd("cucumis #{testFolder}#{folder}", [], handleOutput)
+    cmd (callback) ->
+        testFolder = "./lib/tests/share/features/"
+        runTest = (folder) ->
+            cmd("#{bin}cucumis #{testFolder}#{folder}", [], handleOutput)
 
-    folders = []
-    if options['test-name']
-        runTest(options['test-name'])
-    else
-        fs.readdir testFolder, (err, files) ->
-            throw err if err
-            runTest(file) for file in files
+        folders = []
+        if options['test-name']
+            runTest(options['test-name'])
+        else
+            fs.readdir testFolder, (err, files) ->
+                throw err if err
+                runTest(file) for file in files
+        callback()
 
 ###
 Команды для работы с design-документами в couchDB
