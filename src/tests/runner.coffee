@@ -13,7 +13,7 @@ class TestRunner
         @reporter_type = reporter_type
         @root_path = path.resolve(__dirname + "/../..")
         @test_path = './src/tests'
-        @junit_path = @rootDir() + '/build/tests'
+        @junit_path = @rootDir() + '/lib/tests'
 
     @stripFilenames: (files, stripped_str) ->
         ###
@@ -70,7 +70,7 @@ class TestRunner
         в callback отдаем результаты тестов
         ###
         if @reporter_type == 'junit'
-            test_list.unshift @rootDir() + '/build/tests'
+            test_list.unshift @rootDir() + '/lib/tests'
             test_list.unshift '--output'
             
         test_list.unshift @reporter_type

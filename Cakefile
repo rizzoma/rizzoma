@@ -112,7 +112,7 @@ task 'build-client', 'Compile client side code to javascript, run Browserify, co
             dirs.push(dir) if (dir != "#{r}/.svn" && /[/\\]\.svn$/.test(dir))
         )
 
-    cmd(clean_dir, [r]) for r in ["lib", "build"]
+    cmd(clean_dir, ["lib"])
 
     # 6. lint, minify, compress, static versions
 
@@ -169,16 +169,16 @@ task 'clean', 'Clean build directories', ->
     invoke 'clean-tests'
 
 task 'clean-server', 'Clean build directories for server', ->
-    cmd(fs.rmr, ["#{root}/#{r}"]) for r in ["lib/server", "build/server"]
+    cmd(fs.rmr, ["#{root}/#{r}"]) for r in ["lib/server"]
 
 task 'clean-client', 'Clean build directories for client', ->
-    cmd(fs.rmr, ["#{root}/#{r}"]) for r in ["lib/client", "lib/static", "build/client", "build/static"]
+    cmd(fs.rmr, ["#{root}/#{r}"]) for r in ["lib/client", "lib/static"]
 
 task 'clean-tests', 'Clean build directories for tests', ->
-    cmd(fs.rmr, ["#{root}/#{r}"]) for r in ["lib/tests", "build/tests"]
+    cmd(fs.rmr, ["#{root}/#{r}"]) for r in ["lib/tests"]
 
 task 'clean-pages', 'Clean build directories for static pages', ->
-    cmd(fs.rmr, ["#{root}/#{r}"]) for r in ["lib/pages", "build/pages"]
+    cmd(fs.rmr, ["#{root}/#{r}"]) for r in ["lib/pages"]
 
 task 'init', 'Configure system for first run, (re-)create Sphinx search indexes', ->
     # 1. build
@@ -473,8 +473,8 @@ option null, '--test-name [String]', "Specify folder to test"
 
 task 'test', 'Test the app', (options) ->
     # unit tests, jshint, etc.
-    cmd(fs.rmr, ["#{root}/build/tests"])
-    cmd fs.mkdirp, ["#{root}/build/tests", 0755]
+    cmd(fs.rmr, ["#{root}/lib/tests"])
+    cmd fs.mkdirp, ["#{root}/lib/tests", 0755]
 
     cmd (callback) ->
         # Запускатель тестов
