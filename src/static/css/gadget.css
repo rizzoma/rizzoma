@@ -1,0 +1,52 @@
+/**
+ * Оформление OpenSocial-гаджетов
+ */
+
+.gadget-outer-container {
+    display: inline-block;
+    width: 90%;
+    min-height: 10px;
+    border: 1px solid #EEEEEE;
+    border-radius: 5px;
+    background: #DDDBDB;
+}
+
+.gadget-outer-container.gadget-loading {
+    background: #DDDBDB no-repeat center center url(../img/gadget_loading.gif);
+}
+
+.gadget-outer-container.gadget-error {
+    background: #DDDBDB;
+}
+
+.gadget-error-message {
+    display: none;
+    text-align: center;
+}
+
+.gadget-error .gadget-error-message {
+    display: block;
+}
+
+.gadget-error-message button {
+    background: #5DABF7;
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.gadgets-gadget {
+    width: 100%;
+    margin-bottom: -6px;
+    background: white;
+}
+
+.gadget-loading .gadgets-gadget {
+    visibility: hidden;
+}
+
+.gadget-error .gadgets-gadget {
+    display: none;
+}

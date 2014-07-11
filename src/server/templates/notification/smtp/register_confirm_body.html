@@ -1,0 +1,21 @@
+{% import 'notification/macroses.txt' as m %}
+<html>
+    <head>
+        <title>Confirm your Rizzoma sign up</title>
+    </head>
+    <body style="background-color: #ebf5fe; padding: 10px 20px;font-size: 14px;line-height: 20px;">
+        <p>
+            Dear {{ dstUser.name|default(dstUser.email) }}!
+        </p>
+        <p>
+            You're one step from using Rizzoma.
+        </p>
+        <p style="margin: 20px 0;">
+            Please <a href="{{ baseUrl }}/auth/register/confirm/?key={{ key|url_encode }}" style="color: white; background-color: #18b0b2; border: 1px solid #178182; border-radius: 4px; text-decoration: none; padding: 5px 10px; font-size: 14px;">confirm your sign up</a>
+        </p>
+        <p >
+            If you didn't sign up for <a href="{{ baseUrl }}/">Rizzoma</a> account simply ignore this message.
+        </p>
+        {{ m.logoAndSettingsLinkHtml(baseUrl, dstUser.email, dstUser.notification.id, fromType) }}
+    </body>
+</html>

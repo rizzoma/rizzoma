@@ -1,0 +1,18 @@
+Hello {{name|raw}},
+
+My name is Vladimir Kobzev. I am knowledge manager of Rizzoma team.  
+Recently, I have read your article "{{post|raw}}" about new tecnologies in education. I find your point of view very relevant and important to the project our team is working for.
+
+This is the main reason why I am writing you.
+
+Our team created a product — Rizzoma Wiki <http://rizzoma.com/for-education-and-research.html?cv=mc> that provides a first-rate technology for effective group communication and realtime collaboration. Rizzoma is used in different fields. One of them is Live Wiki for Education and Research. The main strength of our project is an opportunity to comment and leave a @mention in any place of a document.
+
+Efficient communication and sharing of information are highly important for the educational process. From this perspective, Rizzoma is a service that can greatly facilitate group projects in Education and Research. 
+
+This is an example how a group of biologists uses Rizzoma in their research team work <http://blog.rizzoma.com/2012/05/30/education-process-with-rizzoma/>.
+
+From this perspective, we would appreciate to hear your expert opinion about our project as an e-learning platform.
+
+Enthusiastically,
+Vladimir Kobzev,
+Rizzoma Squad

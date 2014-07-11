@@ -1,0 +1,32 @@
+{% import 'notification/macroses.txt' as m %}
+<html>
+    <head>
+        <title>
+            {% if from.name %}{{ from.name }} ({{ from.email }}){% else %}{{ from.email }}{% endif %}: "{{ blipText|truncatewords_with_dots(4) }}"
+        </title>
+    </head>
+    <body style="font-size: 14px;line-height: 20px;">
+    <p style="margin: 0px;padding: 10px 0 10px 0;">{{ blipText }}</p>
+    <p style="padding: 7px 0 0;margin: 0;font-style: italic;">
+        You wrote previously:
+    </p>
+    <p style="padding: 7px 0 7px 30px;margin: 0;">
+        {{ parentBlipText|truncatewords_with_dots(30)|raw|escape_and_nl2br }}
+    </p>
+    <hr style="border: 0; border-top: 1px #d8d8d8 solid;"/>
+    <p style="font-size: 13px;margin: 0px;padding-top: 7px;" >
+        {% if dstUser.firstVisit -%}
+        {%- set fromChannel = 'email_newcommentexisting' -%}
+        {%- else -%}
+        {%- set utmCampaign = 'newcommentnew' -%}
+        {%- set fromChannel = 'email_newcommentnew' -%}
+        {%- endif %}
+        Reply by email or <a href="{{ m.fullUrl(baseUrl, waveId, blipId, utmCampaign, null, fromChannel) }}">view it on Rizzoma.com</a>
+        {% if topicTitle %} <br/>
+        This letter is mailed from the discussion — "{{ topicTitle|truncatewords_with_dots(10) }}"
+        {% endif %}
+        <br/>
+        {{ m.unsubscribeMessageHtml(baseUrl, dstUser.email, dstUser.notification.id, fromType) }}
+    </p>
+    </body>
+</html>

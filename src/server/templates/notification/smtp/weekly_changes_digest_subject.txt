@@ -1,0 +1,2 @@
+{% extends 'notification/smtp/changes_digest_subject.txt' %}
+{% block period %}week{% endblock %}

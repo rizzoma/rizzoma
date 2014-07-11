@@ -1,0 +1,936 @@
+/**
+ * Классы стилей для страницы
+ * Содержит только классы для базовых элементов оформления - заголовок, центральная часть, колонки
+ */
+html, body, .page-content, .navigation-container, .wave-container,
+.inner-wave-container, .wave-content, .wave, .tabs-container, .invite-tool-background,
+.account-setup-wizard {
+    height: 100%;
+    min-height: 600px;
+}
+
+.wave-blips {
+    min-height: 550px; /* = 550px - 54px = min-height, который выше минус высота wave-header*/
+}
+
+body, button, input, .button-like {
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+body {
+    margin: 0;
+    direction: ltr;
+    overflow-y: auto;
+    font-size: 13px;
+    background: #728AA0;
+}
+
+body, .notification-overlay, .ctm-overlay, .cap-overlay,
+.tips-video-overlay, #jquery-overlay, .invite-tool-background {
+    min-width: 981px;
+}
+
+body.anonymous, body.anonymous .notification-overlay,
+body.anonymous .ctm-overlay, body.anonymous .cap-overlay,
+body.anonymous .tips-video-overlay, body.anonymous #jquery-overlay {
+    min-width: 980px;
+}
+
+body.anonymous {
+    text-align: center;
+}
+
+/*стиль чтобы Linkedin не раздвигал страницу*/
+.IN-widget > span > iframe {
+    height: 20px;
+}
+
+.page-description {
+    display: none;
+}
+
+a {
+    color: #3184d6;
+}
+
+button {
+    padding: 0;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+input {
+    outline: none;
+}
+
+form {
+    margin: 0;
+}
+
+hr {
+    border: none;
+    border-bottom: 1px solid #FFF;
+    border-top: 1px solid #CCC;
+    margin: 15px 0;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.clearer {
+    clear: both;
+}
+
+.placeholder {
+    color: #aaa;
+}
+
+.state-header {
+    padding: 12px 0 5px 0;
+    background: #B5BEC5;
+}
+
+.rizzoma_logo {
+    margin: 10px 0 7px 20px;
+}
+
+.build_version {
+    margin-top: 22px;
+    margin-left: -178px;
+    position: absolute;
+    color: black;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.no_build_version {
+    margin-left: -163px;
+}
+
+.page-content {
+    width: 100%;
+    text-align: left;
+}
+
+.navigation-container, .tabs-container {
+    float: left;
+}
+
+.tabs-container {
+    width: 79px;
+    background: #728AA0;
+    position: relative;
+}
+
+.navigation-container {
+    box-shadow: 1px 0px 16px 0px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.wave-container {
+    position: relative;
+    margin-right: 65px;
+    box-shadow: 1px 0px 16px 0px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.help-page-pointer {
+    position: absolute;
+    top: -60px;
+    left: -1000px;
+}
+
+.new-topic-buttons {
+    border: 1px solid #859099;
+    border-radius: 3px;
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+}
+
+.common-create-wave-by-wizard,
+.create-wave-by-wizard,
+.create-wave, .add-block-button,
+.manage-participants-form button,
+.delete-from-wave,
+.selectBox.button-like,
+a.button-like,
+.wave-share-button,
+.show-more-participants,
+.mention-recipient-popup button,
+.task-recipient-popup button,
+.submit-block .unsubscribe-form button:not([disabled="disabled"]),
+.button {
+    display: inline-block;
+    height: 32px;
+    border: 1px solid #859099;
+    padding: 0 11px;
+    border-radius: 3px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-decoration: none;
+
+    background: #f3f3f3; /* Old browsers */
+    background: -moz-linear-gradient(top, #f3f3f3 0%, #dedede 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f3f3f3), color-stop(100%,#dedede)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f3f3f3 0%,#dedede 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f3f3f3 0%,#dedede 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f3f3f3 0%,#dedede 100%); /* IE10+ */
+    background: linear-gradient(top, #f3f3f3 0%,#dedede 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#dedede',GradientType=0 ); /* IE6-9 */
+}
+
+.selectBox.button-like {
+    box-shadow: none;
+}
+
+.user-popup-menu-remove-block {
+    margin-top: 5px;
+}
+
+.selectBox.button-like {
+    min-width: 93px;
+}
+
+.button-like.selectBox-dropdown .selectBox-arrow {
+    top: 11px;
+    right: 6px;
+}
+
+.selectBox.button-like,
+a.button-like,
+.selectBox-dropdown-menu.button-like-selectBox-dropdown-menu li a,
+.common-create-wave-by-wizard,
+.create-wave-by-wizard,
+.create-wave, .add-block-button,
+.manage-participants-form button,
+.delete-from-wave,
+.wave-share-button,
+.show-more-participants,
+.mention-recipient-popup button,
+.task-recipient-popup button,
+.button {
+    color: #364552;
+    text-shadow: white 1px 1px 1px;
+    font-weight: normal;
+}
+
+.selectBox.button-like:focus {
+    outline: none;
+}
+
+.manage-participants-form button,
+.selectBox.button-like,
+.delete-from-wave {
+    height: 26px;
+    line-height: normal;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    vertical-align: top;
+}
+
+.manage-participants-form button,
+.manage-participants-form .selectBox,
+.user-popup-menu-remove-block .role-select,
+.user-popup-menu-remove-block .delete-from-wave,
+.user-popup-menu-remove-block .remove-recipient {
+    padding: 5px 8px;
+}
+
+.user-popup-menu-remove-block .delete-from-wave {
+    margin-left: 11px;
+    float: right;
+}
+
+.button-like.selectBox-dropdown .selectBox-label {
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+}
+
+.common-create-wave-by-wizard:not([disabled="disabled"]):hover,
+.create-wave-by-wizard:not([disabled="disabled"]):hover,
+.create-wave:not([disabled="disabled"]):hover,
+.add-block-button:not([disabled="disabled"]):hover,
+.manage-participants-form button:hover,
+.delete-from-wave:not([disabled="disabled"]):hover,
+.wave-share-button:not([disabled="disabled"]):hover,
+.show-more-participants:not([disabled="disabled"]):hover,
+.selectBox.button-like:not(.selectBox-disabled):hover,
+a.button-like:hover,
+.mention-recipient-popup button:not([disabled="disabled"]):hover,
+.task-recipient-popup button:not([disabled="disabled"]):hover,
+.submit-block .unsubscribe-form button:not([disabled="disabled"]):hover,
+.button:not([disabled="disabled"]):hover {
+    background: rgb(243,243,243); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(243,243,243,1) 0%, rgba(198,198,198,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(243,243,243,1)), color-stop(100%,rgba(198,198,198,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(243,243,243,1) 0%,rgba(198,198,198,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(243,243,243,1) 0%,rgba(198,198,198,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(243,243,243,1) 0%,rgba(198,198,198,1) 100%); /* IE10+ */
+    background: linear-gradient(top, rgba(243,243,243,1) 0%,rgba(198,198,198,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#c6c6c6',GradientType=0 ); /* IE6-9 */
+}
+
+.common-create-wave-by-wizard:not([disabled="disabled"]):active,
+.create-wave-by-wizard:not([disabled="disabled"]):active,
+.create-wave:not([disabled="disabled"]):active,
+.add-block-button:not([disabled="disabled"]):active,
+.manage-participants-form button:not([disabled="disabled"]):active,
+.user-popup-menu-remove-block .delete-from-wave:not([disabled="disabled"]):active,
+.user-popup-menu-remove-block .remove-recipient:active,
+.mention-recipient-popup button:not([disabled="disabled"]):active,
+.task-recipient-popup button:not([disabled="disabled"]):active,
+.submit-block .unsubscribe-form button:not([disabled="disabled"]):active,
+.button:not([disabled="disabled"]):active {
+    background: #bbc2c7;
+}
+
+.account-popup .button:not([disabled="disabled"]):active {
+    border-top-width: 1px;
+}
+
+.common-create-wave-by-wizard[disabled="disabled"],
+.create-wave-by-wizard[disabled="disabled"],
+.create-wave[disabled="disabled"],
+.add-block-button[disabled="disabled"],
+.manage-participants-form button[disabled="disabled"],
+.selectBox.selectBox-disabled,
+.selectBox.selectBox-disabled .selectBox-label,
+.selectBox.button-like.selectBox-disabled,
+.delete-from-wave[disabled="disabled"],
+.show-more-participants[disabled="disabled"],
+.mention-recipient-popup button[disabled="disabled"],
+.task-recipient-popup button[disabled="disabled"],
+.submit-block .unsubscribe-form button[disabled="disabled"],
+.button[disabled="disabled"] {
+    background: #dadbdd;
+    color: #9fa5ab;
+    border-color: #bec3c8;
+    text-shadow: none;
+}
+
+.window {
+    background: #ffffff;
+    z-index: 10;
+    position: absolute;
+}
+
+.close-icon,
+.error-close-icon,
+.warning-close-icon {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.close-icon {
+    width: 14px;
+    height: 14px;
+    background-image: url('/s/img/cancel.png');
+}
+
+.wave-participant-name-email {
+    line-height: 20px;
+}
+
+.wave-participant-name, .wave-participant-email {
+    height: 20px;
+}
+
+.user-popup-menu-top-block .wave-participant-name-email {
+    float: left;
+    margin-left: 8px;
+}
+
+.wave-participant-name-email .wave-participant-name {
+    font-weight: bold;
+}
+
+.wave-participant-name-email .wave-participant-email {
+    color: gray;
+}
+
+.avatar {
+    background-size: auto 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: white;
+    font-weight: bold;
+    text-align: center;
+    color: #728AA0;
+    overflow: hidden;
+}
+
+.wave-participant-avatar {
+    float: left;
+    height: 65px;
+    width: 65px;
+    background-size: auto 65px;
+    margin-top: 5px;
+    margin-right: 5px;
+    font-size: 34px;
+    line-height: 68px;
+}
+
+.user-popup-menu-top-block {
+    min-width: 150px;
+}
+
+.skype-call-link {
+    white-space: nowrap;
+}
+
+.skype-status-ico {
+    margin-left: 3px;
+    width: 16px;
+    height: 16px;
+    border: none;
+    outline: none;
+    vertical-align: -3px;
+}
+
+/*
+ *  Стили для ресайзера
+*/
+.resizer {
+    position: absolute;
+    background: #E3EAF0;
+    width: 15px;
+    height: 50px;
+    right: 5px;
+    top: 0;
+    cursor: col-resize;
+    z-index: 4;
+}
+
+.resizer > div {
+    height: 100%;
+    background: center center no-repeat url(../img/resizer/sprite_right.png);
+}
+
+/**
+ * Стили для вспомогательных элементов
+ */
+.calendricalDatePopup, .calendricalTimePopup {
+    position: absolute;
+    z-index: 1;
+}
+
+.calendricalDatePopup {
+    z-index: 10;
+}
+
+/**
+ * Меняем внешний вид checkbox'ов
+ */
+input.custom[type='checkbox'], input.custom[type='checkbox'] + label:before {
+    width: 14px;
+    height: 15px;
+}
+
+input.custom[type='checkbox'] {
+    visibility: hidden;
+}
+
+input.custom[type='checkbox'] + label {
+    margin-left: 0;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+}
+
+input.custom[type='checkbox'] + label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -2px;
+    margin-left: -15px;
+    background-image: url('/s/img/blip_menu_sprite.png');
+    background-position: -47px 0;
+}
+
+input.custom[type='checkbox']:checked + label::before {
+    background-position: -61px 0;
+}
+
+.page-content.anonymous {
+    display: inline-block;
+    vertical-align: top;
+    width: 865px;
+    margin-left: 65px;
+}
+
+.right-logo {
+    position: absolute;
+    left: 18px;
+    top: 24px;
+    z-index: 3;
+}
+
+.right-logo > a {
+    display: block;
+    height: 40px;
+}
+
+.right-logo-img,
+.right-logo-text {
+    background-repeat: no-repeat;
+}
+
+.right-logo-img {
+    background-image: url(/s/img/logo/logoznak.png);
+    width: 39px;
+    height: 36px;
+    margin-top: -6px;
+    float: left;
+}
+
+.right-logo-text {
+    background-image: url(/s/img/logo/logotxt.png);
+    width: 145px;
+    height: 22px;
+    margin-left: 50px;
+    display: none;
+}
+
+.right-logo-public-likes {
+    margin-top: 10px;
+    margin-left: -14px;
+}
+
+.page-content.anonymous  .public-like {
+    margin: 10px auto;
+    width: 50px;
+}
+
+@media screen and (min-width: 1280px) {
+    .right-logo-text {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .right-logo {
+        left: 48px;
+    }
+}
+
+/*
+ * Стили правой панели
+ */
+
+.right-tools-panel {
+    float: right;
+    width: 65px;
+    height: 100%;
+    background: #728AA0;
+    position: relative;
+}
+.right-tools-panel .next-unread-blip {
+    background: #95D529;
+}
+.right-tools-panel button.next-unread-blip:hover {
+    background: #87BF28;
+}
+.right-tools-panel .next-unread-blip {
+    color: #fff;
+    font-weight: bold;
+    border: 1px solid #82BA24;
+    border-left: none;
+    width: 60px;
+    height: 45px;
+    text-align: left;
+    display: block;
+    border-radius: 0 3px 3px 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.right-tools-panel .next-unread-blip span {
+    margin-left: 10px;
+}
+.right-tools-panel .next-unread-blip img {
+    margin: 0 0 -1px 3px;
+}
+.right-tools-panel .next-unread-button-text {
+    margin: 12px;
+}
+
+.right-tools-panell button.next-unread-blip:not(.disabled):active {
+    background: #78A924;
+    box-shadow: inset 0 0 4px 0px #000;
+}
+.right-tools-panel button.next-unread-blip.disabled {
+    background: #8EA2B5;
+    cursor: auto;
+    border-color: #8091A3;
+}
+
+.right-tools-panel button.next-unread-blip.disabled img,
+.right-tools-panel button.next-unread-blip.disabled span {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.right-tools-panel .hide-replies,
+.right-tools-panel .show-replies,
+.right-tools-panel .text-view,
+.right-tools-panel .mindmap-view {
+    display: block;
+    height: 45px;
+    width: 60px;
+    border: 1px solid #C1CDD7;
+    border-left: none;
+    background-color: #e3eaef;
+    background-repeat: no-repeat;
+}
+.right-tools-panel .hide-replies,
+.right-tools-panel .show-replies {
+    background-image: url('/s/img/sprite_show_hide.png');
+}
+.right-tools-panel .hide-replies,
+.right-tools-panel .text-view {
+    border-radius: 0 3px 0 0;
+}
+.right-tools-panel .show-replies,
+.right-tools-panel .mindmap-view {
+    border-radius: 0 0 3px 0;
+}
+.right-tools-panel .hide-replies {
+    margin-top: 10px;
+    background-position: 22px 17px;
+}
+.right-tools-panel.anonymous .hide-replies {
+    margin-top: 52px;
+}
+.right-tools-panel .show-replies {
+    border-top: none;
+    background-position: 22px -50px;
+}
+.right-tools-panel .text-view {
+    margin-top: 10px;
+}
+.right-tools-panel .mindmap-view {
+    border-top: none;
+}
+.right-tools-panel .text-view .icon,
+.right-tools-panel .mindmap-view .icon {
+    position: absolute;
+    top: 9px;
+    left: 23px;
+    height: 17px;
+    background-image: url('/s/img/mapmode.png');
+}
+.right-tools-panel .text-view .icon {
+    width: 18px;
+}
+.right-tools-panel .mindmap-view .icon {
+    width: 15px;
+}
+.right-tools-panel .text-view .description,
+.right-tools-panel .mindmap-view .description {
+    font-size: 9px;
+    white-space: nowrap;
+    font-weight: bold;
+    display: inline-block;
+    margin: 25px 0 0 0;
+}
+.right-tools-panel:not(.mindmap-view) .text-view .icon {
+    background-position: 0 0;
+}
+.right-tools-panel.mindmap-view .text-view .icon {
+    background-position: -19px 0;
+}
+.right-tools-panel.mindmap-view .mindmap-view .icon {
+    background-position: -38px 0;
+}
+.right-tools-panel:not(.mindmap-view) .mindmap-view .icon {
+    background-position: -54px 0;
+}
+.right-tools-panel .text-view,
+.right-tools-panel .mindmap-view {
+    position: relative;
+    height: 50px;
+}
+.mindmap-view.right-tools-panel .text-view,
+.right-tools-panel:not(.mindmap-view) .mindmap-view {
+    background-color: #b6c4cf;
+    color: #5b7f9b;
+}
+.right-tools-panel:not(.mindmap-view) .text-view,
+.mindmap-view.right-tools-panel .mindmap-view {
+    background-color: #e3eaef;
+    color: #4f90d0;
+}
+.right-tools-panel button.hide-replies:hover,
+.right-tools-panel button.show-replies:hover,
+.right-tools-panel.mindmap-view .text-view:hover,
+.right-tools-panel:not(.mindmap-view) .mindmap-view:hover {
+    background-color: #c5d3de;
+}
+.right-tools-panel button.hide-replies:active,
+.right-tools-panel button.show-replies:active,
+.right-tools-panel.mindmap-view .text-view:active,
+.right-tools-panel:not(.mindmap-view) .mindmap-view:active {
+    background-color: #adbfcc;
+}
+.mindmap-view-switch-buttons {
+    left: 0;
+}
+.mindmap-view-switch-buttons.unvisible {
+    left: -60px;
+}
+.right-tools-panel .mindmap-view-switch-buttons:not(:first-child) button {
+    margin-top: 4px;
+}
+.right-tools-panel .mindmap-view-switch-buttons button {
+    font-size: 11px;
+    color: white;
+    outline: none;
+    border: none;
+    display: block;
+    border-radius: 0;
+    background: #9FA8B3;
+    padding: 12px 5px;
+    position: relative;
+}
+.right-tools-panel .mindmap-view-switch-buttons:not(.long-mindmap-view) .mindmap-short-view,
+.right-tools-panel .mindmap-view-switch-buttons.long-mindmap-view .mindmap-long-view {
+    background: #304E69;
+}
+.right-tools-panel .mindmap-view-switch-buttons button:hover::before {
+    display: inline-block;
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: white;
+    opacity: 0.2;
+}
+/**
+ * Вставка меншена, реплая, таска и тега в активный блип
+ */
+
+.active-blip-controls,
+.mindmap-view-switch-buttons {
+    position: absolute;
+    top: 334px;
+    -webkit-transition-property: right,left;
+    -webkit-transition-timing-function: linear;
+    -webkit-transition-duration: 300ms;
+    -moz-transition-property: right,left;
+    -moz-transition-timing-function: linear;
+    -moz-transition-duration: 300ms;
+    transition-property: right,left;
+    transition-timing-function: linear;
+    transition-duration: 300ms;
+}
+
+.active-blip-controls {
+    right: 5px;
+}
+
+.active-blip-controls.unvisible {
+    right: 70px;
+}
+
+.active-blip-controls .active-blip-control {
+    width: 60px;
+    height: 45px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border: 1px solid #76A8D9;
+    border-left: none;
+    cursor: pointer;
+    background-color: #78bcff;
+    background-image: url("/s/img/active_blip_control_icons.png");
+    background-repeat: no-repeat;
+}
+.active-blip-controls .active-blip-control:hover {
+    background-color: #64a8eb;
+}
+.active-blip-controls .active-blip-control:active {
+    background-color: #589bdd;
+}
+.active-blip-controls .insert-reply {
+    border-radius: 0 3px 0 0;
+    background-position: 22px 16px;
+}
+.active-blip-controls .insert-mention {
+    border-top: none;
+    background-position: 21px -43px;
+}
+.active-blip-controls .insert-tag {
+    border-radius: 0 0 3px 0;
+    border-top: none;
+    background-position: 21px -164px;
+}
+.active-blip-controls .insert-task {
+    border-top: none;
+    background-position: 21px -103px;
+}
+.active-blip-controls .insert-gadget-container {
+    position: relative;
+}
+.active-blip-controls .insert-gadget-container .popup-menu-container {
+    top: auto;
+    left: auto;
+    bottom: -13px;
+    right: 61px;
+    z-index: 3;
+    display: none;
+    white-space: nowrap;
+}
+.active-blip-controls .gadget-logo {
+    background-image: url("/s/img/active_blip_control_icons.png");
+    background-position: 19px -232px;
+    height: 35px;
+    background-repeat: no-repeat;
+}
+.active-blip-controls .insert-gadget {
+    margin-top: 10px;
+    position: relative;
+    height: 57px;
+    border: none;
+    text-align: center;
+    color: white;
+    font-size: 12px;
+    border-radius: 0 3px 3px 0;
+    background-image: none;
+}
+.active-blip-controls .insert-gadget.active {
+    z-index: 4;
+}
+.active-blip-controls .insert-gadget-container .gadget-icon {
+    border: 0;
+    width: 55px;
+    height: 55px;
+    background: url(/s/img/gadget-icons.png) no-repeat;
+    border-radius: 4px;
+    box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.5);
+}
+.active-blip-controls .insert-gadget-container button {
+    margin: 10px 0px 0px 10px;
+}
+.active-blip-controls .insert-gadget-container .gadget-stub {
+    border: 2px solid #788EA0;
+    text-align: center;
+    color: #788EA0;
+    font-size: 14px;
+    width: 55px;
+    white-space: normal;
+    vertical-align: top;
+    border-radius: 4px;
+    height: 57px;
+    background: #D9DEE4;
+}
+.active-blip-controls .gadget-icon.mindmap-gadget {
+    background-position: 0 0;
+}
+.active-blip-controls .gadget-icon.poll-gadget {
+    background-position: -55px 0;
+}
+.active-blip-controls .gadget-icon.vote-gadget {
+    background-position: -110px 0;
+}
+.active-blip-controls .gadget-icon.latex-gadget {
+    background-position: -165px 0;
+}
+.active-blip-controls .gadget-icon.spreadsheets-gadget {
+    background-position: -220px 0;
+}
+.active-blip-controls .gadget-icon.youtube-gadget {
+    background-position: -330px 0;
+}
+.active-blip-controls .gadget-icon.napkin-gadget {
+    background-position: -385px 0;
+}
+.active-blip-controls .gadget-icon.maps-gadget {
+    background-position: -440px 0;
+}
+.active-blip-controls .gadget-icon.annotations-gadget {
+    background-position: -495px 0;
+}
+.active-blip-controls .insert-gadget-container .gadget-icon:not(:first-child) {
+    margin-left: 10px;
+}
+.active-blip-controls .insert-gadget .triangle {
+    background-image: url("/s/img/gadget-button-triangle.png");
+    background-position: 0 center;
+    position: absolute;
+    width: 12px;
+    top: 0;
+    left: -12px;
+    bottom: 0;
+}
+.active-blip-controls .insert-gadget:hover .triangle {
+    background-position: -20px center;
+}
+.active-blip-controls .insert-gadget:active .triangle {
+    background-position: -40px center;
+}
+
+.selectBox-dropdown.selectBox-disabled {
+    cursor: default;
+}
+
+/*
+ * Iframe для звонков в skype и скрипта google conversion.js
+ */
+iframe[name="skype-call-iframe"], iframe[name="google_conversion_frame"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    top: -400px;
+    left: -400px;
+}
+
+/**
+ * Иконка аккаунта
+ */
+.account-container {
+    height: 50px;
+}
+
+.account-button {
+    margin: 6px 0 0 16px;
+    border: 0;
+    background: #728AA0;
+}
+
+.account-button .avatar {
+    border: 2px solid white;
+    border-radius: 3px;
+    width: 27px;
+    height: 27px;
+}
+
+.account-show-popup {
+    background: -5px center no-repeat url(../img/select_arrow.png);
+    width: 8px;
+    height: 4px;
+    margin: 3px auto;
+}
+
+.centered {
+    text-align: center;
+}
+
+/* it is used by /client/utils/dom.coffee to check if our css is loaded */
+.fake-element {
+    display: none;
+}
+
+.gdrive-icon16 {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url(/s/img/gdrive/product16.png) 0 0 no-repeat;
+}

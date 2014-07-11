@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Input test</title>
+    <style>
+        #editor {
+            min-height: 200px;
+            border: 1px solid red;
+        }
+
+        #output {
+            border: 1px solid black;
+            font-family: monospace;
+        }
+    </style>
+    <script>
+        var MOUSE_TRACKING = false;
+        var KEY_TRACKING = false;
+    </script>
+</head>
+<body>
+<!--<p id="editor">-->
+
+<!--</p>-->
+<textarea id="editor"></textarea>
+<button id="clearButton">Clear</button>
+<div id="output"></div>
+<script>
+    if (!window.console){
+        window.console = {
+            log: function(){},
+            warn: function(){},
+            error: function(){},
+            trace: function(){}
+        }
+    }
+    function getLine(text) {
+        var d = document.createElement('div');
+        d.textContent = text;
+        return d
+    }
+    var line = getLine(navigator.userAgent);
+    document.body.appendChild(line);
+    var editor = document.getElementById('editor');
+    editor.contentEditable = 'true';
+    var output = document.getElementById('output');
+    var clearButton = document.getElementById('clearButton');
+    clearButton.addEventListener('click', function(){output.innerHTML = ''}, false);
+
+    function print(){
+        if(output.childNodes.length) output.appendChild(document.createElement('br'));
+        for(var i = 0; i < arguments.length; ++i){
+            output.appendChild(document.createTextNode('|' + arguments[i] + '| '));
+        }
+    }
+
+    function processKeyEvent(e){
+        console.log(e.type, e);
+        print(e.type, 'keyCode(' + e.keyCode + ')', 'charCode(' + e.charCode + ')', 'alt(' + e.altKey + ')',
+                'ctrl(' + e.ctrlKey + ')', 'shift(' + e.shiftKey + ')', 'meta(' + e.metaKey + ')');
+    }
+
+    function processMouseEvent(e){
+        console.log(e.type, e);
+        print(e.type, 'button(' + e.button + ')', 'alt(' + e.altKey + ')', 'ctrl(' + e.ctrlKey + ')',
+                'shift(' + e.shiftKey + ')', 'meta(' + e.metaKey + ')');
+    }
+
+    function processCompositionEvent(e) {
+        console.log(e.type, e.data, e);
+        print(e.type, e.data)
+    }
+
+    function processInputEvent(e) {
+        console.log(e.type, e.data, e);
+        print('current text:', editor.value);
+        print(e.type, e);
+    }
+
+    function processTextinputEvent(e){
+        console.log(e.type, e.data, e);
+        print('textinput', e.data, editor.innerHTML);
+    }
+
+    function processEvent(e) {
+        console.log(e.type, e);
+        print(e.type)
+    }
+
+    if (KEY_TRACKING) {
+        editor.addEventListener('keydown', processKeyEvent, false);
+        editor.addEventListener('keypress', processKeyEvent, false);
+        editor.addEventListener('keyup', processKeyEvent, false);
+    }
+    editor.addEventListener('compositionstart', processCompositionEvent, false);
+    editor.addEventListener('compositionend', processCompositionEvent, false);
+    editor.addEventListener('compositionupdate', processCompositionEvent, false);
+    editor.addEventListener('textInput', processInputEvent, false);
+    editor.addEventListener('input', processInputEvent, false);
+    editor.addEventListener('textinput', processTextinputEvent, false);
+    editor.addEventListener('touchstart', processEvent, false);
+    editor.addEventListener('touchmove', processEvent, false);
+    editor.addEventListener('touchend', processEvent, false);
+    if (MOUSE_TRACKING) {
+        editor.addEventListener('mousedown', processMouseEvent, false);
+        editor.addEventListener('click', processMouseEvent, false);
+        editor.addEventListener('mouseup', processMouseEvent, false);
+    }
+    if (editor.attachEvent){
+        print('binded attachEvent');
+        editor.attachEvent('oninput', processInputEvent);
+        editor.attachEvent('onpropertychange', processInputEvent);
+    }
+    var test = document.createElement('div');
+    test.setAttribute('contentEditable', 'true');
+    line = getLine('content editable: ' + ((test.contentEditable == 'true')?'supported':'not supported'));
+    document.body.appendChild(line);
+</script>
+</body>
+</html>

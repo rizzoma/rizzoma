@@ -1,0 +1,24 @@
+<html>
+<head>
+        <title>Test Doc</title>
+        <script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>
+        <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/s/js/share.uncompressed.js"></script>
+        <script src="/s/js/ace.js"></script>
+        <style type="text/css">
+            .ace_editor{
+            	position: relative;
+        		border: 1px solid black;
+        	}
+        </style>
+</head>
+<body>
+    <input type="text" name="docName" id="docName" />
+    <button id="openDoc">Open Document</button>
+    <button id="createDoc">Create Document</button>
+    <div id="editor" style="width: 800px; height: 600px;"></div>
+    <script>var editor = ace.edit('editor')</script>
+    <script src="/s/js/index.js"></script>
+</body>
+</html>

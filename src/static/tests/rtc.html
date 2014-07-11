@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebRTC Test</title>
+    <script src="adapter.js"></script>
+    <script src="rtc.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+  var channelToken = '{{ token }}';
+  var me = '{{ me }}';
+  var roomKey = '{{ room_key }}';
+  var roomLink = '{{ room_link }}';
+  var initiator = '{{ initiator }}';
+  var pcConfig = {
+      iceServers: [
+          {
+              url: 'turn:hackathon@s3-lon.mnsbone.net',
+              credential: 'Turn4Hack'
+          }
+      ]
+  };
+  var pcConstraints = '{{ pc_constraints|safe }}';
+  var offerConstraints = '{{ offer_constraints | safe }}';
+    var mediaConstraints = {
+        video: true,
+        audio: true
+    };
+  var turnUrl = '{{ turn_url }}';
+  var stereo = '{{ stereo }}';
+
+  setTimeout(initialize, 1);
+</script>
+<div id="container" ondblclick="enterFullScreen()">
+  <div id="card">
+    <div id="local">
+      <video id="localVideo" autoplay="autoplay" muted="true"/>
+    </div>
+    <div id="remote">
+      <video id="remoteVideo" autoplay="autoplay">
+      </video>
+      <div id="mini">
+        <video id="miniVideo" autoplay="autoplay" muted="true"/>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<footer id="footer">
+</footer>
+</html>

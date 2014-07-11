@@ -1,0 +1,2 @@
+{% import 'notification/import_macroses/index.txt' as m -%}
+{{ user.name|raw|default(user.email) }} exported discussion "{{ waveTitle|raw }}" from Google Wave

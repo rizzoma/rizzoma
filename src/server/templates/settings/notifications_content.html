@@ -1,0 +1,173 @@
+<div class="notifications-content" id="notifications-content">
+    <form action="{% if userBy=='auth' %}/settings/notification/{% else %}/notification/settings/notification/{% endif %}" method="POST" id="notifications-form">
+        <div class="content-item">
+            <div class="content-item-title">
+                Notify me by email in case of:
+            </div>
+            <div class="content-item-data notifications-data">
+                <div class="notifications-group notifications-group-2">
+                    <div>
+                        <input type="checkbox" name="settings" value="add_participant;smtp" id="add-participant" {% if settings.add_participant.smtp %}checked="checked"{% endif %}>
+                        <label for="add-participant">adding me to a new topic</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="settings" value="task;smtp" id="new-task" {% if settings.task.smtp %}checked="checked"{% endif %}>
+                        <label for="new-task">new task for me</label>
+                    </div>
+                    {% if settings.task.xmpp %}<input type="hidden" name="settings" value="task;xmpp"/>{% endif %}
+                </div>
+
+                <div class="notifications-group notifications-group-2">
+                    <div>
+                        <input type="checkbox" name="settings" value="message;smtp" id="new-message" {% if settings.message.smtp %}checked="checked"{% endif %}>
+                        <label for="new-message">new @mention for me</label>
+                    </div>
+                    {% if settings.message.xmpp %}<input type="hidden" name="settings" value="message;xmpp"/>{% endif %}
+                    <div>
+                        <input type="checkbox" name="settings" value="access_request;smtp" id="topic-access-request" {% if settings.access_request.smtp %}checked="checked"{% endif %}>
+                        <label for="topic-access-request">topic access request</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-item">
+            <div class="content-item-title">Activity in followed topics</div>
+            <div class="content-item-data notifications-data">
+                <div class="notifications-group notifications-group-3">
+                    <div>
+                        <input type="checkbox" name="settings" value="new_comment;smtp" id="new-comment" {% if settings.new_comment.smtp %}checked="checked"{% endif %} />
+                        <label for="new-comment">for every reply</label>
+                    </div>
+
+                    <div>
+                        <input id="daily_changes_digest_input" type="checkbox" name="settings" value="daily_changes_digest;smtp" {% if settings.daily_changes_digest.smtp %}checked="checked"{% endif %} />
+                        <label for="daily_changes_digest_input">daily</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="weekly_changes_digest_input" name="settings" value="weekly_changes_digest;smtp" {% if settings.weekly_changes_digest.smtp %}checked="checked"{% endif %} />
+                        <label for="weekly_changes_digest_input">weekly</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-item">
+            <input type="checkbox" name="settings" value="announce;smtp" id="announce" {% if settings.announce.smtp %}checked="checked"{% endif %}/>
+            <label for="announce">Monthly service news and updates</label>
+        </div>
+        {% if settings.first_visit.smtp %}
+            <input type="hidden" name="settings" value="first_visit;smtp" />
+        {% endif %}
+        {% if userBy == 'hash' %}
+            <input type="hidden" name="email" value="{{ email }}" />
+            <input type="hidden" name="hash" value="{{ hash }}" />
+        {% endif %}
+        <input type="hidden" name="save_btn" value="Save">
+    </form>
+
+    <div class="content-item submit-block">
+        {% if not denyAll %}
+            <form action="{% if userBy == 'hash' %}/notification/settings/unsubscribe/{% else %}/settings/unsubscribe/{% endif %}" method="POST" id="unsubscribe-form" class="unsubscribe-form">
+                {% if userBy == 'hash' %}
+                    <input type="hidden" name="email" value="{{ email }}" />
+                    <input type="hidden" name="hash" value="{{ hash }}" />
+                {% endif %}
+                <input type="hidden" name="unsubscribe_btn" value="Do not notify me of anything" />
+                <button type="submit" id="unsubscribe-form-button">Don't notify me of anything</button>
+            </form>
+        {% endif %}
+        <button type="button" onclick="$('#notifications-form').submit();" id="submit-notification-form-button" disabled="disabled">Save changes</button>
+        <div class="error js-notifications-error"></div>
+    </div>
+
+    <script>
+        $('#daily_changes_digest_input').click(function() {
+            $('#weekly_changes_digest_input').attr('checked', false);
+        });
+        $('#weekly_changes_digest_input').click(function() {
+            $('#daily_changes_digest_input').attr('checked', false);
+        });
+        {% if message and message.action == 'updateSettings' %}
+            _gaq.push(['_trackEvent', 'Notification settings', 'Save click']);
+        {% endif %}
+
+        $(function() {
+            function resetButtons() {
+                $('#submit-notification-form-button').text('Save changes');
+                $('#unsubscribe-form-button').text("Don't notify me of anything");
+            }
+
+            function hideUnsubscribeForm() {
+                $('#unsubscribe-form').hide();
+            }
+
+            function showUnsubscribeForm() {
+                $('#unsubscribe-form').show();
+            }
+
+            function processInputChange() {
+                enable($('#submit-notification-form-button'));
+                stopFormTracking();
+            }
+
+            function startFormTracking() {
+                $('#notifications-form').on('change', 'input[type="checkbox"]', processInputChange);
+            }
+
+            function stopFormTracking() {
+                $('#notifications-form').off('change');
+            }
+
+            function disableFormInputs() {
+                disable($('#notifications-form').find(' input[type="checkbox"]'));
+            }
+
+            function enableFormInputs() {
+                enable($('#notifications-form').find('input[type="checkbox"]'));
+            }
+
+            function getFormOptions(successCallback) {
+                return {
+                    dataType: 'json',
+                    beforeSubmit: function(){
+                        disable($('#submit-notification-form-button,#unsubscribe-form-button').text('Saving'));
+                        disableFormInputs();
+                    },
+                    success: function(data) {
+                        startFormTracking();
+                        enable($('#unsubscribe-form-button'));
+                        enableFormInputs();
+                        if(data && data.err) {
+                            renderError($('.js-notifications-error'), data.err);
+                        }
+                        else
+                            $('.js-notifications-error').text('');
+                        resetButtons();
+                        successCallback();
+                    },
+                    error: function() {
+                        enable($('#submit-notification-form-button,#unsubscribe-form-button'));
+                        enableFormInputs();
+                        resetButtons();
+                        renderError($('.js-notifications-error'));
+                    }
+                };
+            }
+
+            $('#notifications-form').ajaxForm(getFormOptions(function(){
+                var els = $('#notifications-form input[type="checkbox"]');
+                for(var i = els.length - 1; i >= 0; --i)
+                    if(els[i].checked) return showUnsubscribeForm();
+                return hideUnsubscribeForm();
+            }));
+            $('#unsubscribe-form').ajaxForm(getFormOptions(function(){
+                $('#notifications-form').clearForm();
+                hideUnsubscribeForm();
+            }));
+
+            startFormTracking();
+        });
+    </script>
+</div>

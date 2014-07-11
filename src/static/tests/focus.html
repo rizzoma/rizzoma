@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link type="text/css" href="mobile.css" rel="stylesheet">
+    <title>Focus Test</title>
+</head>
+<body>
+
+    <div id="editor" class="editor">
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this line for focus</span>
+        </div>
+        <div>
+            <span>Testing this editable line for focus</span>
+        </div>
+    </div>
+<script>
+window.addEventListener('focus', function(e){
+    console.log('focus');
+    console.log(e.target.tagName);
+}, true);
+
+var editor = document.getElementById("editor");
+function processMouseDown(event) {
+    if(event.button) return;
+    event.stopPropagation();
+    var element = event.target;
+//    container = element;
+//    while (container and not DomUtils.hasClass(container, 'js-editor'))
+//        return if DomUtils.hasClass(container, 'js-blips-container')
+//        container = container.parentNode
+//    return if not container or container isnt @_container
+    if(element == document.activeElement) return ;
+    if(document.activeElement != element) {
+//        document.activeElement.blur()
+    }
+    handleElementMouseDown(element);
+}
+
+function handleElementMouseDown(el){
+    console.log(el.tagName);
+    editor.contentEditable = 'true';
+    el.contentEditable = 'true';
+    el.focus();
+    setTimeout(function(){editor.contentEditable = 'false';}, 0);
+
+//    setTimeout(function(){el.focus();}, 1000);
+
+//    element.addEventListener(BrowserEvents.FOCUS_EVENT, @_handleTargetFocus, false)
+//    element.focus();
+//    setTimeout ->
+//        console.log 'focus text element'
+//        element.blur()
+//        element.focus()
+//    , 1000
+}
+
+editor.addEventListener('mousedown', processMouseDown, false);
+</script>
+</body>
+</html>

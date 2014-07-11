@@ -1,0 +1,5 @@
+{% if dstUser.name %}Dear {{dstUser.name}},{% endif %}
+Have you requested Rizzoma account merging?
+Requested accounts are:
+Your account {% if from.name %}{{from.name}} ({{ from.email }}){% else %}{{ from.email }}{% endif %} and {{ dstUser.email }}.
+There is no way to revert this operation. To start merging those accounts click follow this link {{baseUrl}}{{mergeUrl}}?digest={{ digest }}. Otherwise please ignore this email.

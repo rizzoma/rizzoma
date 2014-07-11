@@ -1,0 +1,26 @@
+{% import 'notification/task_macroses/index.txt' as m %}
+<html>
+    <head>
+        <title>
+            {{ text|truncatewords_with_dots(15) }}
+        </title>
+    </head>
+    <body style="font-size: 14px;line-height: 20px;">
+    <p style="margin: 0px;padding: 10px 0 20px 0;">{{ text }}</p>
+    <hr style="border: 0; border-top: 1px #d8d8d8 solid;"/>
+    <p style="font-size: 13px;margin: 0px;padding-top: 10px;" >
+        {% if dstUser.firstVisit -%}
+        {%- set fromChannel = 'email_taskexisting' -%}
+        {%- else -%}
+        {%- set utmCampaign = 'tasknew' -%}
+        {%- set fromChannel = 'email_tasknew' -%}
+        {%- endif %}
+        Reply by email or <a href="{{ m.fullUrl(baseUrl, waveId, blipId, utmCampaign, null, fromChannel) }}">view it on Rizzoma.com</a>
+        {% if title %} <br/>
+        This letter is mailed from the discussion — "{{ title|truncatewords_with_dots(10) }}"
+        {% endif %}
+        <br/>
+        {{ m.unsubscribeMessageHtml(baseUrl, dstUser.email, dstUser.notification.id, fromType) }}
+    </p>
+    </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    ul, ol, h1 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .editor {
+        outline: none;
+        margin: 0 8px 0 8px;
+        counter-reset: numbered;
+    }
+
+    .editor > p {
+        margin: 0;
+    }
+
+    #b {
+        display: inline-block;
+        border: 1px solid blue;
+        margin: -1px;
+        white-space: normal;
+        z-index: 200;
+        top: -9999px;
+        left: -9999px;
+        position: static;
+        min-height: 20px;
+        min-width: 5px;
+    }
+</style>
+</head>
+<body>
+
+<div>
+    <h1>Normal wrapping here</h1>
+    List<br>
+    <ul>
+
+        <li>item 1</li>
+        <li>item 2</li>
+        <ol>
+            <li>item<span style="text-decoration: underline;"> </span>2.1</li>
+            <li>item 2.2</li>
+        </ol>
+        <div>
+            not allowed here
+
+
+            list item should wrap this node
+            <br>
+        </div>
+        <li>item 3</li>
+    </ul>
+    <ol>
+        <li>item 1</li>
+        <li>item 2</li>
+    </ol>
+    <div>Common
+        <span></span>
+        text</div>
+    <div>Common<div></div>div inside</div>
+</div>
+
+<div style="white-space:pre;">
+    <h1>Pre wrap</h1>
+    List<br>
+    <ul>
+
+        <li>item 1</li>
+        <li>item 2</li>
+        <ol>
+            <li>item<span style="text-decoration: underline;"> </span>2.1</li>
+            <li>item 2.2</li>
+        </ol>
+        <div>
+            not allowed here
+
+
+            list item should wrap this node
+            <br>
+        </div>
+        <li>item 3</li>
+    </ul>
+    <ol>
+        <li>item 1</li>
+        <li>item 2</li>
+    </ol>
+    <div>Common
+        <span></span>
+        text</div>
+    <div>Common<div></div>div inside</div>
+</div>
+
+<div style="white-space:pre;">
+    <h1>Pre-line wrap</h1>
+    List<br>
+    <ul>
+
+        <li>item 1</li>
+        <li>item 2</li>
+        <ol>
+            <li>item<span style="text-decoration: underline;"> </span>2.1</li>
+            <li>item 2.2</li>
+        </ol>
+        <div>
+            not allowed here
+
+
+            list item should wrap this node
+            <br>
+        </div>
+        <li>item 3</li>
+    </ul>
+    <ol>
+        <li>item 1</li>
+        <li>item 2</li>
+    </ol>
+    <div>Common
+        <span></span>
+        text</div>
+    <div>Common<div></div>div inside</div>
+</div>
+</body>
+</html>

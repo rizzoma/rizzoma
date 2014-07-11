@@ -1,0 +1,36 @@
+Hi, {{ dstUser.name|default("friend")|raw }}!
+Thank you for joining Rizzoma.
+Here your conversations could easily become documents in realtime. Welcome!
+
+Easy to start <https://rizzoma.com/?from=email_firstvisit&version=text>
+First off, check out our one-minute video. <http://www.youtube.com/watch?v=Lsp8VpgfSaM>
+Online collaboration service for project managment. They use google calendar, mindmap presentation and @mention function.
+
+Easy to login
+Login with your Google account. Use your Google contacts in Rizzoma.
+With Google <https://rizzoma.com/auth/google/?from=email_firstvisit&version=text>
+With Facebook <https://rizzoma.com/auth/facebook/?from=email_firstvisit&version=text>
+
+Simple to invite <https://rizzoma.com/topic/?from=email_firstvisit&version=text>
+Invite collegues with Wizard
+to first doing.
+
+Check out the F.A.Q <http://rizzoma.com/faq.html?from=email_firstvisit&version=text>
+
+There are many questions, so we divided it in 4 parts:
+ Getting Started <http://rizzoma.com/faq.html?from=email_firstvisit&version=text#1>
+ Activity Stream <http://rizzoma.com/faq.html?from=email_firstvisit&version=text#2>
+ Navigation <http://rizzoma.com/faq.html?from=email_firstvisit&version=text#3>
+ My Profile <http://rizzoma.com/faq.html?from=email_firstvisit&version=text#4>
+
+Take a look at different uses
+Here are the several interesting and helpful user stories.
+
+Education process with rizzoma <http://blog.rizzoma.com/2012/05/30/education-process-with-rizzoma/?from=email_firstvisit&version=text>
+Hackers collaboration tool <http://blog.rizzoma.com/2012/04/12/hackers-collaboration-tool/?from=email_firstvisit&version=text>
+Gamers usercase <http://blog.rizzoma.com/2012/03/08/gamers-usercase/?from=email_firstvisit&version=text>
+Rizzoma for documentation analysis <http://blog.rizzoma.com/2012/02/27/rizzoma_for_documentation_analysis/?from=email_firstvisit&version=text>
+
+Appreciate your time, keep the context of your doings in Rizzoma! <https://rizzoma.com/topic/?from=email_firstvisit&version=text>
+
+Click here to change the notification settings. <{{ baseUrl }}/notification/settings/?email={{ dstUser.email|url_encode }}&hash={{ dstUser.notification.id|url_encode }}&from={{ fromType|url_encode }}&from=email_firstvisit&version=text>

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}
+    Run tests
+{% endblock title %}
+
+{% block scripts %}
+    <script src='/s/js/jquery-1.7.1.js'></script>
+    <link rel="stylesheet" type="text/css" href="/s/css/jquery.lightbox-0.5.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/s/css/blip.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/wave.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/participants_panel.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/page.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/error.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/search.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/auth.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/connection.css">
+    <link rel="stylesheet" type="text/css" href="/s/css/test_report.css">
+{% endblock scripts %}
+
+{% block content %}
+	<script>
+        $(document).ready(function(){
+			$('.run-button').click(function() {
+				$('#tests_form').submit();
+			});
+            $('.select-all-button').click(function(){
+                var isSelect = $('#select_all_tests');
+                var status = !Boolean(isSelect.attr('checked'));
+
+                $('#tests_form input:checkbox').each(function() {
+                    this.checked = status;
+                    this.value = (status) ? 'on' : 'off';
+				});
+                
+                if (Boolean(isSelect.attr('checked'))){
+                    isSelect.removeAttr('checked');
+                }
+                else{
+                    isSelect.attr('checked', 'checked');
+                }
+            });
+            $('.run-all-button').click(function(){
+                $('#tests_form input:checkbox').each(function() {
+                    this.checked = true;
+                    this.value = 'on';
+                });
+                $('#run_all').click();
+            });
+        });
+
+        function selectTest(testID){
+            var checkBox = $('#test_' + testID);
+
+            if (checkBox.attr("checked")){
+                checkBox.attr("value","on");
+            }
+            else{
+                checkBox.attr("value","off");
+            }
+
+        }
+	</script>
+
+    <div id="report">
+        <div class="report-data">
+            <h1>Результаты запуска</h1>
+            {% if stdout %}
+                {{ stdout|raw }}
+            {% else %}
+                <div class="no-result">Нет результатов...</div>
+            {% endif %}
+        </div>
+        <div class="report-data">
+            <h1>Ошибки</h1>
+            {% if stderr %}
+                <div class="error-data"><pre>
+                    {{ stderr }}
+                </pre></div>
+            {% else %}
+                <div class="no-result">Нет ошибок</div>
+            {% endif %}
+        </div>
+    </div>
+    <div id="tests">
+        <h1>Тесты для запуска</h1>
+
+        {% if tests %}
+            <div class="run-panel">
+                <a class='select-all-button' href="#" id="select_all">Выбрать все\ничего</a>
+                <div class="run-buttons">
+                    <input class='run-button' type='button' id="run_all" value='Запустить' />
+                    <input class='run-all-button' type='button' value='Запустить все' />
+                </div>
+            </div>
+
+            <input id="select_all_tests" name='select_all_tests' type="checkbox" style="display: none;" />
+            <form action='.' method='GET' id="tests_form">
+                {% for test in tests %}
+                    <input type='checkbox'
+                           id="test_{{ forloop.counter }}"
+                           name="{{ test.file }}"
+                           onclick="selectTest({{ forloop.counter }});"
+                           {% if test.is_run %}
+                                checked="checked"
+                                value="on"
+                            {% endif %}
+                        />
+                    <label for="test_{{ forloop.counter }}">{{ test.file }}</label><br />
+                {% endfor %}
+            </form>
+
+            <div class="run-panel" style="vertical-align: bottom;">
+                <a class='select-all-button' href="#">Выбрать все\ничего</a>
+                <div class="run-buttons">
+                    <input class='run-button' type='button' value='Запустить' />
+                    <input class='run-all-button' type='button' value='Запустить все' />
+                </div>
+            </div>
+        {% else %}
+            <div class="no-result">Тестов для запуска не найдено...</div>
+        {% endif %}
+    </div>
+{% endblock content %}

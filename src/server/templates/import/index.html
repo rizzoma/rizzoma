@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}
+Imported waves — Rizzoma
+{% endblock title %}
+{% block styles %}
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="/s/css/wave.css">
+<link rel="stylesheet" type="text/css" href="/s/css/page.css">
+<link rel="stylesheet" type="text/css" href="/s/css/error.css">
+<link rel="stylesheet" type="text/css" href="/s/css/auth.css">
+<link rel="stylesheet" type="text/css" href="/s/css/import.css" xmlns="http://www.w3.org/1999/html">
+{% endblock styles %}
+
+{% block scripts %}{% endblock scripts %}
+{% block content %}
+<div class='page-content'>
+    <div class='column navigation-container'>
+        <div class="js-logo-container">
+            <a href="/">
+                {% if appSignatureType == "dev" %}
+                <img height="36" class="rizzoma_logo" src="/s/img/rizzoma_logo_dev.png" alt="RIZZOMA logo" />
+                {% else %}
+                <img height="36" class="rizzoma_logo" src="/s/img/rizzoma_logo.png" alt="RIZZOMA logo" />
+                {% endif %}
+            </a>
+            {% if appSignatureType == "dev" %}
+            <a href="/" class="build_version {% if not appVersion %}no_build_version{% endif %}">Developer's version {{ appVersion }}</a>
+            {% endif %}
+        </div>
+        <div class="import-help-text">
+            <h1>Your imported waves list</h1>
+            <p>
+                Your last imported waves are here. Waves don't appear on the Rizzoma until you click the link in the "state" column.
+            </p>
+            <p>
+                For instructions watch <a href="http://youtu.be/OdiJ-S9Mzog" target="_blank">this video</a>.
+            </p>
+        </div>
+    </div>
+    <div class='js-wave-container wave-container column loading'>
+        <div class="inner-wave-container">
+            <div class='js-state-header state-header'>
+                <div class='js-page-error-container error-message-container {% if notice %}error-shown {% endif %}'>
+                    <div class='js-page-error error-message'>{% if notice %}{{ notice }}{% endif %}</div>
+                </div>
+                <div class='js-auth auth'>
+                    {% if loggedIn %}
+                    <table>
+                        <tr>
+                            <td><div class="avatar" style="background-image: url({{ everyauth.avatar|default('/s/img/user/unknown.png') }})"></div></td>
+                            <td class="username">{{everyauth.name|default(everyauth.email)}}</td>
+                            <td><a href="https://rizzoma.zendesk.com/" title="Go to support site" target="_blank">Feedback</a></td>
+                            <td>
+                                <a href='/logout' class='auth_button logout' title='Log out'>
+                                    <div>Log out</div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    {% else %}
+                    <table>
+                        <tr>
+                            <td><a href="https://rizzoma.zendesk.com/" title="Go to support site" target="_blank">Feedback</a></td>
+                            <td>
+                                <a href='/auth/google/' class='auth_button login_link' title='Log in using Google'>
+                                    <div>Log in</div>
+                                    <img src="/s/img/auth/google.png" />
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    {% endif %}
+                </div>
+                <div class='clearer'></div>
+            </div>
+            <div class="import-statistic">
+                <table class="import-info" >
+                    <tr>
+                        <th width="430">Google Wave</th>
+                        <th width="110">Request time</th>
+                        <th>State</th>
+                    </tr>
+                    {% for source in sources %}
+                    <tr class="{{source.even}}">
+                        <td>
+                            <a href="{{source.url}}" class="gwave" target="blank">
+                                {{source.title}}
+                            </a>
+                        </td>
+                        <td>{{ source.lastUpdateTimestamp|date("d.m.Y H:i") }}</td>
+                        <td>
+                            {% if source.lastImportingTimestamp and source.importedWaveId %}
+                                <a href="/wave/{{source.importedWaveUrl}}/" target="blank">Imported</a>
+                            {% else %}
+                                {% if source.importedWaveId %}
+                                    In progress
+                                {% else %}
+                                    Waiting
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    setTimeout(function () {
+        window.location.reload();
+    }, 10*60*1000);
+</script>
+{% endblock content %}

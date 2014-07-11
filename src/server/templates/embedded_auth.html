@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Success{% endblock title %}
+{% block scripts %}
+<script>
+    if (window.opener) {
+        if(window.opener.location.search == window.location.search)
+            window.opener.location.reload(false);
+        else
+            window.opener.location.search = window.location.search;
+    }
+    window.close();
+</script>
+{% endblock scripts %}
+{% block content %}You can close this page.{% endblock content %}

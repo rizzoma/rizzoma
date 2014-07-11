@@ -1,0 +1,22 @@
+{% import 'notification/macroses.txt' as m %}
+<html>
+    <head>
+        <title>{{ user.name|default(user.email) }} invites you to topic{% if waveTopic %} "{{ waveTopic }}"{% endif %}</title>
+    </head>
+    <body style="background-color: #ebf5fe; padding: 10px 20px;font-size: 14px;line-height: 20px;">
+        <p>
+            <img style="vertical-align: middle; margin-right: 10px; border: 1px #707478 solid;" width="39" height="39" src="{{ user.avatar|default('https://rizzoma.com/s/img/user/unknown.png') }}" title="{{ user.name|default(user.email) }}" />I invite you to the topic {% if waveTopic %}<b>"{{ waveTopic }}"</b>{% endif %}
+        </p>
+        {% if dstUser.firstVisit -%}
+            {%- set fromChannel = 'email_adduserexisting' -%}
+        {%- else -%}
+            {%- set utmCampaign = 'addusernew' -%}
+            {%- set fromChannel = 'email_addusernew' -%}
+        {%- endif %}
+        <p style="padding: 0 0 20px 49px;">
+            Welcome to the topic I've shared with you. <br/>
+            <a href="{{ m.addParticipantFullUrl(baseUrl, waveId, referalEmailHash, utmCampaign, fromChannel) }}" style="font-weight: bold;">Direct link to topic</a>
+        </p>
+        {{ m.logoAndSettingsLinkHtml(baseUrl, dstUser.email, dstUser.notification.id, fromType) }}
+    </body>
+</html>

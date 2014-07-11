@@ -1,0 +1,15 @@
+{% import 'notification/message_macroses/index.txt' as m -%}
+{% if sender.name  -%}
+    {{ sender.name|raw }} ({{ sender.email|raw }})
+{%- else -%}
+    {{ sender.email|raw }}
+{%- endif %} has sent you a message in topic "{{ title|raw }}":
+{{ text|raw }}
+{% if dstUser.firstVisit -%}
+    {%- set fromChannel = 'jabber_mentionexisting' -%}
+{%- else -%}
+    {%- set utmCampaign = 'mentionnew' -%}
+    {%- set fromChannel = 'jabber_mentionnew' -%}
+{%- endif -%}
+{%- set utmSource = 'jabber' -%}
+Link to message <{{ m.fullUrl(baseUrl, waveId, blipId, utmCampaign, utmSource, fromChannel) }}>

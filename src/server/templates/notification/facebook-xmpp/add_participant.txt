@@ -1,0 +1,8 @@
+{% import 'notification/macroses.txt' as m %}
+{% if dstUser.firstVisit -%}
+    {%- set fromChannel = 'fbchat_adduserexisting' -%}
+{%- else -%}
+    {%- set utmCampaign = 'addusernew' -%}
+    {%- set fromChannel = 'fbchat_addusernew' -%}
+{%- endif -%}
+I invite you to the topic {% if waveTopic %} "{{ waveTopic|raw }}"{% endif %}. Here is the link <{{ m.addParticipantFullUrl(baseUrl, waveId, referalEmailHash, utmCampaign, fromChannel) }}>.

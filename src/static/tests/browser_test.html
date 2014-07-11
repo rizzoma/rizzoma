@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Browser test</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    </head>
+    <style>
+        td {
+            border: 1px solid gray;
+        }
+
+        .cell {
+            background: green;
+            display: none;
+        }
+
+        /* Narrow screen ----------- */
+        @media only screen
+        and (max-width : 480px) {
+            .cell1 {
+                display: block;
+            }
+        }
+
+        /* Medium screen ----------- */
+        @media only screen
+        and (min-width : 481px)
+        and (max-width: 950px) {
+            .cell2 {
+                display: block;
+            }
+        }
+
+        /* Wide screen ----------- */
+        @media only screen
+        and (min-width : 951px) {
+            .cell3 {
+                display: block;
+            }
+        }
+    </style>
+    <body style="margin: 0; padding: 0;">
+        <h1> Results:</h1>
+        <div style="outline: 1px solid black; width: 1024px;">
+            test
+        </div>
+        <table id="testResults">
+            <thead>
+                <tr>
+                    <th>Prop</th><th>Value</th>
+                </tr>    
+            </thead>
+        </table>
+        <script>
+            var props = ['appName', 'appVersion', 'cookieEnabled'] 
+            var OSName="Unknown OS";
+            if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+            if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+            if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
+            if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
+            
+            document.write('OS: ' + OSName + '<br>');
+            
+            var systemDetect = {
+                'Browser':  navigator.appName || "Unknown browser",
+                'Version': navigator.userAgent || navigator.appVersion || "Unknown version",
+                'OS': navigator.platform || "Unknown OS",
+                'Cookies': (navigator.cookieEnabled == true ? 'Enabled' : 'Disabled') || "Unable to determine cookie status",
+                'Language': navigator.language || navigator.userLanguage || 'Unknown language'
+            };
+            var resultsContainer = document.getElementById('testResults').appendChild(document.createElement('tbody'));
+            function getPropElement(name, value){
+                var tr = document.createElement('tr');
+                var td = document.createElement('td');
+                td.appendChild(document.createTextNode(name));
+                tr.appendChild(td);
+                td = document.createElement('td');
+                td.appendChild(document.createTextNode(value));
+                tr.appendChild(td)
+                return tr;
+            }
+            for(var prop in systemDetect){
+                resultsContainer.appendChild(getPropElement(prop, systemDetect[prop]));
+            }
+            if (!screen) screen = {};
+            resultsContainer.appendChild(getPropElement('width', ((window.innerWidth > 0) ? window.innerWidth : screen.width) + ' | ' + screen.width));
+            resultsContainer.appendChild(getPropElement('height', ((window.innerHeight > 0) ? window.innerHeight : screen.height) + ' | ' + screen.height));
+            document.write('Browser: ' + (function(){
+                var N= navigator.appName, ua= navigator.userAgent, tem;
+                var M= ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+                if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
+                M= M? [M[1], M[2]]: [N, navigator.appVersion, '-?'];
+            
+                return M;
+            })());
+        </script>
+
+        <h1>Screen info</h1>
+        <div class="cell cell1"> <= 480px</div>
+        <div class="cell cell2"> 480px < width <= 950px </div>
+        <div class="cell cell3"> > 950px </div>
+        
+    </body>
+</html>

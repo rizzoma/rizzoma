@@ -1,0 +1,773 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background: #C2C9CF;
+}
+
+input[type="text"],
+input[type="password"] {
+    border: none;
+    outline: none;
+    padding: 5px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    vertical-align: middle;
+}
+
+img {
+    border: 0;
+}
+
+button {
+    padding: 10px 34px;
+    margin: 0;
+}
+
+a {
+    color: #1d83c5;
+}
+
+.page-wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+.settings-header,
+.content {
+    background: #c2c9cf;
+    font-size: 14px;
+    text-align: left;
+}
+
+.footer {
+    font-size: 13px;
+}
+
+.content {
+    color: #4C5A68;
+    line-height: 26px;
+    padding-bottom: 100px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    min-width: 100%;
+    background: #2f363c;
+}
+
+.icon {
+    display: inline-block;
+    background: no-repeat center center;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.show-popup-button {
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/show-profile-variants.png);
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.popup-container {
+    position: relative;
+}
+
+.popup {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.7);
+    font-size: 13px;
+}
+
+.popup div {
+    cursor: pointer;
+    padding: 1px 7px;
+    background: #EEE;
+}
+
+.popup div:hover {
+    background: #DDD;
+}
+
+.header-wrap,
+.content-wrap,
+.footer-wrap {
+    margin: 0 auto;
+    width: 935px;
+}
+
+.settings-header {
+    padding: 54px 0;
+    color: white;
+}
+
+.header-wrap {
+    padding: 0 20px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.header-wrap img,
+.header-wrap > div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.header-title {
+    padding: 0 45px;
+    font: 35px PFAgoraSansProLightRegular, Helvetica, Arial;
+}
+
+.header-title > span {
+    display: none;
+}
+
+.profile-menu-shown .header-title .profile-header,
+.account-menu-shown .header-title .account-header,
+.teams-menu-shown .header-title .teams-header,
+.notifications-menu-shown .header-title .notifications-header,
+.storage-menu-shown .header-title .storage-header {
+    display: inline;
+}
+
+.content-wrap {
+    padding-top: 20px;
+}
+
+.content-wrap > div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.footer-wrap {
+    height: 100px;
+    line-height: 100px;
+    vertical-align: middle;
+}
+
+.footer-wrap a {
+    padding-left: 45px;
+    color: #596c7c;
+    text-decoration: underline;
+}
+
+.left-menu-block {
+    margin-left: 65px;
+    width: 160px;
+    font: bold 18px PFAgoraSansProLightRegular, Helvetica, Arial;
+}
+
+.left-menu-block > div {
+    position: relative;
+    padding: 5px 0 25px 0;
+}
+
+.left-menu-block .menu-info {
+    font-size: 12px;
+}
+
+.left-menu-block .menu-info .menu-info-description {
+    color: #91a0b1;
+}
+
+.left-menu-block a {
+    color: #4C5A68;
+    text-decoration: none;
+}
+
+.settings-content-block {
+    position: relative;
+    margin-bottom: 22px;
+    padding: 2px 0 0 47px;
+}
+
+.submit-block {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.submit-block button {
+    border-radius: 3px;
+    border-width: 1px;
+    border-style: solid;
+    white-space: nowrap;
+}
+
+.submit-block .unsubscribe-form {
+    margin-right: 38px;
+}
+
+.submit-block .unsubscribe-form button:not([disabled="disabled"]) {
+    color: #000;
+}
+
+.submit-block button:not([disabled="disabled"]) {
+    background: #2cb6b8;
+    background: -moz-linear-gradient(top,  #2cb6b8 0%, #16a0a2 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2cb6b8), color-stop(100%,#16a0a2));
+    background: -webkit-linear-gradient(top,  #2cb6b8 0%,#16a0a2 100%);
+    background: -ms-linear-gradient(top,  #2cb6b8 0%,#16a0a2 100%);
+    background: linear-gradient(to bottom,  #2cb6b8 0%,#16a0a2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2cb6b8', endColorstr='#16a0a2',GradientType=0 );
+    color: #fff;
+    border-color: #18a2a4;
+}
+
+.error:not(.form-field) {
+    color: red;
+    font-size: 13px;
+    text-align: center;
+}
+
+.settings-content-block::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -5px;
+    display: inline-block;
+    width: 1px;
+    content: "";
+    background: -moz-radial-gradient(center, ellipse cover, rgba(157, 166, 173, 1) 0%,rgba(157, 166, 173, 0) 85%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(157, 166, 173, 1)), color-stop(85%,rgba(157, 166, 173, 0)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(157, 166, 173, 1) 0%,rgba(157, 166, 173, 0) 85%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(157, 166, 173, 1) 0%,rgba(157, 166, 173, 0) 85%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(157, 166, 173, 1) 0%,rgba(157, 166, 173, 0) 85%);
+    background: radial-gradient(ellipse at center, rgba(157, 166, 173, 1) 0%,rgba(157, 166, 173, 0) 85%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#9da6ad',GradientType=1 );
+    box-shadow: -4px 0 20px 3px rgba(255, 255, 255, 0.1), 3px 0 30px 1px rgba(0, 0, 0, 0.1);
+}
+
+.settings-content-block > * {
+    display: none;
+}
+
+.content-item {
+    margin-bottom: 17px;
+}
+
+.content-item-title {
+    margin-bottom: 7px;
+}
+
+.content-item-data {
+    padding: 5px 0 5px 17px;
+    background: #e6e9ef;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.right-content-block {
+    position: absolute;
+    right: 0;
+}
+
+input[name="menu-item-set"] {
+    position: absolute;
+    top: -9999px;
+    left: -9999px
+}
+
+.profile-menu-shown .left-menu-block .profile-menu-item:not(.submenu-selected) a::before,
+.account-menu-shown .left-menu-block .account-menu-item:not(.submenu-selected) a::before,
+.notifications-menu-shown .left-menu-block .notifications-menu-item:not(.submenu-selected) a::before,
+.teams-menu-shown .left-menu-block .teams-menu-item:not(.submenu-selected) a::before,
+.storage-menu-shown .left-menu-block .storage-menu-item:not(.submenu-selected) a::before,
+.teams-menu-shown .left-menu-block .teams-menu-item.submenu-selected .submenu-edit::before,
+.teams-menu-shown .left-menu-block .teams-menu-item.submenu-selected .submenu-new::before,
+.teams-menu-shown .left-menu-block .teams-menu-item.submenu-selected .submenu-payment::before{
+    content: "";
+    position: absolute;
+    left: -25px;
+    display: block;
+    height: 16px;
+    width: 14px;
+    background: url('/s/img/settings/triangle.png') no-repeat;
+}
+
+.profile-menu-shown .settings-content-block #profile-content,
+.account-menu-shown .settings-content-block #account-content,
+.notifications-menu-shown .settings-content-block #notifications-content,
+.teams-menu-shown .settings-content-block #teams-content,
+.storage-menu-shown .settings-content-block #storage-content {
+    display: block;
+}
+
+.profile-item {
+    margin-right: 295px;
+    width: 315px;
+}
+
+.account-name-block {
+    position: relative;
+    height: 37px;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #FFF;
+}
+
+.account-name {
+    display: inline-block;
+    width: 100%;
+    margin-right: -30px;
+    padding-left: 0;
+    padding-right: 30px;
+    vertical-align: middle;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.avatar-block {
+    border: 1px solid white;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+}
+
+.account-avatar {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 3px;
+}
+
+.available-avatars {
+    width: 125px;
+    margin: 0 auto;
+    height: 50px;
+    overflow: auto;
+}
+
+.account-avatar-small {
+    width: 20px;
+    height: 20px;
+    margin: 3px;
+    vertical-align: top;
+    cursor: pointer;
+    background-size: 20px;
+}
+
+.account-avatar-small.chosen {
+    outline: 2px solid #089193;
+}
+
+.upload-avatar-block {
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-avatar-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.insufficient-emails input[type="radio"] {
+    display: none;
+}
+
+.change-password {
+    border-bottom: 1px dashed #1d83c5;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.update-password-form button {
+    padding: 5px;
+}
+
+.update-password-form .error:not(.form-field) {
+    text-align: left;
+}
+
+.account-auth-block input {
+    width: 90px;
+    font-size: 13px;
+}
+
+.auth-icon {
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/auth-sprite.png);
+    vertical-align: middle;
+}
+
+.auth-icon.password {
+    background-position: 0 0;
+}
+
+.auth-icon.google {
+    background-position: 0 -17px;
+}
+
+.auth-icon.facebook {
+    background-position: 0 -34px;
+}
+
+.notifications-content input {
+    margin-right: 10px;
+}
+
+.notifications-data {
+    margin-bottom: 25px;
+    padding-bottom: 14px;
+}
+
+.notifications-group {
+    white-space: nowrap;
+}
+
+.notifications-group input {
+    margin-left: 6px;
+}
+
+.notifications-group > div {
+    display: inline-block;
+    margin: 11px 0 4px;
+}
+
+.notifications-group-2 > div {
+    width: 305px;
+}
+
+.notifications-group-3 > div {
+    width: 175px;
+}
+
+.notifications-submit {
+    text-align: center;
+}
+
+.unsubscribe-form {
+    display: inline-block;
+}
+
+.unsubscribe-form button {
+    width: 245px;
+}
+
+.teams-content,
+.account-content {
+    max-width: 630px;
+}
+
+.teams-content .avatar {
+    width: 42px;
+    height: 42px;
+}
+
+.teams-content .team-topic-container {
+    padding-left: 78px;
+    padding-right: 152px;
+    background: #e3eaf1;
+    position: relative;
+    margin-bottom: 15px;
+    min-height: 70px;
+}
+
+.teams-content .team-topic-container .avatar {
+    position: absolute;
+    left: 18px;
+    top: 14px;
+}
+
+.teams-content .team-topic-controls-container {
+    position: absolute;
+    right: 12px;
+    top: 14px;
+}
+
+.teams-content .team-topic-controls-container button {
+    padding: 11px;
+    height: auto;
+}
+
+.teams-content a {
+    color: inherit;
+}
+
+.teams-content .team-topic-container a {
+    margin-top: 10px;
+    text-decoration: none;
+    display: inline-block;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 400px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.teams-content .topic-snippet {
+    font-size: 12px;
+    min-height: 26px;
+}
+
+.teams-content .topic-title {
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.teams-content .team-topic-edit-container,
+.teams-content .team-topic-create-container,
+.teams-content .payment-container,
+.teams-content .card-info-container,
+.teams-content .payment-help-container {
+    display: none;
+}
+
+.teams-content.team-topic-edit .team-topic-edit-container {
+    display: block;
+}
+
+.teams-content.team-topic-create .team-topic-create-container {
+    display: block;
+}
+
+.teams-content.payment .payment-container, .teams-content.payment .payment-help-container {
+    display: block;
+}
+
+.teams-content.card-info .card-info-container, .teams-content.card-info .payment-help-container {
+    display: block;
+}
+
+.teams-content .account-setup-wizard .content-block::before {
+    display: none;
+}
+
+.teams-content .account-setup-wizard,
+.account-content .account-setup-wizard {
+    position: static;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    z-index: 0;
+    text-align: left;
+    min-width: 0;
+}
+.teams-content.team-topic-edit .team-topics-list,
+.teams-content.team-topic-create .team-topics-list,
+.teams-content.teams-content.payment .team-topics-list,
+.teams-content.teams-content.card-info .team-topics-list {
+    display: none;
+}
+
+.teams-content .account-setup-wizard .content-block,
+.account-content .account-setup-wizard .content-block {
+    margin: 0;
+    position: static;
+    padding: 0;
+}
+
+.current-topic-name {
+    font-weight: bold;
+}
+
+.submenu, .submenu-edit, .submenu-new, .submenu-payment, .submenu-card-info {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: 6px;
+    display: none;
+    white-space: nowrap;
+    margin-right: 20px;
+    overflow: hidden;
+}
+
+.menu-item.submenu-selected .submenu,
+.menu-item.submenu-selected.edit .submenu-edit,
+.menu-item.submenu-selected.new .submenu-new,
+.menu-item.submenu-selected.payment .submenu-payment,
+.menu-item.submenu-selected.card-info .submenu-card-info {
+    display: block;
+}
+
+.teams-content .submit-block {
+    width: 315px;
+}
+
+.teams-content .content-block,
+.account-content .content-block {
+    line-height: normal;
+    color: black;
+}
+
+.account-content .account-setup-wizard .content-block::before {
+    display: none;
+}
+
+.account-content .account-setup-wizard .setup-steps {
+    display: none;
+}
+
+.account-content .enterprise {
+    display: none;
+}
+
+.account-content.enterprise-request-shown .account-setup-wizard-content {
+    display: none;
+}
+
+.account-content.enterprise-request-shown .enterprise {
+    display: inline-block;
+}
+
+.account-content .account-setup-wizard .top-description .recommended {
+    display: none;
+}
+
+.account-content .account-setup-wizard .account-type:nth-child(1) button {
+    display: none;
+}
+
+.account-content .account-setup-wizard .account-type .bottom-description::after {
+    content: 'Your plan';
+    display: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 7px;
+}
+
+.account-content .account-setup-wizard .account-setup-wizard-content:not(.is-business) .account-type:nth-child(1) .bottom-description::after,
+.account-content .account-setup-wizard .account-setup-wizard-content.is-business .account-type:nth-child(2) .bottom-description::after {
+    display: block;
+}
+
+.account-content .account-setup-wizard .account-type:nth-child(2) .bottom-description {
+    background: #18B0B2;
+}
+
+.account-content .account-setup-wizard .account-setup-wizard-content:not(.is-business) .account-type:nth-child(1) .bottom-description,
+.account-content .account-setup-wizard .account-setup-wizard-content.is-business .account-type:nth-child(2) .bottom-description {
+    background: #0DA8DD;
+}
+
+.account-content .account-setup-wizard .account-setup-wizard-content.is-business .account-type:nth-child(2) button {
+    display: none;
+}
+
+.account-content .account-setup-wizard .bottom-description {
+    height: 73px;
+}
+
+.account-content .account-setup-wizard .from-enterprice {
+    top: -70px;
+}
+
+.page-wrapper:not(.is-business) .teams-menu-item {
+    display: none;
+}
+
+.page-error-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    font-size: 13px;
+    height: 0px;
+}
+
+.page-error {
+    padding: 10px;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid #C90019;
+    background: #F9EDBD;
+    border-top: none;
+    color: #706F6F;
+    margin: 0 auto;
+    white-space: nowrap;
+    text-align: center;
+    display: none;
+}
+
+.page-error.shown {
+    display: inline-block;
+}
+
+.attention-icon {
+    width: 32px;
+    height: 28px;
+    vertical-align: middle;
+}
+
+.payment-container .payment-form input, .card-info-container input {
+    height: 12px;
+}
+
+.payment-container .payment-form button {
+    margin-top: 5px;
+}
+
+.incorrect-field {
+    background-color: #ffbaba;
+}
+
+.card-field-name {
+    display: inline-block;
+    width: 100px;
+}
+
+.team-payment-container {
+    margin-left: -60px;
+    width: 600px;
+}
+
+.create-team-button {
+    margin: 10px 0 10px 0;
+}
+
+.make-payment-button, show-card-info {
+    margin-left: 10px;
+}
+
+.payment-alert-message {
+    color: #DC401C;
+}
+
+.summary-payment-info {
+    margin-left: 20px;
+}
+
+.payment-success-message {
+    color: #82BA24;
+    font-weight: bold;
+}
+
+.payment-container p {
+    margin: 10px 0px 10px 0px;
+    line-height: 20px;
+}
+
+.payment-container .payment-systems-sprite {
+    background-image: url('/s/img/settings/payment-systems-sprite.png');
+    background-repeat: no-repeat;
+    width: 256px;
+    height: 18px;
+    margin: 10px 0;
+}

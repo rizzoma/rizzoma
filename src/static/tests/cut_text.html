@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.5, minimum-scale=1.5, user-scalable=no">
+</head>
+
+<body id="body">
+<style>
+.editor {
+    outline: none;
+    margin: 0 8px 0 8px;
+    counter-reset: numbered;
+}
+
+.editor > p {
+    margin: 0;
+}
+
+#b {
+    display: inline-block;
+    border: 1px solid blue;
+    margin: -1px;
+    white-space: normal;
+    z-index: 200;
+    top: -9999px;
+    left: -9999px;
+    position: static;
+    min-height: 20px;
+    min-width: 5px;
+}
+
+a::before, a::after {
+    content: " ";
+    display: inline-block;
+    width: 1px;
+}
+</style>
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<label><input type="file"></label>
+<div><br></div>
+<div id="contB" contentEditable="false" style="display: inline-block;"><div id="b" contentEditable="true" ></div></div>
+<div contentEditable="true" id="editor" style="min-height: 17px;">1234678</div>
+<div style="border: 1px solid green; " id="buffer" contentEditable="true">Buffer</div>
+
+<div id="container" contentEditable="true" style="min-height: 10px; white-space: pre-wrap;" class="editor"><p><span type="text" rz-data="[]dafasdfasdfasdf">1</span></p><p><span>2</span></p><p><span>3</span></p><p><span>4</span></p><p><span>5</span></p><p><span>6</span></p></div>
+
+<script>
+var b = $('#b')[0];
+var contB = $('#contB')[0];
+var editor = $('#editor')[0];
+var buffer = $('#buffer')[0];
+var oldContent;
+
+$('#btn').click(function(){
+    $('#container')[0].appendChild(document.createTextNode('Test1'));
+    console.log(b.innerHTML);
+//    $('#container')[0].firstChild.firstChild.data = 'adf asdf'
+});
+
+var container = $('#container')[0];
+var interval = null;
+//$('#container')[0].addEventListener('paste', cutHandler, false);
+$('#container')[0].addEventListener('copy', copyHandler, false);
+
+function copyHandler(event){
+    var html = document.createElement('span');
+    html.innerHTML = '<div>hello <span style="font-weight: bold;">world</span></div><div>br</div>1111';
+    event.clipboardData.setData('text/plain', 'asdfadsf');
+    event.clipboardData.setData('text/html', html.innerHTML);
+    event.clipboardData.setData('text/rizzoma', '[1,2,3,4]');
+
+    event.preventDefault();
+}
+
+$('#container')[0].addEventListener('paste', function(event){
+//    console.log(event.clipboardData.getData('text/rizzoma'), event.clipboardData, event.clipboardData.types);
+//    console.log(event.type, event);
+//    console.log(event.clipboardData.getData('text/html'));
+    clearBuffer();
+    b.appendChild(window.getSelection().getRangeAt(0).cloneContents());
+    $('#container').empty();
+    var s = window.getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(b);
+//    range.setStart(b, 0);
+//    range.setEnd(b, 0);
+    s.removeAllRanges();
+    s.addRange(range);
+    b.focus();
+    oldContent = b.textContent;
+    console.log(document.activeElement.id);
+    var r = window.getSelection().getRangeAt(0);
+    console.log(r.startContainer.id, r.startOffset, r.endContainer.id, r.endOffset);
+    console.log('initial', b.innerHTML);
+    var s1 = window.getSelection();
+    console.log(s1.anchorNode, s1.anchorOffset, s1.focusNode, s1.focusOffset);
+    startTraking();
+});
+$('#container')[0].appendChild(document.createTextNode(' '));
+
+function cutHandler(event){
+    console.log(event.type, event);
+    clearBuffer();
+    b.appendChild(window.getSelection().getRangeAt(0).cloneContents());
+    $('#container').empty();
+    var s = window.getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(b);
+    s.removeAllRanges();
+    s.addRange(range);
+    b.focus();
+    oldContent = b.textContent;
+    console.log('initial', b.innerHTML);
+    var s1 = window.getSelection();
+//    console.log(s1.anchorNode, s1.anchorOffset, s1.focusNode, s1.focusOffset);
+    if(!range.collapsed)
+        startTraking();
+}
+
+function nodeRemoved(){
+    console.log("node removed");
+    console.log(b.innerHTML);
+    b.removeEventListener('DOMNodeRemoved', nodeRemoved, false)
+}
+function startTraking(){
+    console.log('startTraking');
+//    b.addEventListener('DOMNodeRemoved', nodeRemoved, false);
+    if(interval) clearInterval(interval);
+    interval = setInterval(checkBuffer, 10);
+}
+
+function checkBuffer(){
+    if(b.textContent != oldContent){
+        console.log('content was changed. old"' + oldContent + '" new "' + b.textContent + '"');
+        console.log('text + html', b.textContent, b.innerHTML);
+        clearInterval(interval);
+        interval = null;
+    }
+}
+
+function attachBuffer(){
+    clearBuffer();
+    var s = window.getSelection();
+    var r = s.getRangeAt(0);
+    console.log('attachBuffer', r.startContainer, r.startOffset, r.endContainer, r.endOffset);
+    if (contB.parentNode != editor){
+        console.log('wrong parent');
+        editor.appendChild(contB);
+    }
+    var range = document.createRange();
+    range.setStart(b, 0);
+    range.setEnd(b, 0);
+    if(r.startContainer == range.startContainer && r.startOffset == range.startOffset && r.endContainer == range.endContainer && r.endOffset == range.endOffset) return;
+    console.log("resetting range");
+    s.removeAllRanges();
+    s.addRange(range);
+}
+
+function clearBuffer(){
+    while(b.firstChild){
+        b.removeChild(b.firstChild);
+    }
+}
+
+function extractBuffer(data){
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode('"' + data + '"'));
+    buffer.appendChild(div);
+    console.log(b.textContent);
+}
+
+function log(data){
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode('"' + data + '"'));
+    buffer.appendChild(div);
+}
+
+function detachBuffer(){
+    if(contB.parentNode)
+        contB.parentNode.removeChild(contB);
+    clearBuffer();
+}
+
+function compositionStart(event){
+    console.log(event.data);
+    console.log(event.type, event.data, event);
+    console.log(event.target);
+    log(event.type);
+    attachBuffer();
+    var sel = window.getSelection();
+    if (!sel) return;
+    var r = sel.getRangeAt(0);
+    log(r.startContainer.id);
+    log(r.startOffset);
+    log(r.endContainer.id);
+    log(r.endOffset);
+
+}
+
+function compositionUpdate(event){
+    var sel = window.getSelection();
+    if (!sel) return;
+    var r = sel.getRangeAt(0);
+    console.log(event.type, "\"" + event.data + '"', event);
+    console.log(r.startContainer, r.startOffset, r.endContainer, r.endOffset, r.startContainer.parentNode);
+    setTimeout(function(){
+        var sel = window.getSelection();
+        if (!sel) return;
+        var r = sel.getRangeAt(0);
+        console.log('rechecking range', r.startContainer, r.startOffset, r.endContainer, r.endOffset, r.startContainer.parentNode, r.startContainer.parentNode.parentNode);
+    }, 3000);
+    if(b.textContent == ''){
+        attachBuffer();
+    }
+    log(event.type);
+    log(r.startContainer.id);
+    log(r.startOffset);
+    log(r.endContainer.id);
+    log(r.endOffset);
+}
+
+function compositionEnd(event){
+	console.log(event.type, event.data, b.textContent, event);
+//    extractBuffer(event.data);
+//    detachBuffer();
+}
+
+function textInput(event){
+    console.log(event.data);
+	console.log(event.type, event.data, b.textContent, event);
+    extractBuffer(event.data);
+    detachBuffer();
+	event.preventDefault();
+	event.stopPropagation();
+}
+
+function input(event){
+    console.log(event.type, event)
+}
+//editor.addEventListener('keydown', compositionStart, false);
+//editor.addEventListener('keypress', compositionStart, false);
+editor.addEventListener('compositionstart', compositionStart, false);
+editor.addEventListener('compositionupdate', compositionUpdate, false);
+editor.addEventListener('compositionend', compositionEnd, false);
+editor.addEventListener('compositionend', input, false);
+//if($.browser.mozilla){
+//    editor.addEventListener('compositionend', compositionEnd, false);
+//    editor.addEventListener('input', textInput, false);
+//}
+//else
+//    editor.addEventListener('compositionend', function(event){console.log(event.data)}, false);
+editor.addEventListener('textInput', textInput, false);
+//editor.addEventListener('textinput', textInput, false);
+function mouseUpHandler(event){
+    var sel = window.getSelection();
+    console.log(sel.focusNode, sel.focusOffset, sel.anchorNode, sel.anchorOffset);
+}
+
+window.addEventListener('mouseup', mouseUpHandler, false);
+</script>
+
+</body>
+</html>

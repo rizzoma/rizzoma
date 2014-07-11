@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}Settings — Rizzoma.com{% endblock title %}
+
+{% block styles %}
+    <link type="text/css" rel="stylesheet" href="/s/css/page.css">
+    <link type="text/css" rel="stylesheet" href="/s/css/normalize-20120311.css" />
+    <link type="text/css" rel="stylesheet" href="/s/css/error.css" />
+    <link type="text/css" rel="stylesheet" href="/s/css/settings_new.css" />
+    <link type="text/css" rel="stylesheet" href="/s/fonts/fonts.css">
+    <link type="text/css" rel="stylesheet" href="/s/css/navigation.css">
+    <link type="text/css" rel="stylesheet" href="/s/css/account_setup_wizard.css">
+{% endblock styles %}
+
+{% block addition_meta %}
+    <link rel="search" type="application/opensearchdescription+xml" title="Rizzoma" href="/rizzomasearch.xml" />
+{% endblock addition_meta %}
+
+{% block scripts %}
+    <script type="text/javascript" src="/s/js/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="/s/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/s/js/history.js.1.8b1/compressed/history.js"></script>
+    <script type="text/javascript" src="/s/js/history.js.1.8b1/compressed/history.html4.js"></script>
+    <script type="text/javascript" src="/s/js/history.js.1.8b1/compressed/history.adapter.jquery.js"></script>
+    <script type="text/javascript" src="/s/js/coffeekup.js"></script>
+    <script type="text/javascript" src="/s/js/console_polyfill-0.1.0.js"></script>
+    <script type="text/javascript" src="/s/js/share.uncompressed.js"></script>
+    <script type="text/javascript" src="/s/js/jquery.placeholder.min.js"></script>
+    <script type="text/javascript">
+        {# Данные и функции, используемые разными вкладками #}
+        {% if userContacts %}
+        window.userContacts =  {{ userContacts|json_script_encode|raw }};
+        {% endif %}
+        window.userInfo = {{ userInfo|json_script_encode|raw }};
+        window.expressSessionId = "{{ sessionId|escape('js') }}";
+
+        function disable($el) {
+            $el.attr('disabled', 'disabled');
+        }
+
+        function enable($el) {
+            $el.removeAttr('disabled');
+        }
+
+        function renderError($field, msg) {
+            if(!msg) msg = 'Internal server error';
+            $field.text(msg).show();
+        }
+
+        $(document).ready(function() {
+            var TABS = ["profile-menu", "account-menu", "notifications-menu", "teams-menu", "storage-menu"];
+            var ALLOWED_TABS = {}
+            var SHOWN_TAB_CLASSES = '';
+            for (var i = 0; i < TABS.length; i++) {
+                ALLOWED_TABS[TABS[i]] = true;
+                SHOWN_TAB_CLASSES += ' ' + getTabShownClass(TABS[i]);
+            }
+            var TAB_URL_REGEXP = new RegExp('/settings/([^/]*)/([^/]*)$');
+            function getTabShownClass(tab) {
+                return tab + '-shown';
+            }
+            function getUrlInfo(url) {
+                var res = TAB_URL_REGEXP.exec(url);
+                if (!res) return null;
+                return {tab: res[1], action: res[2]};
+            }
+            function setTab(tab) {
+                var url = '/settings/' + tab + '/';
+                History.replaceState(null, null, url);
+            }
+            function processStateChange() {
+                var info = getUrlInfo(History.getState().url);
+                if(info && ALLOWED_TABS[info.tab]) {
+                    $('.js-page-wrapper').removeClass(SHOWN_TAB_CLASSES).addClass(getTabShownClass(info.tab));
+                } else {
+                    var tab = {% if userBy == 'auth' %}'profile-menu'{% else %}'notifications-menu'{% endif %};
+                    info = {tab: tab, action: null};
+                }
+                setTab(info.tab);
+                window.settings = info;
+            }
+            $('.js-menu-item a').click(function(e) {
+                History.replaceState(null, null, e.currentTarget.href);
+                e.preventDefault();
+            });
+            History.Adapter.bind(window, 'statechange', processStateChange);
+            processStateChange();
+
+            {# Функционал для показа ошибок #}
+            $(function() {
+                var $errorContainer = $('.js-page-error');
+                var $errorMessage = $errorContainer.find('.js-error-text');
+                var $refreshLink = $errorContainer.find('.js-refresh-page-link');
+                function showServerError(e) {
+                    var text = 'Internal error';
+                    if (e && e.code == 'wave_permission_denied' && e.message) text = e.message;
+                    $errorMessage.text(text);
+                    $errorContainer.addClass('shown');
+                }
+
+                function updateRefreshLink() {
+                    $refreshLink.attr('href', History.getState().url);
+                }
+
+                History.Adapter.bind(window, 'statechange', updateRefreshLink);
+                updateRefreshLink();
+                window.showServerError = showServerError;
+            });
+        });
+    </script>
+    <script type="text/javascript" src="/s/js/settings_index.js"></script>
+{% endblock scripts %}
+
+{% block content %}
+    {% if error and not error.action and error.message == 'Authorization required' %}
+        {# панель авторизации #}
+        {% include "auth/index.html" %}
+        <script type="text/javascript">
+            window.AuthDialog.initAndShow(false, '/settings/');
+        </script>
+    {% endif %}
+    <div class="js-page-wrapper page-wrapper">
+        <div class="page-error-container">
+            <div class="js-page-error page-error">
+                <img src="/s/img/attention_icon_red.png" class="attention-icon" />
+                <span class="js-error-text">Internal error</span>. <a href="/settings/" class="js-refresh-page-link">Please, refresh page</a>.
+            </div>
+        </div>
+        <div class="settings-header">
+            <div class="header-wrap">
+                <div>
+                    <a href="/">
+                        <img src="/s/img/settings/logo.png" width="227" height="55" alt="Rizzoma">
+                    </a>
+                </div>
+                <div class="header-title">
+                    <span class="profile-header">Profile settings</span>
+                    <span class="account-header">Plan settings</span>
+                    <span class="teams-header">Teams settings</span>
+                    <span class="notifications-header">Notifications settings</span>
+                    <span class="storage-header">Storage settings</span>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content-wrap">
+                <div class="left-menu-block">
+                    {% if userBy == 'auth' %}
+                        <div class="js-menu-item menu-item profile-menu-item"><a href="/settings/profile-menu/">Profile</a></div>
+                        <div class="js-menu-item menu-item account-menu-item"><a href="/settings/account-menu/">Plans</a></div>
+                        <div class="js-menu-item js-teams-menu-item menu-item teams-menu-item">
+                        <a href="/settings/teams-menu/">Teams</a>
+                            <div class="submenu-edit">Edit <span class="js-current-topic-name current-topic-name">RIZZOMA team</span></div>
+                            <div class="submenu-new">New team</div>
+                            <div class="submenu-payment">Payment</div>
+                            <div class="submenu-card-info">Card info</div>
+                        </div>
+                    {% endif %}
+                    <div class="js-menu-item menu-item notifications-menu-item"><a href="/settings/notifications-menu/">Notifications</a></div>
+                    {% if userBy == 'auth' %}
+                    <div class="js-menu-item menu-item storage-menu-item"><a href="/settings/storage-menu/">Storage<br/><span class="menu-info">Used {{usedSize|percent(uploadSizeLimit)}}% <span class="menu-info-description">({{usedSize|format_size}} of {{uploadSizeLimit|format_size}})</span></span></a></div>
+                    {% endif %}
+                </div>
+                {% if error and not error.action %}
+                    {% if error.message != 'Authorization required' %}
+                        <div class="error">{{ error.message }}</div>
+                    {% endif %}
+                {% else %}
+                    <div class="settings-content-block js-content-block">
+                        {# teams_content должен быть выше account_content, т.к. teams_content инициализирует window.userTeamTopics #}
+                        {% include "settings/profile_content.html" %}
+                        {% include "settings/notifications_content.html" %}
+                        {% include "settings/teams_content.html" %}
+                        {% include "settings/storage_content.html" %}
+                        {% include "settings/account_content.html" %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-wrap">
+                <a href="/about-terms.html?from=settings" target="_blank">Terms of use</a>
+                <a href="/about-privacy.html?from=settings" target="_blank">Privacy policy</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

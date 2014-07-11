@@ -1,0 +1,16 @@
+{% import 'notification/macroses.txt' as m %}
+{%- if dstUser.firstVisit -%}
+    {%- set fromChannel = 'email_accessrequestexisting' -%}
+{%- else -%}
+    {%- set utmCampaign = 'accessrequestnew' -%}
+    {%- set fromChannel = 'email_accessrequestnew' -%}
+{%- endif %}
+{% if from.name %}{{ from.name|raw }} ({{ from.email|raw }}){% else %}{{ from.email|raw }}{% endif %} requests access to your topic{% if waveTopic %} "{{ waveTopic|truncatewords_with_dots(4)|raw }}"{% endif %}<{{ m.fullUrl(baseUrl, waveUrl, null, utmCampaign, null, fromChannel) }}>.
+Would you like to grant access? Follow the link:
+
+<{{ m.grantAccessUrl(baseUrl, waveUrl, utmCampaign, fromChannel, from.email) }}>
+
+To deny access simply ignore this email.
+
+This message is sent by the robot, do not reply to it.
+{{ m.unsubscribeMessageTxt(baseUrl, dstUser.email, dstUser.notification.id, fromType) }}

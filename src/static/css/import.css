@@ -1,0 +1,47 @@
+/* 
+    Document   : import
+    Created on : 09.01.2012, 18:06:02
+    Author     : yury
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.import-statistic{
+    padding-bottom: 20px;
+}
+
+.import-info {
+    border-collapse: collapse;
+    color: #333333;
+    font-size: 13px;
+    font-family: arial, sans=serif;
+    width: 100%;
+}
+
+.import-info a.gwave {
+    color: #333333;
+}
+
+.import-info th {
+    text-align: left;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.import-info td {
+    padding: 6px 10px;
+}
+
+.import-info th {
+    padding: 10px;
+}
+
+.import-info .even {
+    background-color:#efefef;
+}
+
+.import-help-text {
+    background-color: #e4eaf0;
+    padding: 10px;
+    border-right: 1px solid #c4c7ca;
+}

@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>{{ companyName }} enterprise request</title>
+    </head>
+    <body>
+        <h1>User {{ from.name|default('no name') }} ({{ from.email }}) from company "{{ companyName }}" send enterprise request:</h1>
+        <p>
+            {{ comment }}
+        </p>
+            Contact email: < {{ contactEmail }} >
+    </body>
+</html>

@@ -1,0 +1,256 @@
+<div class="profile-content" id="profile-content">
+    <form action="/settings/account/" method="POST" enctype="multipart/form-data" id="profile-form">
+        <div class="right-content-block">
+            <div class="content-item-title">Profile picture:</div>
+            <div class="avatar-block">
+                <div class="icon account-avatar js-account-avatar" style="background-image: url({{ avatar|default('/s/img/user/unknown.png') }})"></div>
+                <div class="available-avatars js-available-avatars">
+                    {% if filtered.avatars -%}
+                        {%- for value in filtered.avatars -%}
+                            <div data-auth="{{ loop.key }}" class="icon account-avatar-small js-clickable-avatar {% if value == avatar %}chosen{% endif %}" style="background-image: url({{ value }});"></div>
+                        {%- endfor -%}
+                    {%- endif -%}
+                </div>
+                {%- if hasAuthByPassword -%}
+                    <div class="upload-avatar-block">
+                        <button type="button" class="js-change-photo">Upload photo</button>
+                        <input type="file" name="account_avatar" class="upload-avatar-input" id="change-photo-input">
+                    </div>
+                {%- endif %}
+            </div>
+        </div>
+
+        <div class="content-item profile-item">
+            <div class="content-item-title">Displayed name:</div>
+            <div class="content-item-data account-name-block">
+                {% if hasAuthByPassword %}
+                    <input type="text" placeholder="Name" name="account_name" value="{{ name }}" class="account-name js-account-name">
+                {% else %}
+                    <span class="account-name js-account-name ellipsis">{{ name }}</span>
+                {% endif %}
+
+                {% if filtered.names %}
+                    <div class="icon show-popup-button js-show-popup-button"></div>
+                    <div class="popup name-popup hidden js-popup js-name-popup">
+                        {% for value in filtered.names %}
+                            <div data-auth="{{ loop.key }}" class="ellipsis">{{ value }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="content-item profile-item">
+            <div class="content-item-title">My invitation emails:</div>
+            <div class="content-item-data account-email-block">
+                {% if filtered.emails %}
+                    {% for value in filtered.emails %}
+                        <div class="{% if filtered.emails|length < 2 %} insufficient-emails {% endif %} ellipsis">
+                            <input type="radio" name="account_email_auth" id="{{ loop.key }}" {% if email == value %}checked=checked{% endif %} value="{{ loop.key }}">
+                            <label for="{{ loop.key }}">{{ value }}</label>
+                        </div>
+                    {% endfor %}
+                    <div><a href="https://rizzoma.com/topic/41fbc62661b64d956fe1ededfc3d4675/">How to add other emails</a></div>
+                {% endif %}
+            </div>
+        </div>
+        <input type="hidden" name="account_avatar_auth">
+        <input type="hidden" name="account_name_auth">
+        <input type="hidden" name="update_account" value="save">
+    </form>
+
+    <div class="content-item profile-item">
+        <div class="content-item-title">Authentication accounts:</div>
+        <div class="content-item-data account-auth-block">
+            {% for auth in auths %}
+                {% if auth.email and auth.source!='auto' %}
+                    <div>
+                        <div class="ellipsis">
+                            <div class="icon auth-icon {{ auth.source }}" title="
+                                {%- if auth.source == 'google' -%}
+                                    By Google
+                                {%- else if auth.source == 'facebook' -%}
+                                    By Facebook
+                                {%- else -%}
+                                    By password
+                                {%- endif -%}
+                            "></div> {{ auth.email }}
+                        </div>
+                        {% if auth.source == 'password' %}
+                            <div>
+                                <a href="#" class="change-password js-change-password">Change password</a>
+                                <form action="/settings/password/" method="POST" class="update-password-form hidden js-update-password-form">
+                                    <input type="hidden" name="auth_id" value="{{ loop.key }}">
+                                    <input type="password" name="old_password" placeholder="Old password">
+                                    <input type="password" name="new_password" placeholder="New password">
+                                    <input type="hidden" name="update_password_btn" value="Change">
+                                    <button type="submit">Change</button>
+                                    <div class="error js-password-change-error"></div>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div><a href="https://rizzoma.com/topic/41fbc62661b64d956fe1ededfc3d4675/">How to add other accounts</a></div>
+        </div>
+    </div>
+
+    <div class="submit-block profile-item">
+        <button onclick="$('#profile-form').submit();" id="save-profile-form-btn" disabled="disabled">Save changes</button>
+        <div class="error js-profile-error"></div>
+    </div>
+
+    <script>
+        $(function(){
+            var $profileForm = $('#profile-form'), $availableAvatars = $('.js-available-avatars');
+
+            $('input[name="account_avatar_auth"]').val($availableAvatars.find('.chosen').data('auth'));
+
+            function chooseAvatar($avatar) {
+                $('.js-clickable-avatar').removeClass('chosen');
+                $avatar.addClass('chosen');
+                $('input[name="account_avatar_auth"]').val($avatar.data('auth'));
+                $('.js-account-avatar').css('background-image', $avatar.css('background-image'));
+                enable($('#save-profile-form-btn').text('Save changes'));
+            }
+
+            $('.js-change-photo').click(function(){
+                $('#change-photo-input').click();
+            });
+
+            $availableAvatars.click('.js-clickable-avatar', function(e) {
+                if(this == e.target) return;
+                chooseAvatar($(e.target));
+            });
+
+            $profileForm.on('change', 'input[type="radio"]', function() {
+                enable($('#save-profile-form-btn'));
+            });
+
+            $('.js-name-popup').click(function(event) {
+                var $target = $(event.target);
+                var text = $target.text();
+                var auth = $target.data('auth');
+                var $element = $('.js-account-name');
+                $element.is('input') ? $element.val(text) : $element.text(text);
+                enable($('#save-profile-form-btn'));
+                $('input[name="account_name_auth"]').val(auth);
+            });
+
+            $('.js-change-password').click(function(e){
+                e.preventDefault();
+                var $this = $(this);
+                $this.next().removeClass('hidden');
+                $this.hide();
+            });
+
+            function disableProfileFormInputs() {
+                $('.js-account-name').attr('readonly', 'readonly');
+                disable($('#change-photo-input'));
+                disable($('#profile-form').find('input[type="radio"]'));
+            }
+
+            function enableProfileFormInputs() {
+                $('.js-account-name').removeAttr('readonly');
+                enable($('#change-photo-input'));
+                enable($('#profile-form').find('input[type="radio"]'));
+            }
+
+            $profileForm.ajaxForm({
+                dataType: 'json',
+                beforeSubmit: function() {
+                    disable($('#save-profile-form-btn').text('Saving'));
+                    disableProfileFormInputs();
+                },
+                success: function(data) {
+                    var $submitBtn = $('#save-profile-form-btn').text('Save changes');
+                    enableProfileFormInputs();
+                    var $fileInput = $('#change-photo-input');
+                    $fileInput.replaceWith($fileInput.clone(true));
+                    if(data && data.err) {
+                        renderError($('.js-profile-error'), data.err);
+                        enable($submitBtn);
+                        return;
+                    }
+                    $('.js-profile-error').text('');
+                    var avatars = data.data.avatars;
+                    var $avatarsBlock = $('.js-available-avatars');
+                    if(avatars) {
+                        for(var auth in avatars) {
+                            var $avatar = $avatarsBlock.find('[data-auth="' + auth + '"]').first();
+                            if($avatar[0]) {
+                                var style = 'background-image: url(' + avatars[auth] + ');';
+                                if ($avatar.attr('style') != style) {
+                                    $avatar.attr('style', style);
+                                    chooseAvatar($avatar);
+                                }
+                                continue;
+                            }
+                            var html = '<div data-auth="' + auth + '" class="icon account-avatar-small js-clickable-avatar chosen';
+                            html += '" style="background-image: url(' + avatars[auth] + ');"></div>';
+                            $avatarsBlock.append(html);
+                            chooseAvatar($avatarsBlock.children().last());
+                        }
+                    }
+                },
+                error: function() {
+                    enable($('#save-profile-form-btn').text('Save changes'));
+                    enableProfileFormInputs();
+                    renderError($('.js-profile-error'));
+                }
+            });
+
+            $('#change-photo-input').on('change', function(){
+                $('#profile-form').submit();
+            });
+
+            $profileForm.find('.js-account-name').on('input propertychange', function(){
+                enable($('#save-profile-form-btn'));
+            });
+
+            $('.js-update-password-form').each(function(index, form){
+                var $form = $(form);
+                $form.ajaxForm({
+                    dataType: 'json',
+                    beforeSubmit: function() {
+                        disable($form.find('button').text('Saving'));
+                        disable($form.find('[type="password"]'));
+                    },
+                    success: function(data){
+                        enable($form.find('button').text('Change'));
+                        enable($form.find('[type="password"]'));
+                        if(data && data.err) {
+                            renderError($form.find('.js-password-change-error'), data.err);
+                            return;
+                        }
+                        $form.find('.js-password-change-error').hide();
+                        $form.clearForm();
+                        $form.addClass('hidden').prev().show();
+                    },
+                    error: function() {
+                        enable($form.find('button').text('Change'));
+                        enable($form.find('[type="password"]'));
+                        renderError($form.find('.js-password-change-error'));
+                    }
+                });
+            });
+
+            function hidePopups() {
+                $('.js-popup').hide();
+            }
+
+            $(document).ready(function(){
+                $(document).click(hidePopups);
+
+                $('.js-show-popup-button').click(function(e) {
+                    e.stopPropagation();
+                    var $popup = $(this).parent().find('.js-popup');
+                    var isVisible = $popup.is(':visible');
+                    hidePopups();
+                    if(!isVisible) $popup.show();
+                });
+            });
+        });
+    </script>
+</div>

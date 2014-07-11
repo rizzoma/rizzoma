@@ -1,0 +1,22 @@
+{% import 'notification/macroses.txt' as m %}
+<html>
+<head>
+    <title>Payment required</title>
+</head>
+    <body style="background-color: #ebf5fe; padding: 10px 20px;font-size: 14px;line-height: 20px;">
+        <p>
+            {% if dstUser.name %}Dear {{dstUser.name}}!<br>{% endif %}
+            You need to make a monthly payment for your Rizzoma {% if topics.length == 1 %}team{% else %}teams{% endif %}:<br>
+            {% for topic in topics %}
+                <b>{{ topic.teamName }}</b>: ${{ topic.amount/100}} for {% if topic.participantCount == 1 %}1 member{% else %}{{ topic.participantCount }} members{% endif %}.<br>
+            {% endfor %}
+            <br>
+            Please submit your payment <a href="{{baseUrl}}/settings/teams-menu/">here</a>. If no payment provided by {{ blockingDate|formated_short_date(dstUser.timezone) }} your {% if topics.length == 1 %}team{% else %}teams{% endif %} (and possibly all business account features) will be suspended.
+            If you have any questions please contact support@rizzoma.com<br>
+            <br><br>
+            Sincerely,<br>
+            Rizzoma Team
+        </p>
+        {{ m.logo() }}
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="{{ title }}">
+        <Require feature="rpc"/>
+        <Require feature="views"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+            {% if devMode -%}
+                <script src="//hangoutsapi.talkgadget.google.com/hangouts/_/api/hangout.js?v=1.1"></script>
+            {%- else -%}
+                <script src="//talkgadget.google.com/hangouts/_/api/hangout.js?v=1.1"></script>
+            {%- endif %}
+            <script>
+                (function(gapi) {
+                    var app = {
+                        init: function(event) {
+                            if (event.isApiReady) {
+                                var baseUrl = '{{ baseUrl }}';
+                                var initParams = this._getUrlInitParams();
+                                if (this._isEmpty(initParams)) {
+                                    initParams = this._getStateInitParams();
+                                } else {
+                                    this._setStateInitParams(initParams);
+                                }
+                                var topicId = initParams.topicId;
+                                if(topicId) {
+                                    baseUrl += topicId + '/';
+                                }
+                                document.location.href = baseUrl;
+                            }
+                        },
+                        _getUrlInitParams: function() {
+                            var result = {};
+                            var params = gapi.hangout.getStartData();
+                            if (params) {
+                                params = params.split(';');
+                                result.topicId = params[0];
+                            }
+                            return result;
+                        },
+                        _setStateInitParams: function(params) {
+                            gapi.hangout.data.submitDelta(params);
+                        },
+                        _getStateInitParams: function() {
+                            return gapi.hangout.data.getState();
+                        },
+                        _isEmpty: function(obj) {
+                            for(key in obj) {
+                                if (key) {return false;}
+                            }
+                            return true;
+                        }
+                    };
+                    gapi.hangout.onApiReady.add(function(evenet) {
+                        app.init(evenet);
+                    });
+                })(gapi);
+            </script>
+    ]]>
+    </Content>
+</Module>

@@ -1,0 +1,11 @@
+{% import 'notification/macroses.txt' as m %}
+{% if dstUser.firstVisit -%}
+    {%- set fromChannel = 'email_adduserexisting' -%}
+{%- else -%}
+    {%- set utmCampaign = 'addusernew' -%}
+    {%- set fromChannel = 'email_addusernew' -%}
+{%- endif -%}
+I invite you to the topic {% if waveTopic %} "{{ waveTopic|raw }}"{% endif %}. Here is the link <{{ m.addParticipantFullUrl(baseUrl, waveId, referalEmailHash, utmCampaign, fromChannel) }}>.
+
+This message is sent by the robot, do not reply to it.
+{{ m.unsubscribeMessageTxt(baseUrl, dstUser.email, dstUser.notification.id, fromType) }}

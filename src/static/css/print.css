@@ -1,0 +1,76 @@
+/**
+ * Стили для печати топика
+ */
+
+.page-description,
+.tabs-container,
+.navigation-container,
+.right-tools-panel,
+.connection-error-container.error-shown,
+.wave-notifications,
+.wave-header,
+.topic-tip,
+.wave-panel,
+.root-blip-menu,
+.blip-menu-container,
+.blip-reply-button,
+.blip-info,
+.popup-menu-container,
+.link-popup {
+    display: none !important;
+}
+
+.wave-container {
+    margin-left: 0 !important; /* Resizer устанавливает отступ через стиль, по-другому убрать не получится */
+    margin-right: 0;
+}
+
+.wave-content {
+    padding-top: 0;
+}
+
+.wave-blips {
+    overflow-y: visible;
+    position: static;
+}
+
+.wave-blips,
+.wave-content,
+.wave,
+.inner-wave-container,
+.wave-container,
+.page-content,
+body,
+html {
+    height: auto;
+}
+
+a::after {
+    content:" [" attr(href) "] ";
+}
+
+.attachment-preview,
+.attachment-content,
+.file-content {
+    page-break-inside: avoid;
+}
+
+.attachment-preview a::after,
+.attachment-content a::after,
+.file-content a::after {
+    display: none;
+}
+
+.blips-container {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.blip-container.active {
+    border-color: #D6D6D6;
+}
+
+.blip-container:last-child {
+    border-top-width: 2px;
+    margin-top: -2px;
+}

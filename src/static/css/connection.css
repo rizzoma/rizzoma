@@ -1,0 +1,29 @@
+/**
+ * Стили для отображения информации о соединении
+ */
+
+.connection-status-container {
+    display: inline-block;
+    float: right;
+    margin: 0 20px;
+}
+
+.connection-status-container > div {
+    display: inline-block;
+}
+
+.connection-status-container .connected {
+    display: none;
+}
+
+.connection-status-container .disconnected {
+    display: inline-block;
+}
+
+.connection-status-container.connected .connected {
+    display: inline-block;
+}
+
+.connection-status-container.connected .disconnected {
+    display: none;
+}

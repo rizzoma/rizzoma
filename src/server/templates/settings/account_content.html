@@ -1,0 +1,65 @@
+<div class="js-account-content account-content" id="account-content">
+    <div class="account-setup-wizard">
+        <div class="js-account-setup-wizard-content account-setup-wizard-content">
+
+        </div>
+        <div class="js-enterprise-request-content enterprise">
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        var AccountTypeSelect = window.accountTypeSelectExports.AccountTypeSelect;
+        var EnterpriseRequest = window.enterpriseRequestExports.EnterpriseRequest;
+
+        var ACCOUNT_TYPE_SELECTED_URL = '/api/rest/1/team/onAccountTypeSelected/?ACCESS_TOKEN=' + encodeURIComponent(window.expressSessionId);
+        var ENTERPRISE_REQUEST_URL = '/api/rest/1/team/sendEnterpriseRequest/?ACCESS_TOKEN=' + encodeURIComponent(window.expressSessionId);
+
+        var enterpriseRequester, selector;
+
+        function sendAccountTypeSelected() {
+            $.post(ACCOUNT_TYPE_SELECTED_URL);
+        }
+        function submitEnterpriseForm(companyName, email, comment) {
+            var data = {companyName: companyName, contactEmail: email, comment: comment};
+            $.post(ENTERPRISE_REQUEST_URL, data, function(res) {
+                if (res.err) {
+                    showServerError();
+                } else {
+                    showSelector(true);
+                }
+            });
+        }
+        function showEnterpriseRequestForm() {
+            sendAccountTypeSelected();
+            enterpriseRequester = new EnterpriseRequest($('.js-enterprise-request-content'));
+            enterpriseRequester.renderAndInit();
+            enterpriseRequester.on('submit', submitEnterpriseForm);
+            $('.js-account-content').addClass('enterprise-request-shown');
+        }
+        function showBusinessAccountForm() {
+            History.replaceState(null, null, '/settings/teams-menu/');
+            showTeamCreationForm();
+            sendAccountTypeSelected();
+        }
+        function showSelector(fromEnterpriseRequest) {
+            $('.js-account-setup-wizard-content').empty();
+            selector.renderAndInit(fromEnterpriseRequest);
+            $('.js-account-content').removeClass('enterprise-request-shown');
+        }
+        function isBusinessAccount() {
+            return window.userTeamTopics && window.userTeamTopics.length;
+        }
+        selector = new AccountTypeSelect($('.js-account-setup-wizard-content'));
+        if (isBusinessAccount()) {
+            $('.js-account-setup-wizard-content').addClass('is-business');
+            $('.js-page-wrapper').addClass('is-business');
+        } else {
+            $('.js-account-setup-wizard-content').removeClass('is-business');
+        }
+        // Переход на free аккаунт не реализован
+        selector.on('businessAccountClick', showBusinessAccountForm);
+        selector.on('enterpriseAccountClick', showEnterpriseRequestForm);
+    });
+</script>

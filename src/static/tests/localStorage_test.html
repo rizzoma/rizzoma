@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head><title>LocalStorage Test</title></head>
+    <body>
+        <section>
+            Works on Chrome 21.0.1180.89, FF 15.0.1, Opera 12.02, Opera Mobile 12.00
+        </section>
+        <div id="results"></div>
+        <script>
+            var results = document.getElementById('results');
+            function addResult(key, oldValue, newValue){
+                results.appendChild(document.createTextNode(key + '>>>> ' + oldValue + ' <<<< ' + newValue));                
+                results.appendChild(document.createElement('hr'));
+            }
+            window.addEventListener('storage', function(e){
+                console.log('storage change', e);
+                addResult(e.key, e.oldValue, e.newValue);
+            }, false);
+            function test1(){
+                console.log('running test1');
+                localStorage.setItem('test', {test: 'test'});
+            }
+            function test2(){
+                console.log('running test2');
+                localStorage.setItem('test1', 'test1');
+            }
+            function test3(){
+                console.log('running test3');
+                localStorage.removeItem('test1');
+            }
+            function test4(){
+                console.log('running test4');
+                localStorage.clear();
+            }
+            function startTest(test, tl){
+                setTimeout(test, tl);
+            }
+            startTest(test1, 10);
+            startTest(test2, 100);
+            startTest(test3, 200);
+            startTest(test4, 300);
+        </script>
+    </body>
+</html>

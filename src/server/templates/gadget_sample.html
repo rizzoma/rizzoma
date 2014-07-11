@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>Gadget testing container</title>
+<link rel="stylesheet" href="{{shindigUrl}}/container/gadgets.css">
+<style type="text/css">
+  body {
+    font-family: arial, sans-serif;
+  }
+  
+  .subTitle {
+    font-size: smaller;
+    float: right;
+  }
+
+  .gadgets-gadget-chrome {
+    width: 60%;
+    float: none;
+    margin: auto;
+	border: 1px solid green;
+  }
+
+  .gadgets-gadget {
+    width: 100%;
+  }
+
+</style>
+<script type="text/javascript" src="/gadgets/js/core:rpc:pubsub:shindig-container.js?c=1&debug=1"></script>
+<script type="text/javascript" src="/s/js/gadget_sample.js"></script>
+<script type="text/javascript">
+  function initRpcs() {
+    var frameId = "remote_iframe_0";
+	
+    gadgets.rpc.register("wave_gadget_state", function(obj) {
+	  setTimeout(gadgets.rpc.call(frameId, "wave_gadget_state", null, obj), 1000);	  
+      console.log('send: ', { type: "gadget_state", content: obj } );	  
+    });
+    gadgets.rpc.register("wave_state_delta", function(obj) {
+      console.log('send: ', { type: "state_delta", content: obj } );	  
+    });
+    gadgets.rpc.register("wave_private_gadget_state", function(obj) {
+	  setTimeout(gadgets.rpc.call(frameId, "wave_private_gadget_state", null, obj), 1000);	  
+      console.log('send: ', { type: "private_gadget_state", content: obj } );
+    });
+	gadgets.rpc.register("wave_private_state_delta", function(obj) {
+      console.log('send: ', { type: "private_state_delta", content: obj } );
+    });	
+	gadgets.rpc.register("set_snippet", function(str) {
+      console.log('send: ', { type: "set_snippet", content: str } );
+    });
+	gadgets.rpc.register("setIframeWidth", function(width) {
+      console.log('send: ', { type: "setIframeWidth", content: width } );
+    });
+  }
+
+  function initSocket(version) {
+	  var frameId = "remote_iframe_0";
+
+	  content = {};
+	  content.myId = "1";
+	  content.authorId = "1";
+	  content.participants = [
+		{"id": "1",
+		"displayName": "Vitaluysha",
+		"thumbnailUrl": "http://site.com/main/images/x_home/home_spinball.jpg"},
+		{"id": "2",
+		"displayName": "Ne Vitaluysha",
+		"thumbnailUrl": "http://site.com/main/images/x_home/home_spinball.jpg"}
+	  ];
+	  console.log("call: ", frameId, "wave_participants", null, content);
+	  gadgets.rpc.call     (frameId, "wave_participants", null, content);
+	  
+	  console.log("call: ", frameId, "wave_gadget_state", null, {});
+	  gadgets.rpc.call     (frameId, "wave_gadget_state", null, {});
+	  
+	  console.log("call: ", frameId, "wave_state_delta", null, {});
+	  gadgets.rpc.call     (frameId, "wave_state_delta", null, {});
+	  
+	  console.log("call: ", frameId, "wave_private_gadget_state", null, {});
+	  gadgets.rpc.call     (frameId, "wave_private_gadget_state", null, {});
+	  
+	  console.log("call: ", frameId, "wave_private_state_delta", null, {});
+	  gadgets.rpc.call     (frameId, "wave_private_state_delta", null, {});
+	  
+	  console.log("call: ", frameId, "wave_gadget_mode", null, "EDIT");
+	  gadgets.rpc.call     (frameId, "wave_gadget_mode", null, "EDIT");
+		
+		//socket.on('message', function(data) {
+		//  gadgets.rpc.call(frameId, "wave_" + data.type, null, data.content);
+		//});
+		//socket.connect();
+  }
+
+  gadgets.rpc.register('wave_enable', initSocket);
+  initRpcs();
+</script>
+</head>
+<body>
+  <div id="headerDiv">
+	<input type="button" value="Add Gadget" onclick="initGadget('http://ew-wave.googlecode.com/svn/trunk/gadgets/poll/poll.xml','gadget-chrome');"/>
+	<input type="button" value="Add Gadget2" onclick="initGadget('http://issue-tracker-robot.appspot.com/gadget.xml','gadget-chrome2');"/>
+    <input type="button" value="Add Gadget3" onclick="initGadget('http://www.labpixies.com/campaigns/todo/todo.xml','gadget-chrome3');"/>
+  </div>
+  <div id="gadget-chrome" class="gadgets-gadget-chrome"></div>
+  <div id="gadget-chrome2" class="gadgets-gadget-chrome"></div>
+  <div id="gadget-chrome3" class="gadgets-gadget-chrome"></div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+.acResults {
+    z-index: 7;
+    max-width: 400px;
+    background-color: white;
+    border: 1px solid #AAAAAA;
+}
+
+.acResults li {
+    margin: 0;
+    padding: 4px;
+    white-space: nowrap;
+    -moz-box-sizing:    border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing:        border-box;
+}
+
+.acSelect {
+	background-color: #5CAAF7;
+	color: #FFF;
+}
+
+.acResults li div {
+    float: right;
+    margin-left: 4px;
+    width: 27px;
+    height: 27px;
+    background-position: center;
+    border: 1px solid #BABABA;
+}
+
+.acResults .participant {
+    font-weight: bold;
+}
+
+.acResults li span {
+    display: block;
+    overflow: hidden;
+}

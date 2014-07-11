@@ -1,0 +1,95 @@
+h1 {
+    margin-left: 120px;
+    margin-bottom: 30px;
+}
+.report-data h2 {
+    margin-left: 30px;
+}
+.report-data h3 {
+    border: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    padding: 5px;
+    border-color: #11a914;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    margin-top: 30px;
+    max-width: 600px;
+}
+.report-data li {
+    margin-left: 45px;
+}
+.no-result {
+    margin-left: 50px;
+    font-family: Arial;
+    font-size: 14pt;
+}
+.run-buttons{
+    float: right;
+}
+.pass {
+    margin: 3px;
+    font-size: 10pt;
+    color: green;
+}
+.fail {
+    margin: 3px;
+    font-size: 10pt;
+    color: red;
+}
+.fail > pre {
+    color: #000000;
+}
+#tests {
+    margin-rightt: 50px;
+    vertical-align: top;
+    border: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 20px;
+    /*min-width: 600px;*/
+    min-height: 600px;
+    float: left;
+    width: 30%;
+}
+#report {
+    margin-rightt: 50px;
+    vertical-align: top;
+    border: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 20px;
+    /*min-width: 900px;*/
+    min-height: 600px;
+    float: left;
+    align: center;
+    width: 60%;
+}
+#tests input {
+    margin: 5px;
+    margin-left: 15px;
+}
+label, input {
+    cursor: pointer;
+}
+.report-data {
+    max-width: 700px;
+}
+.error-data {
+    margin: 10px;
+    /*white-space: nowrap;*/
+}
+.select-all-button {
+    margin-left: 15px;
+}
+.select-all-button:link {
+    color: #0000ff; /* Цвет ссылок */
+}
+.select-all-button:visited {
+    color: #0000ff; /* Цвет посещенных ссылок */
+}
+.run-panel {
+    margin: 20px;
+}

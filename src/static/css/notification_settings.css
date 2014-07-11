@@ -1,0 +1,39 @@
+.content#notification-settings-content {
+    width: 650px;
+    font-size: 15px;
+}
+
+.settings {
+    padding-left: 25px;
+}
+
+.settings-header {
+    padding-top: 25px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.settings-box {
+    padding-bottom: 20px;
+}
+
+.settings-group {
+    border-bottom: 1px solid #CCC;
+    padding: 10px 0px;
+}
+.settings-group-header {
+    font-weight: bold;
+}
+
+.settings-group-options {
+    padding-top: 3px;
+}
+
+.settings-group-option {
+    font-size: 13px;
+    padding-right: 20px;
+}
+
+.settings-form {
+    padding-bottom: 40px;
+}

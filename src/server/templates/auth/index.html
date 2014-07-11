@@ -1,0 +1,272 @@
+<script type="text/javascript" src="/s/js/auth.js"></script>
+
+<style type="text/css">
+    .auth-container {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        -moz-transition: top 1s;
+        -webkit-transition: top 1s;
+        -o-transition: top 1s;
+        top: 0;
+        left: 0;
+        text-align: center;
+    }
+    .auth-dialog {
+        text-align: center;
+        width: 262px;
+        border: 1px solid #7aa1a5;
+        margin: 80px auto;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-family: PFAgoraSansProLightRegular, Helvetica, Arial;
+        -moz-box-shadow: 0 0 20px #00545e;
+        -webkit-box-shadow: 0 0 20px #00545e;
+        box-shadow: 0 0 20px #00545e;
+        color: #6c6c6c;
+        background-color: #ffffff;
+        font-size: 14px;
+        font-weight: bold;
+        position: relative;
+        height: 426px;
+        z-index: 15;
+        line-height: normal;
+    }
+    .close-auth-dialog-btn {
+        background: url(/s/img/auth/close_btn.png) right no-repeat;
+        display: block;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        right: 8px;
+        top: 4px;
+    }
+    .auth-dialog .google-sign-in-btn, .auth-dialog .facebook-sign-in-btn, .auth-dialog .text-field, .auth-dialog .btn {
+        line-height: 33px;
+        height: 33px;
+        margin: 15px auto;
+        width: 198px;
+        font-family: PFAgoraSansProLightRegular, Helvetica, Arial;
+        display: block;
+    }
+    .auth-dialog .google-sign-in-btn, .auth-dialog .facebook-sign-in-btn {
+        display: block;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        padding-left: 40px;
+        width: 214px;
+        margin: 14px auto;
+        line-height: 51px;
+        height: 51px;
+    }
+    .auth-dialog .google-sign-in-btn {
+        background: url(/s/img/auth/btns.png) no-repeat -5px -4px;
+    }
+    .auth-dialog .google-sign-in-btn:hover {
+        background: url(/s/img/auth/btns.png) no-repeat -5px -61px;
+    }
+    .auth-dialog .google-sign-in-btn:active {
+        background: url(/s/img/auth/btns.png) no-repeat -5px -120px;
+    }
+    .auth-dialog .facebook-sign-in-btn {
+        background: url(/s/img/auth/btns.png) no-repeat -5px -178px;
+    }
+    .auth-dialog .facebook-sign-in-btn:hover {
+        background: url(/s/img/auth/btns.png) no-repeat -5px -235px;
+    }
+    .auth-dialog .facebook-sign-in-btn:active {
+        background: url(/s/img/auth/btns.png) no-repeat -5px -294px;
+    }
+    .auth-container.hidden, .auth-container .hidden {
+        display: none;
+    }
+    .auth-dialog .text-field {
+        border: 1px solid #a2a2a2;
+        padding-left: 36px;
+        font-size: 18px;
+    }
+
+    .auth-dialog .btn {
+        color: white;
+        font-size: 18px;
+        margin: -1px auto;
+        width: 243px;
+        line-height: 47px;
+        height: 47px;
+        font-weight: bold;
+        border: 0;
+    }
+    .auth-dialog .sign-in-btn {
+        background: url(/s/img/auth/btns.png) no-repeat -10px -352px;
+    }
+    .auth-dialog .sign-in-btn:hover {
+        background: url(/s/img/auth/btns.png) no-repeat -10px -409px;
+    }
+    .auth-dialog .sign-in-btn.active, .auth-dialog .sign-in-btn:active {
+        background: url(/s/img/auth/btns.png) no-repeat -10px -468px;
+    }
+    .auth-dialog .sign-up-btn {
+        background: url(/s/img/auth/btns.png) no-repeat -10px -526px;
+    }
+    .auth-dialog .sign-up-btn:hover {
+        background: url(/s/img/auth/btns.png) no-repeat -10px -583px;
+    }
+    .auth-dialog .sign-up-btn.active, .auth-dialog .sign-up-btn:active {
+        background: url(/s/img/auth/btns.png) no-repeat -10px -642px;
+    }
+    .auth-dialog .forgot-password-btn {
+        background: url(/s/img/auth/btns.png) no-repeat -10px -700px;
+    }
+    .auth-dialog .forgot-password-btn:hover {
+        background: url(/s/img/auth/btns.png) no-repeat -10px -757px;
+    }
+    .auth-dialog .forgot-password-btn.active, .auth-dialog .forgot-password-btn:active {
+        background: url(/s/img/auth/btns.png) no-repeat -10px -816px;
+    }
+    .auth-dialog .name-field {
+        background: url(/s/img/auth/person.png) 10px center no-repeat;
+    }
+    .auth-dialog .email-field {
+        background: url(/s/img/auth/envelope.png) 10px center no-repeat;
+    }
+    .auth-dialog .password-field {
+        background: url(/s/img/auth/lock.png) 10px center no-repeat;
+    }
+    .auth-dialog .or-glue {
+        background: url(/s/img/auth/or_glue.png) no-repeat center center;
+        height: 26px;
+    }
+
+    .auth-dialog .link {
+        color: #198b8a;
+        font-weight: bold;
+    }
+
+    .auth-dialog .link:hover {
+        color: black;
+    }
+
+    .auth-dialog .amnesia-img {
+        margin: 34px auto 12px;
+    }
+    .auth-dialog .amnesia {
+        color: #077e87;
+        font-size: 22px;
+        margin: 20px 0px 19px;
+    }
+    .amnesia-descr {
+        margin: 10px 5px 46px;
+    }
+    .auth-container .errors {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        padding: 80px 0 0 0;
+        z-index: 17;
+    }
+    .auth-container .errors.hide-before {
+        padding: 334px 0 0 0
+    }
+    .auth-container .errors .before {
+        display: block;
+        width: 262px;
+        padding: 14px;
+        height: 110px;
+        margin: 10px auto;
+        background: #ffffff;
+        opacity: 0.5;
+        z-index: 17;
+    }
+    .auth-container .errors.hide-before .before {
+        display: none;
+    }
+    .auth-container .errors span {
+        color: #ffffff;
+        background: url(/s/img/auth/error.png) no-repeat 17px 8px #be0216;
+        padding: 10px 40px 10px 54px;
+        box-shadow: 0 5px 10px #939393;
+        white-space: nowrap;
+        border-radius: 3px;
+        z-index: 17;
+    }
+    .auth-container .errors .after {
+        display: block;
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #be0216;
+        box-shadow: 0 3px 10px #939393;
+        margin: 10px auto;
+        z-index: 17;
+    }
+    .auth-dialog .error-border {
+        border: 1px solid red;
+    }
+    .auth-dialog .info {
+        color: #058a88;
+    }
+    .auth-dialog .msg {
+        margin: 16px 0px;
+    }
+    .auth-dialog #sign-in-form .msg {
+        margin:22px 0px 16px;
+    }
+    .auth-dialog #sign-up-form .msg {
+        margin: 12px 0px;
+    }
+    .auth-dialog #forgot-password-form .msg {
+        margin: 22px 0 12px;
+    }
+    .auth-dialog .show-forgot-password-form-link {
+        margin: 0px;
+        display: block;
+    }
+
+</style>
+<div class="auth-container js-auth-dialog hidden">
+    <div class="notification-overlay"></div>
+    <div class="js-errors errors hidden">
+        <div class="before"></div>
+        <span class="js-msg"></span>
+        <div class="after"></div>
+    </div>
+    <div class="auth-dialog">
+        <a href="#" class="close-auth-dialog-btn js-close-auth-dialog-btn hidden" title="Close"></a>
+        <form action="/" method="post" id="sign-in-form" >
+            <a href="/auth/google/?url=%2Ftopic%2F" class="js-google-login-link google-sign-in-btn"></a>
+            <a href="/auth/facebook/?url=%2Ftopic%2F" class="js-facebook-login-link facebook-sign-in-btn"></a>
+            <div class="or-glue"></div>
+            <input type="email" placeholder="Email" name="username" class="text-field email-field" />
+            <input type="password" placeholder="Password" name="password" class="text-field password-field" />
+            <input type="submit" value="" class="btn sign-in-btn" />
+            <div class="msg">Don't have an account? <a href="/auth/register/" class="link js-show-sign-up-form-link" >Sign up</a></div>
+            <a href="/auth/register/" class="link js-show-forgot-password-form-link show-forgot-password-form-link" >Forgot password?</a>
+        </form>
+
+        <form action="/" method="post" id="sign-up-form" class="hidden" >
+            <a href="/auth/google/?url=%2Ftopic%2F" class="js-google-login-link google-sign-in-btn"></a>
+            <a href="/auth/facebook/?url=%2Ftopic%2F" class="js-facebook-login-link facebook-sign-in-btn"></a>
+            <div class="or-glue"></div>
+            <div class="js-success-msg msg info hidden"></div>
+            <input type="text" placeholder="Name" name="name" class="text-field name-field" />
+            <input type="email" placeholder="Email" name="username" class="text-field email-field" />
+            <input type="password" placeholder="Password" name="password" class="text-field password-field" />
+            <input type="submit" value="" class="btn sign-up-btn" />
+            <div class="msg">Already have an account? <a href="/topic/" class="link js-show-sign-in-form-link" >Sign in</a></div>
+        </form>
+
+        <form action="/" method="post" id="forgot-password-form" class="hidden">
+            <img class="amnesia-img" src="/s/img/auth/amnesia.png" />
+            <div class="amnesia" >Forgot password?</div>
+            <div class="amnesia-descr">Enter email you registered with and we'll send you a reset password link.</div>
+            <div class="js-success-msg msg info hidden"></div>
+            <input type="email" placeholder="Email" name="username" class="text-field email-field"/>
+            <input type="submit" value="" class="btn forgot-password-btn" />
+            <div class="msg">Want to try again? <a href="/topic/" class="link js-show-sign-in-form-link" >Go back</a></div>
+        </form>
+
+    </div>
+</div>

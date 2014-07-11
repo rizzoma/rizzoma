@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+UI settings — Rizzoma.com
+{% endblock title %}
+
+{% block styles %}
+<link type="text/css" href="/s/css/normalize-20120311.css" rel="stylesheet" />
+<link type="text/css" href="/s/css/simple_page.css" rel="stylesheet" />
+<link type="text/css" href="/s/css/settings_ui.css" rel="stylesheet" />
+{% endblock styles %}
+
+{% block scripts %}
+<script type="text/javascript" src='/s/js/jquery-1.7.2.js'></script>
+<script type="text/javascript" src='/s/js/jquery.cookies.js'></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var defaultUiv = 0, uiv = parseInt($.cookie('uiv'));
+    if(isNaN(uiv) || uiv===null || $('.js-settings-uiv input[value="'+uiv+'"]').length==0) uiv = defaultUiv;
+    $('.js-settings-uiv input[value="'+uiv+'"]').attr('checked', true);
+
+    $('.js-settings-uiv input').change(function() {
+        uiv = $('.js-settings-uiv input:checked').val();
+        $.cookie('uiv', uiv, {path: '/', expires: 20});
+        $('.js-saved-message').show();
+    });
+
+    fetchVersion = function(inputItem) {
+        var msgElem = $(inputItem).parent().find('span'), uiv = $(inputItem).val();
+        msgElem.text('fetching version...');
+        $.ajax({
+            url: '/status/version.txt?uiv='+(uiv || 0), cache: false, timeout: 5000
+        }).done(function(msg) {
+            msgElem.text('version '+msg);
+        }).fail(function(jqXHR, textStatus) {
+            msgElem.text('unavailable ('+textStatus+')');
+        });
+    };
+    $('.js-settings-uiv input').each(function(i, v) {
+        fetchVersion(v);
+    });
+
+});
+</script>
+{% endblock scripts %}
+
+{% block content %}
+<div class="content">
+    <a href="/"><img src="/s/img/logo_rizzoma.png" alt="Rizzoma logo" class="logo"/></a>
+    <div class="settings-uiv js-settings-uiv">
+        <h1>Application interface version</h1>
+        <label><input type="radio" name="uiv" value="0"/> Current interface <span></span></label>
+        <label><input type="radio" name="uiv" value="4"/> Next 1 (experiments) <span></span></label>
+        <label><input type="radio" name="uiv" value="2"/> Next 2 (experiments) <span></span></label>
+        <label><input type="radio" name="uiv" value="3"/> Next 3 (experiments) <span></span></label>
+        <div class="info-message js-saved-message" style="display: none">
+            Preferred version was saved into cookie. <a href="/topic/" target="_blank">Open Rizzoma</a>.
+        </div>
+    </div>
+    <div class="footer">
+        <a href="/">Rizzoma</a> is a real-time communication and collaboration tool
+    </div>
+
+</div>
+{% endblock content %}

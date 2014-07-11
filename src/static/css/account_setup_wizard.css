@@ -1,0 +1,404 @@
+/**
+ * Стили форм для работы с team-топиками и для работы с типом аккаунта. Используются при первом входе
+ * и на странице настроек.
+ */
+
+.account-setup-wizard {
+    font-family: "PFAgoraSansProLightRegular", arial, tahoma;
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #C2C9CF;
+    z-index: 10000;  /*нужно большое значение чтобы перекрыть все остальные всплывающие окна*/
+    min-height: 855px;
+    min-width: 981px;
+}
+.account-setup-wizard ul {
+    margin: 0;
+    padding: 0;
+}
+.account-setup-wizard .steps-container,
+.account-setup-wizard .footer-container {
+    width: 881px; /* = min-page-width(981) - .first-step-container:padding-left(100) */
+    margin: 0 auto;
+}
+.account-setup-wizard .steps-container {
+    height: 100%;
+    padding-left: 50px;
+}
+.account-setup-wizard .account-setup-wizard-header {
+    white-space: nowrap;
+    margin: 0 0 80px -75px;
+    padding-top: 55px;
+}
+.account-setup-wizard .logo {
+    background: url('/s/img/account_setup_logo.png') 0 0 no-repeat;
+    width: 241px;
+    height: 62px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.account-setup-wizard .text {
+    display: inline-block;
+    font-size: 30px;
+    color: #fff;
+    vertical-align: middle;
+    margin-left: 35px;
+}
+.account-setup-wizard .account-setup-wizard-content {
+    white-space: nowrap;
+    position: relative;
+}
+.account-setup-wizard .content-block, .setup-steps {
+    display: inline-block;
+    vertical-align: top;
+}
+.account-setup-wizard .content-block {
+    margin-left: 47px;
+}
+@media screen and (min-width: 1280px) {
+    .account-setup-wizard .content-block {
+        margin-left: 80px;
+    }
+    .account-setup-wizard .steps-container {
+        padding-left: 80px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .account-setup-wizard .content-block {
+        margin-left: 110px;
+    }
+    .account-setup-wizard .steps-container {
+        padding-left: 100px;
+    }
+}
+.account-setup-wizard .content-block::before {
+    content: '';
+    position: absolute;
+    width: 67px;
+    height: 510px;
+    background: url('/s/img/account_setup_delimiter.png') 0 0 no-repeat;
+    left: 125px;
+    top: -30px;
+}
+.account-setup-wizard .setup-steps {
+    display: inline-block;
+    vertical-align: top;
+    list-style-type: none;
+    color: #4C5A68;
+    padding: 0 30px 30px 20px;
+    font-size: 18px;
+}
+.account-setup-wizard .setup-steps li {
+    margin-bottom: 20px;
+    position: relative;
+    height: 35px;
+}
+.account-setup-wizard .setup-steps li.active div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -27px;
+    background: url('/s/img/account_setup_active.png') 0 0 no-repeat;
+    width: 20px;
+    height: 20px;
+}
+.account-setup-wizard .setup-steps li.disabled,
+.account-setup-wizard .setup-steps li.completed {
+    color: #8B959F;
+    line-height: 16px;
+}
+.account-setup-wizard .setup-steps li.completed {
+    cursor: pointer;
+}
+.account-setup-wizard .setup-steps li.completed div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -27px;
+    background: url('/s/img/account_setup_completed.png') 0 0 no-repeat;
+    width: 21px;
+    height: 19px;
+}
+.account-setup-wizard .setup-steps li.completed span {
+    font-size: 14px;
+}
+.account-setup-wizard .account-type {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 12px;
+    width: 212px;
+}
+.account-setup-wizard .top-description h2, .top-description h3 {
+    margin: 0 0 5px 0;
+}
+.account-setup-wizard .top-description h2 {
+    font-size: 22px;
+}
+.account-setup-wizard .top-description h3 {
+    font-size: 14px;
+    color: #0A9091;
+}
+.account-setup-wizard .top-description {
+    background: #fff;
+    padding: 20px;
+    position: relative;
+    font-size: 13px;
+    height: 190px;
+}
+.account-setup-wizard .top-description .recommended {
+    position: absolute;
+    top: -3px;
+    right: 1px;
+    height: 151px;
+    width: 41px;
+    background: url('/s/img/account_setup_recommended.png') 0 0 no-repeat;
+}
+.account-setup-wizard .top-description ul,
+.account-setup-wizard .top-description .plan-note {
+    list-style-position: inside;
+    margin-top: 30px;
+    font-family: arial;
+    white-space: normal;
+}
+.account-setup-wizard .top-description li {
+    margin-bottom: 7px;
+}
+.account-setup-wizard .bottom-description {
+    background: #18B0B2;
+    padding: 20px;
+    white-space: normal;
+    text-align: center;
+}
+.account-setup-wizard .account-type:nth-child(2) .bottom-description {
+    background: #0da8dd;
+}
+.account-setup-wizard button {
+    font-size: 14px;
+}
+.account-setup-wizard .bottom-description button {
+    width: 100%;
+    height: 40px;
+}
+.account-setup-wizard .bottom-description .price {
+    display: inline-block;
+    color: white;
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+.account-setup-wizard .account-setup-wizard-footer {
+    background: #2F363C;
+    margin-top: -97px;
+    height: 97px;
+}
+.account-setup-wizard .footer-container {
+    padding-top: 40px;
+}
+.account-setup-wizard .footer-container a {
+    color: #596C7C;
+    margin: 30px 0 0 30px;
+}
+.account-setup-wizard .from-enterprice {
+    position: absolute;
+    top: -88px;
+    font-size: 22px;
+    color: #4C5A68;
+}
+.account-setup-wizard input {
+    border: none;
+    padding: 10px 18px;
+    font-size: 14px;
+}
+.account-setup-wizard .company-block input {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.account-setup-wizard .contact-picker-block {
+    display: inline-block;
+    position: relative;
+}
+.account-setup-wizard .business .contact-picker-block {
+    padding-top: 60px;
+}
+.account-setup-wizard .contact-picker-block::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 50px;
+    background: url('/s/img/account_setup_arrow.png') 0 0 no-repeat;
+    left: -25px;
+    top: 220px;
+}
+.account-setup-wizard .company-block {
+    display: inline-block;
+    vertical-align: top;
+    width: 315px;
+    margin-right: 35px;
+}
+.account-setup-wizard .company-block .team-members {
+    height: 382px;
+    background: #fff;
+    width: 100%;
+    margin-right: 35px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.account-setup-wizard .business .company-block .team-members {
+    margin-top: 25px;
+}
+.account-setup-wizard .team-member {
+    background: #E5EAF1;
+    border: 2px solid #fff;
+    padding: 10px 15px;
+    position: relative;
+}
+.account-setup-wizard .team-member:not(:last-child) {
+    border-bottom: none;
+}
+.account-setup-wizard .avatar {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 15px;
+    line-height: 35px;
+}
+.account-setup-wizard .info {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 14px;
+    font-family: arial;
+}
+.account-setup-wizard .name {
+    font-weight: bold;
+}
+.account-setup-wizard .name,
+.account-setup-wizard .email {
+    width: 200px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.account-setup-wizard .remove-item {
+    background: url('/s/img/account_setup_remove_participant.png') 0 0 no-repeat;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    cursor: pointer;
+}
+.account-setup-wizard .contact-picker-email{
+    border-radius: 0;
+    height: auto;
+    padding: 8px 16px;
+}
+.account-setup-wizard .contact-picker-contacts {
+    margin-top: 7px;
+    border: 1px solid #fff;
+}
+.account-setup-wizard .contact-list-empty-message {
+    color: #fff;
+    background: #C2C9CF;
+    height: 100%;
+}
+.account-setup-wizard .contact-picker-block .button {
+    font-size: 14px;
+    height: 34px;
+    padding: 0 14px;
+}
+.account-setup-wizard .centered-button-block {
+    margin-top: 30px;
+    text-align: center;
+}
+.account-setup-wizard .centered-button {
+    height: 40px;
+    padding: 0 30px;
+}
+.account-setup-wizard .enterprise .form-field input,
+.account-setup-wizard .enterprise > input {
+    width: 315px;
+    margin-bottom: 15px;
+}
+.account-setup-wizard .error-text {
+    margin-left: 19px;
+    position: absolute;
+    top: -27px;
+}
+.account-setup-wizard .contact-picker-block .error-text {
+    margin-left: 14px;
+    top: 35px;
+}
+.account-setup-wizard .enterprise .form-field span {
+    margin-left: 15px;
+}
+.account-setup-wizard .error-text,
+.account-setup-wizard .enterprise .form-field span {
+    font-family: arial, tahoma;
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    display: none;
+    opacity: 0.4;
+}
+.account-setup-wizard .enterprise .form-field.error span {
+    display: inline;
+}
+.account-setup-wizard .enterprise .form-field.error {
+    display: block;
+}
+.account-setup-wizard .enterprise > textarea {
+    height: 130px;
+    width: 650px;
+    border: none;
+    padding: 10px 17px;
+}
+.account-wizard-banner {
+    position: absolute;
+    z-index: 4;
+    top: 50px;
+    width: 100%;
+    height: 52px;
+    border-top: 1px solid #268C8E;
+    border-bottom: 1px solid #268C8E;
+    background: #18AFB2;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+}
+
+.account-wizard-banner img,
+.account-wizard-banner .content-block {
+    vertical-align: middle;
+    display: inline-block;
+    margin-top: 7px;
+}
+
+.account-wizard-banner .content-block {
+    margin-left: 15px;
+}
+
+.account-wizard-banner .open-account-select {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.close-account-wizard-banner {
+    position: absolute;
+    right: 12px;
+    top: 13px;
+    height: 18px;
+    cursor: pointer;
+    color: #000;
+    text-decoration: underline;
+    font-size: 13px;
+}
+
+.account-wizard-banner .close-account-wizard-banner img {
+    margin: 0 0 0 5px;
+}

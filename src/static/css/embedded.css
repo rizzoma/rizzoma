@@ -1,0 +1,194 @@
+body.anonymous,
+body.anonymous .notification-overlay,
+body.anonymous .ctm-overlay,
+body.anonymous .cap-overlay,
+body.anonymous .tips-video-overlay,
+body.anonymous #jquery-overlay,
+body,
+.notification-overlay,
+.ctm-overlay,
+.cap-overlay,
+.tips-video-overlay,
+#jquery-overlay,
+.invite-tool-background {
+    min-width: 0;
+}
+
+body,
+.page-content,
+.navigation-container,
+.wave-container,
+.inner-wave-container,
+.wave-content,
+.wave,
+.tabs-container,
+.invite-tool-background {
+    min-height: 0;
+}
+
+html {
+    min-height: 550px;
+    min-width: 550px;
+}
+
+.page-content.anonymous {
+    display: block;
+    margin-left: 0;
+    width: auto;
+}
+
+.right-tools-panel {
+    width: 47px;
+}
+
+.root-blip, .root-blip ~ .blip-container {
+    padding-left: 10px;
+}
+
+.right-logo,
+.tabs-container,
+.navigation-container,
+.right-tools-panel .text-view,
+.right-tools-panel .mindmap-view,
+.anonymous .right-tools-panel {
+    display: none;
+}
+
+.active-blip-controls {
+    top: 225px;
+    right: 2px;
+}
+
+.active-blip-controls-group {
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+}
+
+.active-blip-controls:not(.unvisible) .active-blip-controls-group.active {
+    z-index: 3;
+}
+
+.active-blip-controls-group .active-blip-control {
+    display: inline-block;
+    height: 57px;
+    border-radius: 0;
+    vertical-align: middle;
+}
+
+.active-blip-controls-group .active-blip-control:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+.right-tools-panel .next-unread-blip,
+.right-tools-panel .hide-replies,
+.right-tools-panel .show-replies,
+.active-blip-controls .insert,
+.active-blip-controls .insert-gadget {
+    text-align: center;
+    width: 45px;
+}
+
+.active-blip-controls .insert,
+.active-blip-controls .insert-gadget {
+    font-size: 10px;
+}
+
+.right-tools-panel .hide-replies {
+    background-position: 15px 17px;
+}
+
+.right-tools-panel .show-replies {
+    background-position: 15px -50px;
+}
+
+.right-tools-panel .next-unread-blip img {
+    display: none;
+}
+
+.right-tools-panel .next-unread-blip span {
+    margin: 0;
+}
+
+.active-blip-controls .gadget-logo {
+    background-position: 14px -232px;
+}
+
+.insert-gadget-container {
+    text-align: right;
+}
+
+.active-blip-controls .insert {
+    background-image: none;
+    border-radius: 0 3px 3px 0;
+    color: #FFF;
+    font-size: 12px;
+    text-align: center;
+}
+
+.active-blip-controls .insert .icon {
+    display: inline-block;
+    height: 22px;
+    width: 20px;
+    margin-top: 10px;
+    background: url(/s/img/insert_group_icon.png) no-repeat 0 0;
+}
+
+.active-blip-controls .insert-gadget {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.wave-blips {
+    min-height: 400px;
+}
+
+.wave-container {
+    margin-left: 0 !important; /* #TODO kill resizer */
+    margin-right: 47px;
+}
+
+.anonymous .wave-container {
+    margin-right: 0;
+}
+
+.manage-participants-form .autocomplete-results {
+    max-height: 300px;
+}
+
+.share-section .wave-share-popup {
+    left: -220px;
+}
+
+.notification-block .bottom-caption {
+    margin-top: 40px;
+}
+
+.log-out-container .notification-block {
+    top: 20px;
+}
+
+.auth-dialog.auth-dialog {
+    margin: 20px auto;
+}
+
+.auth-container .errors.errors {
+    padding-top: 20px;
+}
+
+.account-button {
+    margin-left: 10px;
+}
+
+.auth-container .errors.errors.hide-before {
+    padding-top: 274px;
+}
+
+.anonymous-login-container .sign-in-btn {
+    white-space: nowrap;
+}
+
+.anonymous-wave-info {
+    display: none;
+}
+

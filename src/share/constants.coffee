@@ -1,0 +1,38 @@
+_ = require('underscore')
+
+PROFILE_FIELDS =
+    PROFILE_FIELD_EMAIL: 'email'
+    PROFILE_FIELD_NAME: 'name'
+    PROFILE_FIELD_AVATAR: 'avatar'
+    PROFILE_FIELD_TIMEZONE: 'timezone'
+    PROFILE_FIELD_SOURCE: 'source'
+
+BONUS_TYPES =
+    BONUS_TYPE_LINKEDIN_LIKE: 1
+    BONUS_TYPE_TEAM: 2
+
+STORE_ITEM_CATEGORY =
+    ###
+    Категории позиций в магазине.
+    ###
+    STORE_ITEM_CATEGORY_GADGET: 1
+    STORE_ITEM_CATEGORY_BROWSER_EXTENSION: 2
+
+STORE_ITEM_STATE =
+    ###
+    Статусы позиций.
+    ###
+    STORE_ITEM_STATE_HIDDEN: 1
+    STORE_ITEM_STATE_VISIBLE: 2    
+
+module.exports =
+    PROFILE_FIELDS: _.values(PROFILE_FIELDS)
+    BONUS_TYPES: _.values(BONUS_TYPES)
+    STORE_ITEM_CATEGORY: STORE_ITEM_CATEGORY
+    STORE_ITEM_STATE: STORE_ITEM_STATE
+    NEED_MERGE_ERROR_CODE: 'need_merge'
+    WAVE_PERMISSION_DENIED_ERROR_CODE: 'wave_permission_denied'
+    WAVE_DOCUMENT_DOES_NOT_EXISTS_ERROR_CODE: 'wave_document_does_not_exists'
+    WAVE_ANONYMOUS_PERMISSION_DENIED_ERROR_CODE: 'wave_anonymous_permission_denied'
+
+_.extend(module.exports, PROFILE_FIELDS, BONUS_TYPES, STORE_ITEM_CATEGORY, STORE_ITEM_STATE)

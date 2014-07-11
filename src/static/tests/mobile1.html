@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+    <style>
+        
+.editor{
+        border: 1px solid black;
+        margin: 0 -51px 0 10px;
+        padding: 50px;
+        min-width: 100px;
+    }
+    .root{
+        margin: 0;
+    }
+
+.tabs {
+    /*position: relative;*/
+}
+
+
+/*
+.tabs input#tab-2{
+    left: 120px;
+}
+.tabs input#tab-3{
+    left: 240px;
+}
+.tabs input#tab-4{
+    left: 360px;
+}*/
+
+
+
+/*.tabs label:after {
+    content: '';
+    background: #fff;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    display: block;
+}*/
+
+/*.tabs label:first-of-type {
+    z-index: 4;
+    box-shadow: 2px 0 2px rgba(0,0,0,0.1);
+}
+
+.tab-label-2 {
+    z-index: 3;
+}
+
+.tab-label-3 {
+    z-index: 2;
+}
+
+.tab-label-4 {
+    z-index: 1;
+}*/
+
+
+
+.content {
+    /*position: relative;*/
+    width: 100%;
+    height: 370px;
+    z-index: 5;
+    box-shadow: 0 -2px 3px -2px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.1);
+    border-radius: 0 3px 3px 3px;
+}
+
+/*
+.content div h2,
+.content div h3{
+    color: #398080;
+}
+.content div p {
+    font-size: 14px;
+    line-height: 22px;
+    font-style: italic;
+    text-align: left;
+    margin: 0;
+    color: #777;
+    padding-left: 15px;
+    font-family: Cambria, Georgia, serif;
+    border-left: 8px solid rgba(63,148,148, 0.1);
+}*/
+
+
+
+    </style>
+    <div class="tabs">
+        <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1" checked="checked">
+        <label for="tab-1" class="tab-label-1">About</label>
+    
+        <input id="tab-2" type="radio" name="radio-set" class="tab-selector-2">
+        <label for="tab-2" class="tab-label-2">Services</label>
+    
+        <input id="tab-3" type="radio" name="radio-set" class="tab-selector-3">
+        <label for="tab-3" class="tab-label-3">Work</label>
+    
+        <input id="tab-4" type="radio" name="radio-set" class="tab-selector-4">
+        <label for="tab-4" class="tab-label-4">Contact</label>
+    
+        <div class="clear-shadow"></div>
+        
+        <div class="content">
+            <div class="content-1">
+                <h2>About us</h2>
+                <p>You think water moves fast? You should see ice. It moves like it has a mind. Like it knows it killed the world once and got a taste for murder. After the avalanche, it took us a week to climb out. Now, I don't know exactly when we turned on each other, but I know that seven of us survived the slide... and only five made it out. Now we took an oath, that I'm breaking now. We said we'd say it was the snow that killed the other two, but it wasn't. Nature is lethal but it doesn't hold a candle to man.</p>
+                <h3>How we work</h3>
+                <p>Like you, I used to think the world was this great place where everybody lived by the same standards I did, then some kid with a nail showed me I was living in his world, a world where chaos rules not order, a world where righteousness is not rewarded. That's Cesar's world, and if you're not willing to play by his rules, then you're gonna have to pay the price. </p>
+            </div>
+            <div class="content-2">
+                <h2>Services</h2>
+                <p>Do you see any Teletubbies in here? Do you see a slender plastic tag clipped to my shirt with my name printed on it? Do you see a little Asian child with a blank expression on his face sitting outside on a mechanical helicopter that shakes when you put quarters in it? No? Well, that's what you see at a toy store. And you must think you're in a toy store, because you're here shopping for an infant named Jeb.</p>
+                <h3>Excellence</h3>
+                <p>Like you, I used to think the world was this great place where everybody lived by the same standards I did, then some kid with a nail showed me I was living in his world, a world where chaos rules not order, a world where righteousness is not rewarded. That's Cesar's world, and if you're not willing to play by his rules, then you're gonna have to pay the price. </p>
+            </div>
+            <div class="content-3">
+                <h2>Portfolio</h2>
+                <p>The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.</p>
+                <h3>Examples</h3>
+                <p>Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite of the hero. And most times they're friends, like you and me! I should've known way back when... You know why, David? Because of the kids. They called me Mr Glass. </p>
+            </div>
+            <div class="content-4">
+                <h2>Contact</h2>
+                <p>You see? It's curious. Ted did figure it out - time travel. And when we get back, we gonna tell everyone. How it's possible, how it's done, what the dangers are. But then why fifty years in the future when the spacecraft encounters a black hole does the computer call it an 'unknown entry event'? Why don't they know? If they don't know, that means we never told anyone. And if we never told anyone it means we never made it back. Hence we die down here. Just as a matter of deductive logic.</p>
+                <h3>Get in touch</h3>
+                <p>Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing. </p>
+            </div>
+        </div>
+    </div>
+
+   <div class="editor root">
+       Служба Яндекс.Рефераты предназначена для студентов и школьников, дизайнеров и журналистов, создателей научных заявок и отчетов — для всех, кто относится к тексту, как к количеству знаков.
+       <div class="editor">
+           Нажав на кнопку «Написать реферат» вы лично создаете уникальный текст, причем именно от вашего нажатия на кнопку зависит, какой именно текст получится — таким образом, авторские права на реферат принадлежат только вам.
+           <div class="editor">
+               Теперь никто не сможет обвинить вас в плагиате, ибо каждый текст Яндекс.Рефератов неповторим.
+               <div class="editor">
+                   Текстами рефератов можно пользоваться совершенно бесплатно, однако при транслировании и предоставлении текстов в массовое пользование ссылка на Яндекс.Рефераты обязательна.
+                   <div class="editor">
+                       Зеркало разъедает полимолекулярный ассоциат, при этом дефект массы не образуется. Взвесь многообразна. Темная материя регрессийно индуцирует восстановитель, но если бы песен было раз в пять меньше, было бы лучше для всех. Иными словами, соинтервалие волнообразно. Скорость детонации огнеопасно иллюстрирует изобарический флюгель-горн, хотя этот факт нуждается в дальнейшей тщательной экспериментальной проверке.
+                       <div class="editor">
+                           Звукоряд, как того требуют законы термодинамики, неверифицируемо варьирует экситон в том случае, когда процессы переизлучения спонтанны. Плавно-мобильное голосовое поле начинает разнокомпонентный несимметричный димер одинаково по всем направлениям. Рассматривая уравнения этих реакций, можно с уверенностью утверждать, что везикула расщепляет квант, образуя молекулу замещенного ацилпиридина. Говорят также о фактуре, типичной для тех или иных жанров ("фактура походного марша", "фактура вальса" и пр.), и здесь мы видим, что валентность представляет собой квантово-механический гидродинамический удар, что вызывает дезактивацию. Лептон, несмотря на некоторую вероятность коллапса, диазотирует разрыв, что лишний раз подтверждает правоту Эйнштейна. Легато представляет собой нечетный выход целевого продукта, тем самым открывая возможность синтеза тетрахлордифенилдиоксина.
+                           <div class="editor">
+                              Глиссандо, как и везде в пределах наблюдаемой вселенной, экранирует циркулирующий катод даже в случае уникальных химических свойств. Гетерогенная структура гомологична. Галактика иллюстрирует атом, на этих моментах останавливаются Л.А.Мазель и В.А.Цуккерман в своем "Анализе музыкальных произведений". Винил, в том числе, удален. Ощущение мономерности ритмического движения возникает, как правило, в условиях темповой стабильности, тем не менее турбулентность скалярна.
+                              <div class="editor">
+                                  Объект, и это особенно заметно у Чарли Паркера или Джона Колтрейна, дает лирический гармонический интервал, о чем подробно говорится в книге М.Друскина "Ганс Эйслер и рабочее музыкальное движение в Германии". Растворение испускает кристаллизатор - все дальнейшее возникло благодаря правилу Морковникова. Процессуальное изменение отталкивает кристалл не только в вакууме, но и в любой нейтральной среде относительно низкой плотности. Рутений окисляет симметричный тетрахорд почти так же, как в резонаторе газового лазера. Объект, и это особенно заметно у Чарли Паркера или Джона Колтрейна, концентрирует кристаллизатор, в итоге возможно появление обратной связи и самовозбуждение системы. Еще Аристотель в своей «Политике» говорил, что музыка, воздействуя на человека, доставляет «своего рода очищение, то есть облегчение, связанное с наслаждением», однако алеаединица возбуждает голубой гель, не случайно эта композиция вошла в диск В.Кикабидзе "Ларису Ивановну хочу".
+                                  <div class="editor">
+                                      Атом тормозит магнит, что позже подтвердилось многочисленными опытами. Попса адсорбирует мембранный луч независимо от последствий проникновения метилкарбиола внутрь. Квантовое состояние испаряет экзотермический квант, поскольку изоморфная кристаллизация с перманганатом рубидия невозможна. Ионообменник летуч. Силовое поле, в том числе, нейтрализует мелодический звукоряд не только в вакууме, но и в любой нейтральной среде относительно низкой плотности.
+                                      <div class="editor">
+                                          Жесткая ротация, как неоднократно наблюдалось при постоянном воздействии ультрафиолетового облучения, излучает батохромный шоу-бизнес, однозначно свидетельствуя о неустойчивости процесса в целом. Свойство препаративно. Дисторшн квазипериодично захватывает белок даже в случае сильных локальных возмущений среды. Ретро последовательно излучает музыкальный лазер, что лишний раз подтверждает правоту Эйнштейна. Квантовое состояние одновременно. Векторно-зеркальная синхронность, в отличие от классического случая, вступает разнокомпонентный свежеприготовленный раствор по мере распространения сигнала в среде с инверсной населенностью.
+                                          <div class="editor">
+                                              11
+                                              <div class="editor">
+                                                  12
+       </div>   
+       </div>
+       </div>
+       </div>
+       </div>
+       </div>
+       </div>
+       </div>
+       </div>
+       </div>
+       </div>
+   </div> 
+   <div style="font-size: 40px;" class="div"> Hello world</div>
+</body>    
+</html>

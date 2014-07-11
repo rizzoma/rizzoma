@@ -1,0 +1,87 @@
+/**
+ * Классы стилей для панели аутентификации
+ */
+
+.auth {
+    display: inline-block;
+    float: right;
+    position: relative;
+}
+
+.auth > table {
+    font-size: 13px;
+}
+
+.auth > table td {
+    padding-left: 14px;
+}
+
+.auth > table td:first-child {
+    padding-left: 0;
+}
+
+.auth .username {
+    padding-left: 3px;
+    max-width: 133px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/**
+ * Классы для кнопки авторизации
+ */
+
+.auth_button {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 3px;
+    background: inherit;
+    border: 1px solid #CDCDCD;
+    box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.1);
+    color: #2C2C2C;
+    background: #FEFEFE;
+    background: -moz-linear-gradient(top, rgba(254, 254, 254, 1) 8%, rgba(234, 234, 234, 1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(8%,rgba(254, 254, 254, 1)), color-stop(100%,rgba(234, 234, 234, 1)));
+    background: -webkit-linear-gradient(top, rgba(254, 254, 254, 1) 8%,rgba(234, 234, 234, 1) 100%);
+    background: -o-linear-gradient(top, rgba(254, 254, 254, 1) 8%,rgba(234, 234, 234, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(254, 254, 254, 1) 8%,rgba(234, 234, 234, 1) 100%);
+    background: linear-gradient(top, rgba(254, 254, 254, 1) 8%,rgba(234, 234, 234, 1) 100%);
+    filter: progidXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#eaeaea',GradientType=0 );
+}
+
+.auth_button:hover {
+    border-color: #C7C7C7;
+    background: white;
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 13%, rgba(198, 198, 198, 1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(13%,rgba(255, 255, 255, 1)), color-stop(100%,rgba(198, 198, 198, 1)));
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 13%,rgba(198, 198, 198, 1) 100%);
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 13%,rgba(198, 198, 198, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 13%,rgba(198, 198, 198, 1) 100%);
+    background: linear-gradient(top, rgba(255, 255, 255, 1) 13%,rgba(198, 198, 198, 1) 100%);
+    filter: progidXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#c6c6c6',GradientType=0 );
+}
+
+.auth_button div, .auth_button img {
+    float: left;
+}
+
+.auth_button div {
+    margin-top: 4px;
+    margin-left: 6px;
+}
+
+.auth_button img {
+    margin: 2px 2px 2px 4px;
+    height: 20px;
+    width: 20px;
+}
+
+/**
+ * Свойство для кнопки выхода
+ */
+
+ .auth_button.logout div {
+    margin: 4px 8px;
+}

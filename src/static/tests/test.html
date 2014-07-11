@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html><head><title>Test</title></head>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<style type="text/css">
+.editor{
+    border: 1px solid green;
+    outline: none;
+    margin-left: 20px;
+}
+
+img {
+    padding: 1px;
+}
+</style>
+
+<div contentEditable="true" class="editor" id="editor1" tabindex="1">
+    <div>
+        <span>Editor 1</span>
+        <span contentEditable="false">
+            <div style="display:inline-block; border: 1px solid silver;"><img src="http://dottorocdn.com/images/help/content/search.gif"></div>
+            <div style="display: none;" contentEditable="false" class="editor" id="editor2" tabindex="1">
+                <div>
+                    <span>Editor 2</span>
+                </div>
+                <div>
+                    <span style="background: #800080">Editor 2 end</span>
+                </div>
+            </div>
+        </span>
+        <span contentEditable="false">
+            <div style="display:inline-block; border: 1px solid silver;"><img src="http://dottorocdn.com/images/help/content/search.gif"></div>
+            <div contentEditable="false" class="editor" tabindex="1">
+                <div>
+                    <span>Editor 2.1</span>
+                </div>
+                <div>
+                    <span style="background: #800080">Editor 2 end</span>
+                </div>
+            </div>
+        </span>
+    </div>
+    <div>
+        <span>Editor 1.1</span>
+        <span contentEditable="false">
+            <div contentEditable="true" class="editor" id="editor3">
+                <div>
+                    <span>Editor 3</span>
+                    <span contentEditable="false"><div style="display:inline-block; border: 1px solid silver;"><img src="http://dottorocdn.com/images/help/content/search.gif"></div></span><span>1</span>
+                </div>
+                <div>
+                    <span style="background: yellow;">Editor 3 end</span>
+                </div>
+            </div>
+        </span>
+        <span style="background: magenta;" href="#">
+            Editor 1.1 end
+        </span>
+    </div>
+</div>
+<div>
+    <a href="#">Link</a>
+</div>
+<div>
+    <button id="test">Test</button>
+</div>
+<input id="testInput">
+<div id="testDiv" contentEditable="true"><span contentEditable="false">Raw Text </span><span id="spanTest" contentEditable="false">Test</span><span id="block" contentEditable="false" style="display:inline-block;width: 20px;height: 20px;background: yellow;"></span><span id="spanTest1">test1</span></div>
+<script>
+    var span1 = document.getElementById('spanTest');
+    var block = document.getElementById('block');
+    var span2 = document.getElementById('stanTest1');
+    var testDiv = document.getElementById('testDiv');
+    console.log (testDiv, block);
+    setTimeout(function(){
+        testDiv.insertBefore(document.createTextNode('TEST'), block);
+    }, 5000);
+//    var div1 = document.createElement('div');
+//    div1.appendChild(document.createTextNode(''));
+//    var div2 = document.createElement('div');
+//    div2.appendChild(document.createTextNode(''));
+//    document.body.appendChild(div1);
+//    document.body.appendChild(div2);
+//    function fillDiv1(text){
+//        div1.firstChild.insertData(0, text);
+//    }
+//    function fillDiv2(text){
+//        div2.firstChild.insertData(0, text);
+//    }
+//    var text1= '1', text2 = new String('1');
+//    function startTest(){
+//        var start, end, i;
+//        start = Date.now();
+//        for (i = 0; i < 1000; i++)
+//            fillDiv1(text1);
+//        end = Date.now();
+//        console.warn(end-start);
+//        for (i = 0; i < 1000; i++)
+//            fillDiv2(text2);
+//        end = Date.now();
+//        console.warn(end-start);
+//    }
+//    $('.editor').bind('blur focus', function(event){console.log(event.type, this.id)})
+//    var button = $('#test')[0];
+//    button.addEventListener('click', startTest, false);
+    $('#testInput')[0].addEventListener('keydown', function(){window.confirm('test')}, false);
+    $('#testInput')[0].addEventListener('keypress', function(){console.log('1')}, false);
+    window.addEventListener('mousedown', function(e){
+        console.log(e.type);
+        var sel = window.getSelection();
+        if(!sel) return;
+        console.log(sel.anchorNode, sel.anchorOffset, sel.focusNode, sel.focusOffset);
+    }, false);
+    window.addEventListener('mouseup', function(e){
+        console.log(e.type);
+        var sel = window.getSelection();
+        if(!sel) return;
+        console.log(sel.anchorNode, sel.anchorOffset, sel.focusNode, sel.focusOffset);
+    }, false);
+window.addEventListener('click', function(e){
+    e.preventDefault();
+        console.log(e.type);
+        var sel = window.getSelection();
+        if(!sel) return;
+        console.log(sel.anchorNode, sel.anchorOffset, sel.focusNode, sel.focusOffset);
+    }, false);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,459 @@
+/**
+ * Стили панели с участниками в волне
+ **/
+
+
+/**
+ * Иконки участников волны
+ */
+
+.wave-participants {
+    position: relative;
+    margin: 0 0 0 2px;
+}
+
+.wave-participants > div {
+    position: relative;
+}
+
+.participants {
+    overflow: hidden;
+    height: 32px;
+    float: left;
+}
+
+.wave-participant {
+    margin-right: 2px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid #707478;
+    vertical-align: top;
+    font-size: 15px;
+    line-height: 32px;
+}
+
+.hide-participant, .deleted-participant {
+    display: none;
+}
+
+.hidden-participants {
+    position: absolute;
+    background: #B5BEC5;
+    left: -10px;
+    right: -11px;
+    display: none;
+    padding: 3px 10px 10px;
+    overflow-y: auto;
+}
+
+.hidden-participants .hide-participant {
+    display: inline-block;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+.wave-participants .show-more-participants {
+    float: left;
+    padding-left: 8px;
+    padding-right: 7px;
+}
+
+.wave-share-button {
+    height: 31px;
+    padding: 2px 0 0 0;
+    position: relative;
+    width: 69px;
+    text-align: left;
+}
+
+.wave-share-button .lock {
+    display: inline-block;
+    height: 13px;
+    width: 18px;
+    background: url('/s/img/wave_lock_sprite.png') -6px -8px no-repeat;
+    position: absolute;
+}
+
+.wave-share-button .gdrive-icon16 {
+    display: none;
+    margin-right: 5px;
+    vertical-align: top;
+}
+
+.wave-share-button.gdrive {
+    width: 92px;
+}
+
+.wave-share-button.gdrive .gdrive-icon16 {
+    display: inline-block;
+    position: absolute;
+    left: 26px;
+    top: 7px;
+}
+
+.show-more-participants.number-shown .more-participants-image {
+    display: none;
+}
+
+.show-more-participants.number-shown span {
+    display: inline;
+}
+
+.show-more-participants span {
+    display: none;
+}
+
+.show-more-participants .more-participants-image {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 3px;
+    margin-right: 3px;
+    background: url(/s/img/share_button_rectangle.png);
+    width: 8px;
+    height: 4px;
+}
+
+.show-more-participants[disabled] .more-participants-image {
+    background: url(/s/img/share_button_rectangle_disabled.png);
+}
+
+/**
+ * Окно добавления участников в волну
+ * По умолчанию скрыто, показывается при получении класса .showing-window
+ */
+
+.wave-header-section {
+    position: relative;
+    z-index: 1;  /* Панель расшаривания волны должна быть поверх иконок участников */
+    color: #616161;
+    font-size: 12px;
+}
+
+.social-section {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    line-height: 0;
+}
+
+.social-section .social-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 32px;
+    z-index: 1;
+}
+
+.social-section:hover {
+    background: none;
+}
+
+.social-section button {
+    margin-left: 5px;
+    display: inline-block;
+    border: none;
+    height: 27px;
+    width: 27px;
+    cursor: pointer;
+}
+
+.social-section button {
+    background-image: url(/s/img/sn1.png);
+}
+
+.social-section button[disabled="disabled"] {
+    background-image: url(/s/img/sn2.png);
+}
+
+.social-section .social-facebook {
+    background-position: -1px -1px;
+    opacity: 0.8;
+}
+
+.social-section .social-google {
+    background-position: -1px 58px;
+}
+
+.social-section .social-twitter {
+    background-position: -1px 28px;
+}
+
+.social-section button:not([disabled="disabled"]) {
+    opacity: 0.8;
+}
+
+.social-section button:not([disabled="disabled"]):hover {
+    opacity: 1;
+}
+
+.wave-participants,
+.share-section {
+    float: left;
+}
+
+.wave-header-section .wave-header-button {
+    background: none;
+    border-radius: 2px 2px 0 0;
+    -moz-border-radius: 2px 2px 0 0;
+    padding-right: 15px;
+    border: 1px solid #B5BEC5;
+    position: relative;
+    color: #5C5C5C;
+    height: 30px;
+}
+
+.share-section .wave-header-button {
+    padding: 10px;
+}
+
+.wave-header-section .wave-header-button span {
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.wave-header-popup {
+    display: none;
+    white-space: nowrap;
+}
+
+.wave-header-section.showing-window .wave-header-popup {
+    display: block;
+}
+
+.wave-header-section .wave-header-popup {
+    border-radius: 0 0 2px 2px;
+    -moz-border-radius: 0 0 2px 2px;
+    box-shadow: 2px 4px 9px -6px black;
+    top: 23px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #F4F4F4;
+    border: 1px solid #E5E5E5;
+    border-top: 0;
+    width: 100%;
+}
+
+.wave-header-popup a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #616161;
+}
+
+.wave-header-popup a:hover {
+    background: #EDEDED;
+}
+
+.wave-header-popup .show-topic-tip.hidden {
+    display: none;
+}
+
+/**
+ * Раздел переключения публичности волны
+ */
+
+ .share-section {
+     margin: 0 5px 0 25px;
+ }
+ 
+.wave-share-window-delimiter {
+    border-bottom: 1px solid white;
+    border-top: 1px solid #CCC;
+    margin: 15px 0;
+}
+
+.wave-header-section .wave-share-button {
+    text-align: right;
+}
+
+.wave-header-section.shared .wave-share-button {
+    padding-right: 7px;
+}
+
+.wave-header-section.shared .wave-share-button .lock {
+    background-position: -5px -66px;
+    top: 8px;
+    left: 7px;
+}
+
+.wave-header-section.private .wave-share-button {
+    padding-right: 10px;
+}
+
+.wave-header-section.private .wave-share-button .lock {
+    background-position: -6px -8px;
+    top: 8px;
+    left: 7px;
+}
+
+.wave-header-section.public .wave-share-button {
+    padding-right: 9px;
+}
+
+.wave-header-section.public .wave-share-button .lock {
+    background-position: -6px -36px;
+    top: 6px;
+    left: 6px;
+}
+
+.make-public-section .description-icon {
+    width: 29px;
+    background: #D6DADF;
+    border: 1px solid #9AA1A7;
+    height: 29px;
+    margin: 0 10px 0 6px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.make-public-section .sharing-section {
+    margin-bottom: 10px;
+}
+
+.make-public-section .sharing-section .new-participant-role-select {
+    text-decoration: underline;
+}
+
+.make-public-section .sharing-section .new-participant-role-select.disabled {
+    text-decoration: none;
+    color: #5F7484;
+}
+
+.make-public-section .description,
+.make-public-section .description-text,
+.make-public-section label {
+    display: inline-block;
+}
+
+.make-public-section input[type="radio"][name="privacy"] {
+    vertical-align: top;
+    margin-top: 10px;
+}
+
+.make-public-section .description-text {
+    width: 340px;
+    line-height: 15px;
+    color: #000;
+}
+
+.make-public-section .description-text .section-details {
+    color: #5F7484;
+}
+
+.make-public-section label {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.share-section .wave-url {
+    padding-right: 9px;
+    font-size: 13px;
+}
+
+.wave-url-sharing {
+    position: relative;
+    padding-right: 100px;
+}
+
+.wave-url-container {
+    position: relative;
+}
+
+/**
+ * Стили для всплывающего окна выбора роли по умолчанию
+ */
+.role-selector-popup {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+.role-selector-popup .role {
+    cursor: pointer;
+    line-height: 19px;
+    margin-left: -4px;
+    margin-right: -4px;
+    padding-right: 10px;
+}
+
+.role-selector-popup .role:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.role-selector-popup .role:hover {
+    background: #e4eaf0;
+}
+
+.role-selector-popup input[type="radio"] {
+    visibility: hidden;
+}
+
+.role-selector-popup input[type="radio"] + label {
+    padding-left: 12px;
+    position: relative;
+}
+
+.role-selector-popup input[type="radio"][checked="checked"] + label::before {
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 12px;
+    background: url(/s/img/v.png);
+    top: 2px;
+    left: -6px;
+}
+
+/**
+ * Сообщение о сохранении топика.
+ */
+.saving-message {
+    float: left;
+    color: #3C3C3C;
+    margin: 5px 0 0 16px;
+    width: 90px;
+}
+
+.saving-message div {
+    display: none;
+}
+
+.saving-message div.visible {
+    display: block;
+}
+
+/**
+ * Внешний вид для незалогиненных
+ */
+
+.anonymous-wave-info {
+    display: inline-block;
+    float: right;
+    height: 100%;
+    white-space: nowrap;
+}
+
+.anonymous-wave-info .wave-participants {
+    float: none;
+    display: inline-block;
+    margin-right: 25px;
+    width: 120px;
+}
+
+.anonymous-wave-info .show-hide-reply-blips {
+    background-color: transparent;
+    vertical-align: top;
+    height: 100%;
+    margin-right: 5px;
+}
+
+.anonymous-wave-info .participants-caption {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 14px;
+    margin-top: 7px;
+    font-weight: bold;
+}

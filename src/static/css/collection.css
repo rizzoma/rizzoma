@@ -1,0 +1,148 @@
+.collection-container.search {
+    padding-top: 0;
+    background: #EFF6F7;
+}
+
+.collection-container .wave-header .share-section,
+.collection-container .wave-header .saving-message,
+.collection-container .wave-header .settings-section {
+    display: none;
+}
+
+.collection-container .collection-topic-container {
+    height: 100%;
+    position: relative; /* Позволим resizer'у быть выше себя */
+    z-index: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.collection-container .wave-content,
+.collection-container .wave-blips {
+    min-height: 0;
+}
+
+.collection-container .resizer > div {
+    background: center center no-repeat url(../img/resizer/sprite_right_dark.png);
+}
+
+.collection-container .editor-panel {
+    padding-left: 0;
+}
+
+.collection-container .editor-panel .bold {
+    margin-left: 0;
+}
+
+.collection-container .editor-panel .redo,
+.collection-container .editor-panel .clear-formatting,
+.collection-container .editor-panel .insert-image,
+.collection-container .editor-panel .insert-file {
+    display: none;
+}
+
+.collection-container .blip-info {
+    display: none;
+}
+
+.collection-container .collection-topic-container {
+    line-height: 22px;
+}
+
+.collection-container a {
+    cursor: pointer;
+}
+
+.collection-container .root-blip,
+.collection-container .root-blip ~ .blip-container {
+    padding-left: 0;
+}
+
+.collection-container .topic-url {
+    margin-top: 15px;
+    height: 33px;
+    visibility: visible;
+    color: #FFF;
+    text-align: right;
+}
+
+.collection-container .collection-topic-container .root-blip-menu .menu-content {
+    position: relative;
+}
+
+.collection-container .collection-list-button {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+}
+
+.collection-topic-link {
+    display: inline-block;
+    line-height: 24px;
+}
+
+.collection-container .collection-list-warning {
+    position: absolute;
+    left: 0px;
+    top: 50px;
+    background-color: #f2cf79;
+    border: 1px solid #d4ad4d;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 10px;
+    display: none;
+}
+
+.collection-container .collection-list-warning a {
+    color: #000;
+}
+
+.debt .collection-container .collection-list-warning {
+    display: block;
+}
+
+.topic-list-container {
+    display: none;
+    position: absolute;
+    width: 100%;
+    max-height: 100%;
+    max-height: -webkit-calc(100% - 50px);
+    max-height: -ms-calc(100% - 50px);
+    max-height: -moz-calc(100% - 50px);
+    max-height: calc(100% - 50px);
+    top: 50px;
+    left: 0;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.collection-list {
+    background: rgb(227, 234, 240);
+}
+
+.topic-list-container.visible {
+    display: block;
+}
+
+.topic-list-container .search-result-item {
+    min-height: 29px;
+}
+
+.topic-list-container .search-result-item .wave-title {
+    height: auto;
+}
+
+.topic-list-container .collection-footer {
+    position: relative;
+    background: rgb(227, 234, 240);
+    border-bottom: 1px solid #B5BEC5;
+    box-shadow: 5px 5px 5px #B5BEC5;
+    margin-bottom: 10px;
+}
+
+.topic-list-container .collection-footer div {
+    padding: 10px;
+    text-align: center;
+}

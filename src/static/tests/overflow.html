@@ -1,0 +1,83 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Test Overflow</title>
+    <script src="/s/js/overthrow.js"></script>
+    <style>
+        /* Overthrow CSS:
+           Enable overflow: auto on elements with overthrow class when html element has overthrow class too */
+        .overthrow-enabled .overthrow {
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .alloha {
+            margin: 1px;
+            border: 10px solid gray;
+            padding: 100px;
+            position: relative;
+        }
+    </style>
+    <script>
+        function scroll(el){
+            var offsetTop = 0, parentScrollTop, topWidth;
+            while(el){
+                console.log(el);
+                var parent = el.offsetParent;if(!parent) return;
+                if(topWidth = parseInt(window.getComputedStyle(el).borderTopWidth, 10)) {
+                   offsetTop += topWidth;
+                   console.log(topWidth);
+                }
+                offsetTop += el.offsetTop;
+                parentScrollTop = offsetTop;
+                parent.scrollTop = offsetTop;
+                if(parentScrollTop != parent.scrollTop){
+                    
+                }
+                else{
+                   offsetTop = 0;
+                }
+                el = parent; 
+            }
+        }
+    </script>
+</head>
+<body class="body">
+    <button onclick="scroll(document.getElementById('footer'))">Test</button>
+    <div class="alloha" id="test">
+        <div class="alloha" id="test1">
+            alloha1
+            <div class="alloha" id="test2">
+                alloha
+            </div>
+        </div>
+        Alloha
+    </div>
+    <section id="footerSection" style="height: 200px; overflow: auto; background: magenta;" class="overthrow" id="overthrow">
+        Overflow area <br> Content<br>
+        <H1>Header</H1><br>
+        <h2>Header 2</h2>
+        <h3> header 3</h3>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div id="footer" contentEditable="false">Footer</div>
+    </section>
+</body>    
+</html>

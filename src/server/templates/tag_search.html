@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+Public topics for {{ query }} — Rizzoma
+{% endblock title %}
+
+{% block addition_meta %}
+    {% block meta_opengraph_attrs %}
+    <meta property="og:title" content="Public topics for {{ query }} — Rizzoma Active Docs" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="http://rizzoma.com/s/img/logo/75.png" />
+    <meta property="og:description" content="Realtime collaborative editing docs. Here you can send messages, emails and assign tasks right in context." />
+    <meta name="description" content="Realtime collaborative editing docs. Here you can send messages, emails and assign tasks right in context." />
+    {% endblock %}
+    <link rel="search" type="application/opensearchdescription+xml" title="Rizzoma" href="/rizzomasearch.xml" />
+{% endblock addition_meta %}
+
+{% block styles %}
+<link type="text/css" href="/s/css/normalize-20120311.css" rel="stylesheet" />
+<link type="text/css" href="/s/css/simple_page.css" rel="stylesheet" />
+{% endblock styles %}
+
+{% block content %}
+<div class="content">
+    <a href="/"><img src="/s/img/logo_rizzoma.png" alt="Rizzoma logo" class="logo"/></a>
+    <h1>Public topics for {{ query }}</h1>
+    {% if topics|length %}
+    <dl>
+        {% for topic in topics %}
+            <dt>
+                <a href="{{ url }}{{ topic.waveId }}/">{{ topic.title }}</a>
+            </dt>
+            {% if topic.snippet %}
+                <dd>{{ topic.snippet }}</dd>
+            {% endif %}
+        {% endfor %}
+    </dl>
+    {% else %}
+        <div style="font-weight: bold;">No public topics found for this tag.</div>
+    {% endif %}
+
+    <div class="footer">
+        <a href="http://rizzoma.com/" title="Rizoma">Rizzoma</a> is a real-time communication and collaboration tool.
+        Create documents, discuss in real-time, send messages, emails and assign tasks right in context.
+    </div>
+</div>
+{% endblock content %}

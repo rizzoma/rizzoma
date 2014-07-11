@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}
+    Rizzoma.com — Supported browsers
+{% endblock title %}
+{% block scripts %}
+    <link type="text/css" href="/s/css/supported_browsers.css" rel="stylesheet" />
+    <link type="text/css" href="/s/css/normalize-20120311.css" rel="stylesheet" />
+{% endblock scripts %}
+{% block content %}
+<div class="content">
+    <a href="/"><img src="/s/img/logo_rizzoma.png" alt="Rizzoma logo" class="logo"/></a>
+    <div class="text">
+        Sorry, we do not fully support your browser now. For correct rizzoma.com functioning
+        please use these browsers:
+    </div>
+    <div class="browsers">
+        <div class="browser first" title="Google Chrome">
+            <a href="http://www.google.ru/chrome"><img src="/s/img/supported_browsers/chrome.png" alt="Chrome" /></a>
+            <a class="text-link" href="http://www.google.ru/chrome" target="_blank">Chrome</a>
+        </div>
+        <div class="browser" title="Chromium">
+            <a href="http://code.google.com/p/chromium/downloads/list"><img src="/s/img/supported_browsers/chromium.png" alt="Chromium" /></a>
+            <a class="text-link" href="http://www.chromium.org/Home" target="_blank">Chromium</a>
+        </div>
+        <div class="browser" title="Safari">
+            <a href="http://www.apple.com/en/safari/download/"><img src="/s/img/supported_browsers/safari.png" alt="Safari" /></a>
+            <a class="text-link" href="http://www.apple.com/safari/" target="_blank">Safari</a>
+        </div>
+        <div class="browser" title="Mozilla Firefox">
+            <a href="http://www.mozilla.org/firefox/new/"><img src="/s/img/supported_browsers/firefox.png" alt="Firefox" /></a>
+            <a class="text-link" href="http://www.mozilla.org/firefox/new/" target="_blank">Firefox</a>
+        </div>
+        <div class="browser" title="Internet Explorer 9 and later">
+            <a href="http://ie.microsoft.com/"><img src="/s/img/supported_browsers/ie.png" alt="IE 9+" /></a>
+            <a class="text-link" href="http://ie.microsoft.com/" target="_blank">IE 9+</a>
+        </div>
+        <div class="clearer"></div>
+    </div>
+    <div class="block-enter-link">
+        <a class="enter-link"
+           href="{{ redirectUrl }}"
+           onClick="document.cookie = '{{showIfUnsupportedBrowserCookie}} = true;path=/';">
+            Or enter at your own risk
+        </a>
+    </div>
+    We are working on support of <a href="http://blog.rizzoma.com/2012/02/15/we-need-your-input-for-rizzomas-next-phases/?utm_source=g+&utm_medium=feed&utm_campaign=roadmap"
+       class="text-link" title="Open Roadmap">other browsers</a>
+</div>
+{% endblock content %}

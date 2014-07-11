@@ -1,0 +1,1 @@
+require('../blip/plugin_autosender').PluginAutosender

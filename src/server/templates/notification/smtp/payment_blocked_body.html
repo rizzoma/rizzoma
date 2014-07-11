@@ -1,0 +1,22 @@
+{% import 'notification/macroses.txt' as m %}
+<html>
+<head>
+    <title>Your team is suspended</title>
+</head>
+    <body style="background-color: #ebf5fe; padding: 10px 20px;font-size: 14px;line-height: 20px;">
+        <p>
+            {% if dstUser.name %}Dear {{dstUser.name}}!<br>{% endif %}
+            Rizzoma service failed to collect monthly payment of your {% if topics.length == 1 %}team{% else %}teams{% endif %}:<br>
+            {% for topic in topics %}
+                <b>"{{ topic.teamName }}"</b>: ${{ topic.amount/100}} for {% if topic.participantCount == 1 %}1 member{% else %}{{ topic.participantCount }} members{% endif %}<br>
+            {% endfor %}
+            <br>
+            Your team (and possibly all business account features) was suspended. To resume your {% if topics.length == 1 %}team{% else %}teams{% endif %} provide new payment info <a href="{{ baseUrl }}/settings/teams-menu/">here</a>.<br>
+            If you have any questions please contact support@rizzoma.com<br>
+            <br><br>
+            Sincerely,<br>
+            Rizzoma Team
+        </p>
+        {{ m.logo() }}
+    </body>
+</html>

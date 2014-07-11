@@ -1,0 +1,829 @@
+var couchapp = require('couchapp');
+
+doc = {
+    _id: "_design/import",
+    language: "javascript",
+    views: {}
+};
+
+doc.views.not_imported = {
+    map: function(doc) {
+        if(!doc.type || doc.type != 'WaveImportData') return;
+        if(doc.lastImportingTimestamp) return;
+        emit(doc._id, null);
+    }
+};
+
+doc.views.by_participant_email = {
+    map: function(doc) {
+        if(!doc.type || doc.type != 'WaveImportData') return;
+        var participants = doc.participants
+        for (var i=0; i < participants.length; i++) {
+            var email = participants[i]
+            emit([email, doc.lastUpdateTimestamp], null);
+        }
+    }
+};
+
+
+module.exports = doc;
+/*
+[{
+    "id":"0",
+    "data":{
+        "message":"b+sVBcmzVLB",
+        "blips":{
+            "b+dnt3UOdbB":{
+                "lastModifiedTime":1324626854665,
+                "contributors":["yuryilinikh@googlewave.com"],
+                "waveletId":"googlewave.com!conv+root",
+                "threadId":"b+dnt3UOdbA",
+                "parentBlipId":"b+sVBcmzVLB",
+                "waveId":"googlewave.com!w+sVBcmzVLA",
+                "replyThreadIds":[],
+                "creator":"yuryilinikh@googlewave.com",
+                "version":633,
+                "content":"\n2nd root reply",
+                "blipId":"b+dnt3UOdbB",
+                "annotations":[{
+                    "range":{
+                        "start":0,
+                        "end":15
+                    },
+                    "name":"lang",
+                    "value":"en"
+                }],
+                "elements":{
+                    "0":{
+                        "properties":{},
+                        "type":"LINE"
+                    }
+                },
+            "childBlipIds":[]
+        },
+        "b+dnt3UOdbC":{
+            "lastModifiedTime":1325056162689,
+            "contributors":["yuryilinikh@googlewave.com","vsemenov86@googlewave.com","projectvolna@appspot.com"],
+            "waveletId":"googlewave.com!conv+root",
+            "threadId":"b+dnt3UOdbC",
+            "parentBlipId":"b+sVBcmzVLB",
+            "waveId":"googlewave.com!w+sVBcmzVLA",
+            "replyThreadIds":[],
+            "creator":"yuryilinikh@googlewave.com",
+            "version":695,
+            "content":"\n(задача всем сделано) глобальные ошибки для интерфейса\n",
+            "blipId":"b+dnt3UOdbC",
+            "annotations":[{
+                "range":{
+                    "start":0,
+                    "end":55
+                },
+                "name":"lang",
+                "value":"ru"
+            },{
+                "range":{
+                    "start":1,
+                    "end":22
+                },
+                "name":"style/color",
+                "value":"#000000"
+            },{
+                "range":{
+                    "start":1,
+                    "end":22
+                },
+                "name":"event_id",
+                "value":"1373025"
+            },{
+                "range":{
+                    "start":1,
+                    "end":22
+                },
+                "name":"link/manual",
+                "value":"http://www.projectvolna.com/_r_/taskbot/process_task/ru/?gwextMark&wave_id=googlewave.com%21w%2BsVBcmzVLA&wavelet_id=googlewave.com%21conv%2Broot&blip_id=b%2Bdnt3UOdbC&event_id=1373025"
+            },{
+                "range":{
+                    "start":1,
+                    "end":22
+                },
+                "name":"style/backgroundColor",
+                "value":"#CCC"
+            }],
+            "elements":{
+                "0":{
+                    "properties":{},
+                    "type":"LINE"
+                },
+                "55":{
+                    "properties":{},
+                    "type":"LINE"
+                }
+            },
+        "childBlipIds":[]
+    },
+    "b+8eZe_oyzB":{
+        "lastModifiedTime":1324622213763,
+        "contributors":["yuryilinikh@googlewave.com"],
+        "waveletId":"googlewave.com!conv+root",
+        "threadId":"b+8eZe_oyzB",
+        "parentBlipId":"b+sVBcmzVLF",
+        "waveId":"googlewave.com!w+sVBcmzVLA",
+        "replyThreadIds":[],
+        "creator":"yuryilinikh@googlewave.com",
+        "version":552,
+        "content":"\ninsert strange reply, блиа а сэтим что делать?",
+        "blipId":"b+8eZe_oyzB",
+        "annotations":[{
+            "range":{
+                "start":0,
+                "end":47
+            },
+            "name":"lang",
+            "value":"unknown"
+        }],
+        "elements":{
+            "0":{
+                "properties":{},
+                "type":"LINE"
+            }
+        },
+    "childBlipIds":[]
+},
+"b+sVBcmzVLB":{
+    "lastModifiedTime":1326698655476,
+    "contributors":["vsemenov86@googlewave.com","yuryilinikh@googlewave.com"],
+    "waveletId":"googlewave.com!conv+root",
+    "threadId":"",
+    "parentBlipId":null,
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "replyThreadIds":["b+dnt3UOdbC","b+sVBcmzVLC","b+sVBcmzVLD","b+dnt3UOdbA"],
+    "creator":"vsemenov86@googlewave.com",
+    "version":824,
+    "content":"\nЗаголовок волны\n\nТекст волны Текст волны Текст волны Текст волны Текст волны Текст волны \nol\nolindented 1\nolindented 2\nol1\n\nul\nulindented 1\nulindented 2\nul1\n\nindent\nindent1\nwaveid://googlewave.com/w+sVBcmzVLA/~/conv+root/b+sVBcmzVLF\nТекст волны Текст волны Текст волны Текст волны \n \n\n  \n",
+    "blipId":"b+sVBcmzVLB",
+    "annotations":[{
+        "range":{
+            "start":0,
+            "end":16
+        },
+        "name":"lang",
+        "value":"ru"
+    },{
+        "range":{
+            "start":0,
+            "end":16
+        },
+        "name":"conv/title",
+        "value":""
+    },{
+        "range":{
+            "start":17,
+            "end":90
+        },
+        "name":"lang",
+        "value":"ru"
+    },{
+        "range":{
+            "start":30,
+            "end":41
+        },
+        "name":"style/fontWeight",
+        "value":"bold"
+    },{
+        "range":{
+            "start":30,
+            "end":41
+        },
+        "name":"style/color",
+        "value":"rgb(229, 51, 51)"
+    },{
+        "range":{
+            "start":30,
+            "end":41
+        },
+        "name":"style/backgroundColor",
+        "value":"rgb(255, 229, 0)"
+    },{
+        "range":{
+            "start":30,
+            "end":41
+        },
+        "name":"style/textDecoration",
+        "value":"line-through"
+    },{
+        "range":{
+            "start":30,
+            "end":41
+        },
+        "name":"style/fontStyle",
+        "value":"italic"
+    },{
+        "range":{
+            "start":54,
+            "end":65
+        },
+        "name":"style/fontSize",
+        "value":"1.5em"
+    },{
+        "range":{
+            "start":78,
+            "end":89
+        },
+        "name":"link/manual",
+        "value":"http://localhost/"
+    },{
+        "range":{
+            "start":90,
+            "end":93
+        },
+        "name":"lang",
+        "value":"tr"
+    },{
+        "range":{
+            "start":93,
+            "end":119
+        },
+        "name":"lang",
+        "value":"unknown"
+    },{
+        "range":{
+            "start":119,
+            "end":123
+        },
+        "name":"lang",
+        "value":"tr"
+    },{
+        "range":{
+            "start":124,
+            "end":127
+        },
+        "name":"lang",
+        "value":"pl"
+    },{
+        "range":{
+            "start":127,
+            "end":153
+        },
+        "name":"lang",
+        "value":"unknown"
+    },{
+        "range":{
+            "start":153,
+            "end":157
+        },
+        "name":"lang",
+        "value":"pl"
+    },{
+        "range":{
+            "start":158,
+            "end":173
+        },
+        "name":"lang",
+        "value":"en"
+    },{
+        "range":{
+            "start":173,
+            "end":233
+        },
+        "name":"lang",
+        "value":"unknown"
+    },{
+        "range":{
+            "start":174,
+            "end":233
+        },
+        "name":"style/color",
+        "value":"rgb(187, 187, 187)"
+    },{
+        "range":{
+            "start":174,
+            "end":233
+        },
+        "name":"link/auto",
+        "value":"waveid://googlewave.com/w+sVBcmzVLA/~/conv+root/b+sVBcmzVLF"
+    },{
+        "range":{
+            "start":233,
+            "end":282
+        },
+        "name":"lang",
+        "value":"ru"
+    },{
+        "range":{
+            "start":258,
+            "end":269
+        },
+        "name":"link/manual",
+        "value":"waveid://googlewave.com/w+sVBcmzVLA/~/conv+sVBcmzVLH/b+sVBcmzVLI"
+    },{
+        "range":{
+            "start":282,
+            "end":284
+        },
+        "name":"lang",
+        "value":"unknown"
+    },{
+        "range":{
+            "start":285,
+            "end":288
+        },
+        "name":"lang",
+        "value":"unknown"
+    }],
+    "elements":{
+        "127":{
+            "properties":{
+                "lineType":"li",
+                "indent":"1"
+            },
+            "type":"LINE"
+        },
+        "93":{
+            "properties":{
+                "lineType":"li",
+                "indent":"1"
+            },
+            "type":"LINE"
+        },
+        "123":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "124":{
+            "properties":{
+                "lineType":"li"
+            },
+            "type":"LINE"
+        },
+        "90":{
+            "properties":{
+                "lineType":"li"
+            },
+            "type":"LINE"
+        },
+        "17":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "158":{
+            "properties":{
+                "indent":"1"
+            },
+            "type":"LINE"
+        },
+        "16":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "157":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "285":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "165":{
+            "properties":{
+                "indent":"2"
+            },
+            "type":"LINE"
+        },
+        "284":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "283":{
+            "properties":{
+                "id":"b+dnt3UOdbC"
+            },
+            "type":"INLINE_BLIP"
+        },
+        "119":{
+            "properties":{
+                "lineType":"li"
+            },
+            "type":"LINE"
+        },
+        "282":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "288":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "153":{
+            "properties":{
+                "lineType":"li"
+            },
+            "type":"LINE"
+        },
+        "286":{
+            "properties":{
+                "id":"b+sVBcmzVLC"
+            },
+            "type":"INLINE_BLIP"
+        },
+        "0":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "287":{
+            "properties":{
+                "id":"b+sVBcmzVLD"
+            },
+            "type":"INLINE_BLIP"
+        },
+        "173":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "106":{
+            "properties":{
+                "lineType":"li",
+                "indent":"2"
+            },
+            "type":"LINE"
+        },
+        "233":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "140":{
+            "properties":{
+                "lineType":"li",
+                "indent":"2"
+            },
+            "type":"LINE"
+        }
+    },
+"childBlipIds":["b+dnt3UOdbC","b+sVBcmzVLC","b+sVBcmzVLF","b+sVBcmzVLJ","b+sVBcmzVLD","b+sVBcmzVLK","b+dnt3UOdbA","b+dnt3UOdbB"]
+},
+"b+sVBcmzVLC":{
+    "lastModifiedTime":1324010471378,
+    "contributors":["vsemenov86@googlewave.com"],
+    "waveletId":"googlewave.com!conv+root",
+    "threadId":"b+sVBcmzVLC",
+    "parentBlipId":"b+sVBcmzVLB",
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "replyThreadIds":[],
+    "creator":"vsemenov86@googlewave.com",
+    "version":55,
+    "content":"\nинлайн 1",
+    "blipId":"b+sVBcmzVLC",
+    "annotations":[{
+        "range":{
+            "start":0,
+            "end":9
+        },
+        "name":"lang",
+        "value":"ru"
+    }],
+    "elements":{
+        "0":{
+            "properties":{},
+            "type":"LINE"
+        }
+    },
+"childBlipIds":[]
+},
+"b+sVBcmzVLD":{
+    "lastModifiedTime":1324010571362,
+    "contributors":["vsemenov86@googlewave.com"],
+    "waveletId":"googlewave.com!conv+root",
+    "threadId":"b+sVBcmzVLD",
+    "parentBlipId":"b+sVBcmzVLB",
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "replyThreadIds":["b+sVBcmzVLG"],
+    "creator":"vsemenov86@googlewave.com",
+    "version":144,
+    "content":"\nинлайн 2 с приватом\n ",
+    "blipId":"b+sVBcmzVLD",
+    "annotations":[{
+        "range":{
+            "start":0,
+            "end":22
+        },
+        "name":"lang",
+        "value":"unknown"
+    }],
+    "elements":{
+        "21":{
+            "properties":{
+                "id":"b+sVBcmzVLG"
+            },
+            "type":"INLINE_BLIP"
+        },
+        "20":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "0":{
+            "properties":{},
+            "type":"LINE"
+        }
+    },
+"childBlipIds":["b+sVBcmzVLG"]
+},
+"b+sVBcmzVLE":{
+    "lastModifiedTime":1324626861622,
+    "contributors":["vsemenov86@googlewave.com","yuryilinikh@googlewave.com"],
+    "waveletId":"googlewave.com!conv+root",
+    "threadId":"",
+    "parentBlipId":null,
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "replyThreadIds":[],
+    "creator":"vsemenov86@googlewave.com",
+    "version":641,
+    "content":"\n3 реплай от рута",
+    "blipId":"b+sVBcmzVLE",
+    "annotations":[{
+        "range":{
+            "start":0,
+            "end":17
+        },
+        "name":"lang",
+        "value":"ru"
+    }],
+    "elements":{
+        "0":{
+            "properties":{},
+            "type":"LINE"
+        }
+    },
+"childBlipIds":[]
+},
+"b+sVBcmzVLF":{
+    "lastModifiedTime":1324011068079,
+    "contributors":["vsemenov86@googlewave.com"],
+    "waveletId":"googlewave.com!conv+root",
+    "threadId":"b+sVBcmzVLC",
+    "parentBlipId":"b+sVBcmzVLB",
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "replyThreadIds":["b+8eZe_oyzB"],
+    "creator":"vsemenov86@googlewave.com",
+    "version":267,
+    "content":"\nреплай инлайна 1 bold italic red underline",
+    "blipId":"b+sVBcmzVLF",
+    "annotations":[{
+        "range":{
+            "start":0,
+            "end":43
+        },
+        "name":"lang",
+        "value":"unknown"
+    },{
+        "range":{
+            "start":18,
+            "end":22
+        },
+        "name":"style/fontWeight",
+        "value":"bold"
+    },{
+        "range":{
+            "start":23,
+            "end":29
+        },
+        "name":"style/fontStyle",
+        "value":"italic"
+    },{
+        "range":{
+            "start":30,
+            "end":33
+        },
+        "name":"style/color",
+        "value":"rgb(229, 51, 51)"
+    },{
+        "range":{
+            "start":34,
+            "end":43
+        },
+        "name":"style/textDecoration",
+        "value":"underline"
+    }],
+    "elements":{
+        "0":{
+            "properties":{},
+            "type":"LINE"
+        }
+    },
+"childBlipIds":["b+8eZe_oyzB"]
+},
+"b+sVBcmzVLG":{
+    "lastModifiedTime":1324010580913,
+    "contributors":["vsemenov86@googlewave.com"],
+    "waveletId":"googlewave.com!conv+root",
+    "threadId":"b+sVBcmzVLG",
+    "parentBlipId":"b+sVBcmzVLD",
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "replyThreadIds":[],
+    "creator":"vsemenov86@googlewave.com",
+    "version":150,
+    "content":"\n",
+    "blipId":"b+sVBcmzVLG",
+    "annotations":[],
+    "elements":{
+        "0":{
+            "properties":{},
+            "type":"LINE"
+        }
+    },
+"childBlipIds":[]
+},
+"b+sVBcmzVLJ":{
+    "lastModifiedTime":1324010614392,
+    "contributors":["vsemenov86@googlewave.com"],
+    "waveletId":"googlewave.com!conv+root",
+    "threadId":"b+sVBcmzVLC",
+    "parentBlipId":"b+sVBcmzVLB",
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "replyThreadIds":[],
+    "creator":"vsemenov86@googlewave.com",
+    "version":170,
+    "content":"\nгаджет \n\n ",
+    "blipId":"b+sVBcmzVLJ",
+    "annotations":[{
+        "range":{
+            "start":0,
+            "end":8
+        },
+        "name":"lang",
+        "value":"ru"
+    },{
+        "range":{
+            "start":9,
+            "end":11
+        },
+        "name":"lang",
+        "value":"unknown"
+    }],
+    "elements":{
+        "10":{
+            "properties":{
+                "author":"vsemenov86@googlewave.com",
+                "url":"http://wave-api.appspot.com/public/gadgets/areyouin/gadget.xml",
+                "ifr":"//g1qqb4lp5hrcfvk0vuhb70127nchupuh-a-wave-opensocial.googleusercontent.com/gadgets/ifr?url=http://wave-api.appspot.com/public/gadgets/areyouin/gadget.xml&container=wave&view=default&sanitize=0&v=e3fbcf147e789522&libs=core:dynamic-height:opensocial-data:opensocial-templates:wave"
+            },
+            "type":"GADGET"
+        },
+        "0":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "9":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "8":{
+            "properties":{},
+            "type":"LINE"
+        }
+    },
+"childBlipIds":[]
+},
+"b+sVBcmzVLK":{
+    "lastModifiedTime":1324010652822,
+    "contributors":["vsemenov86@googlewave.com"],
+    "waveletId":"googlewave.com!conv+root",
+    "threadId":"b+sVBcmzVLD",
+    "parentBlipId":"b+sVBcmzVLB",
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "replyThreadIds":[],
+    "creator":"vsemenov86@googlewave.com",
+    "version":187,
+    "content":"\nаттач \n\n ",
+    "blipId":"b+sVBcmzVLK",
+    "annotations":[{
+        "range":{
+            "start":0,
+            "end":7
+        },
+        "name":"lang",
+        "value":"ru"
+    },{
+        "range":{
+            "start":8,
+            "end":10
+        },
+        "name":"lang",
+        "value":"unknown"
+    }],
+    "elements":{
+        "0":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "7":{
+            "properties":{},
+            "type":"LINE"
+        },
+        "9":{
+            "properties":{
+                "attachmentId":"sVBcmzVL1",
+                "caption":"file",
+                "attachmentUrl":"https://wave.googleusercontent.com/wave/attachment/interface_08.png?id=sVBcmzVL1&key=AH0qf5xuYFEz8feV6fiATAWIarqBz5hFCw",
+                "mimeType":"image/png"
+            },
+            "type":"ATTACHMENT"
+        },
+        "8":{
+            "properties":{},
+            "type":"LINE"
+        }
+    },
+"childBlipIds":[]
+},
+"b+dnt3UOdbA":{
+    "lastModifiedTime":1324626074635,
+    "contributors":["yuryilinikh@googlewave.com"],
+    "waveletId":"googlewave.com!conv+root",
+    "threadId":"b+dnt3UOdbA",
+    "parentBlipId":"b+sVBcmzVLB",
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "replyThreadIds":[],
+    "creator":"yuryilinikh@googlewave.com",
+    "version":592,
+    "content":"\n1st root reply",
+    "blipId":"b+dnt3UOdbA",
+    "annotations":[{
+        "range":{
+            "start":0,
+            "end":15
+        },
+        "name":"lang",
+        "value":"en"
+    }],
+    "elements":{
+        "0":{
+            "properties":{},
+            "type":"LINE"
+        }
+    },
+"childBlipIds":[]
+}
+},
+"threads":{
+    "b+dnt3UOdbC":{
+        "id":"b+dnt3UOdbC",
+        "blipIds":["b+dnt3UOdbC"],
+        "location":283
+    },
+    "b+8eZe_oyzB":{
+        "id":"b+8eZe_oyzB",
+        "blipIds":["b+8eZe_oyzB"],
+        "location":-1
+    },
+    "b+sVBcmzVLC":{
+        "id":"b+sVBcmzVLC",
+        "blipIds":["b+sVBcmzVLC","b+sVBcmzVLF","b+sVBcmzVLJ"],
+        "location":286
+    },
+    "b+sVBcmzVLD":{
+        "id":"b+sVBcmzVLD",
+        "blipIds":["b+sVBcmzVLD","b+sVBcmzVLK"],
+        "location":287
+    },
+    "b+sVBcmzVLG":{
+        "id":"b+sVBcmzVLG",
+        "blipIds":["b+sVBcmzVLG"],
+        "location":21
+    },
+    "b+dnt3UOdbA":{
+        "id":"b+dnt3UOdbA",
+        "blipIds":["b+dnt3UOdbA","b+dnt3UOdbB"],
+        "location":-1
+    }
+},
+"blipId":"",
+"rawSnapshot":null,
+"rawDeltas":null,
+"waveletIds":null,
+"waveletData":{
+    "lastModifiedTime":1326698670884,
+    "tags":[],
+    "waveletId":"googlewave.com!conv+root",
+    "rootThread":{
+        "id":"",
+        "blipIds":  ["b+sVBcmzVLB","b+sVBcmzVLE"],
+        "location":-1
+    },
+    "rootBlipId":"b+sVBcmzVLB",
+    "dataDocuments":{},
+    "waveId":"googlewave.com!w+sVBcmzVLA",
+    "participants":["vsemenov86@googlewave.com","projectvolna@appspot.com","yuryilinikh@googlewave.com","davidov.oleg88@googlewave.com","ilpochta@googlewave.com"],
+    "version":829,
+    "creator":"vsemenov86@googlewave.com",
+    "title":"Заголовок волны",
+    "participantRoles":{
+        "davidov.oleg88@googlewave.com":"FULL",
+        "vsemenov86@googlewave.com":"FULL",
+        "projectvolna@appspot.com":"FULL",
+        "ilpochta@googlewave.com":"FULL",
+        "yuryilinikh@googlewave.com":"FULL"
+    },
+    "creationTime":1324010400140
+}
+}
+}]
+*/

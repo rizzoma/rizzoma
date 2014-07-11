@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: #2C2C2C;
+    line-height: 26px;
+    text-align: center;
+}
+img {border: 0;}
+.content {
+    margin: 100px auto;
+    width: 550px;
+    text-align: left;
+}
+.browsers .browser {
+    float: left;
+    width: 100px;
+    text-align: center;
+    margin: 0 0 0 10px;
+}
+a.text-link {
+    color: #0868C3;
+}
+.enter-link {
+    display: block;
+    margin: 0 auto;
+    background: url('/s/img/supported_browsers/button.png') no-repeat 0 0;
+    width: 190px;
+    height: 24px;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+}
+.text {
+    text-align: justify;
+}
+.text, .browsers, .block-enter-link {
+    margin-top: 20px;
+}
+.block-enter-link {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.browsers .first {
+    margin: 0;
+}
+.clearer {
+    clear: both;
+}
