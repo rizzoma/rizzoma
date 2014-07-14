@@ -6,6 +6,7 @@ Rizzoma is a powerful web-application for realtime collaboration. It was created
 ## Build and run
 
 **Install requirements:**
+
 Node.js 0.10, CouchDB, RabbitMQ, SphinxSearch, Redis (optional), ImageMagick (optional)
 
 On Debian/Ubuntu:
@@ -22,8 +23,9 @@ sudo apt-get install nodejs couchdb rabbitmq-server sphinxsearch redis-server im
 - configure SphinxSearch (optional, TBD)
 
 **Run:**
-`./app.js`
-Open http://localhost:8000/
+
+- `./app.js`
+- Open http://localhost:8000/
 
 ## Learn internals
 
@@ -41,16 +43,19 @@ In short:
 - Google and Facebook oAuth and contacts, email notifications and reply by email, Android application, Hangouts, Google Calendar, Google Drive, Chrome extensions
 
 Other topics: [REST API](https://rizzoma.com/topic/4796b8d26f1258bf15da0a37ee82155f/), [Developing gadgets with OpenSocial](https://rizzoma.com/topic/ec233aca0354f039c71c3e38bb5a3c69/)
+
 ## Make changes
 
-**Server side** entry points:
-src/server,
-src/server/app_roles/web_wave.coffee, src/server/templates/wave*.html - web
-src/server/common/root_router.coffee - API module routing
+**Server side entry points:**
+- src/server,
+- src/server/app_roles/web_wave.coffee, src/server/templates/wave*.html - web (views and templates),
+- src/server/common/root_router.coffee - API module routing.
+
 For most changes to apply just restart `./app.js`.
 
-**Client** entry points:
-src/client, src/static
+**Client entry points:**
+- src/client, src/static
+
 For .coffee files changes to apply run `node_modules/.bin/cake build-client`, for .css changes - just press F5.
 
 ## Help Rizzoma
@@ -59,11 +64,12 @@ For .coffee files changes to apply run `node_modules/.bin/cake build-client`, fo
 - Spread a word, [like](https://www.facebook.com/rizzomacom), star the repo ;)
 - Sponsor feature development or just upgrade your Rizzoma plan to support the project.
 
-## Who is behind Rizzoma and licenses
+## Who is behind Rizzoma and license
 
 Rizzoma Project was created and is developed by the [Tekliner](http://tekliner.com/) team with great help from the community.
 Rizzoma.com service is provided and supported by Tekliner. Write us a line - support@rizzoma.com
 
+```
 Copyright 2011-2014 Tekliner, http://tekliner.com/
 Copyright 2011-2014 Rizzoma Project, https://rizzoma.com/
 
@@ -78,3 +84,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
