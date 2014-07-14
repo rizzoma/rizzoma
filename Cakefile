@@ -46,7 +46,6 @@ bin = "#{root}/node_modules/.bin/"
 task 'build', 'Build server and client code', ->
     invoke "build-server"
     invoke "build-client"
-    invoke "generate-search-scheme"
 
 option '', '--do-not-compile-server', 'Do not cimpile server scripts to js'
 task 'build-server', 'Compile server side code to javascript', (options)->
@@ -67,6 +66,9 @@ task 'build-server', 'Compile server side code to javascript', (options)->
 
     # 3. process node_modules
     invoke 'build-node_modules'
+
+    # 4. generate headers for search index
+    invoke "generate-search-scheme"
 
 task 'build-client', 'Compile client side code to javascript, run Browserify, copy static, minify', ->
     invoke 'clean-client'
