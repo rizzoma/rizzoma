@@ -18,11 +18,11 @@ else
   # Only run this if this script was not run before
   # i.e. sudoers.rizzoma.bkp had not been created
   if [ ! -f /etc/sudoers.rizzoma.bkp ]; then
-  	# Make backup of sudoers just in case :)
-  	sudo cp /etc/sudoers /etc/sudoers.rizzoma.bkp 
+    # Make backup of sudoers just in case :)
+    sudo cp /etc/sudoers /etc/sudoers.rizzoma.bkp 
     USERNAME=`cat username.tmp`
-	sudo sed -i "s/Defaults	env_reset/Defaults	env_reset\nDefaults	env_keep += \"INDEX_PREFIX INDEX_TYPE\"/" $1
-	sudo echo -e "\n#run indexer without password prompt\n${USERNAME}	ALL=(sphinxsearch)NOPASSWD: /usr/bin/indexer * \n"  >> $1
+    sudo sed -i "s/Defaults	env_reset/Defaults	env_reset\nDefaults	env_keep += \"INDEX_PREFIX INDEX_TYPE\"/" $1
+    sudo echo -e "\n#run indexer without password prompt\n${USERNAME}	ALL=(sphinxsearch)NOPASSWD: /usr/bin/indexer * \n"  >> $1
     rm -f username.tmp
   else
     echo "Not changing sudoers file twice."
