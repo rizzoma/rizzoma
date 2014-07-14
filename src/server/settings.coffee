@@ -240,14 +240,14 @@ module.exports.dev =
             # application id and secret for http://localhost:8000
             # (can be obtained at https://developers.facebook.com/apps/ "Create a New App", App ID and App Secret values)
             clientID: '123'
-            clientSecret: '0123test'
+            clientSecret: 'facebook-app-secret'
             callbackURL: '/auth/facebook/callback'
             scope: ['email']
         google:
             # application id and secret for http://localhost:8000
             # (can be obtained at https://console.developers.google.com/project "APIS&AUTH">"Credentials")
             clientID: '123'
-            clientSecret: '0123test'
+            clientSecret: 'google-client-secret'
             callbackURL: '/auth/google/callback'
             scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
         googleByToken:
