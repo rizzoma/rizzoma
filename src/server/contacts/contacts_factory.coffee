@@ -3,7 +3,7 @@ async = require('async')
 
 Conf = require('../conf').Conf
 NotImplementedError = require('../../share/exceptions').NotImplementedError
-{GoogleContactsFetcher, FaceboockContactsFetcher} = require('./contacts_fetcher')
+{GoogleContactsFetcher, FacebookContactsFetcher} = require('./contacts_fetcher')
 DateUtils = require('../utils/date_utils').DateUtils
 
 UPDATE_THRESHOLD = Conf.get('contacts').updateThreshold
@@ -47,7 +47,7 @@ class ContactsFactory
                 contacts.removeAccessTocken(@_sourceName)
                 return callback(null, true) #нужно сохранить удаленный токен и отдать те контакты, которые есть
             @_updateFromSourceContacts(accessToken, contacts, sourceContacts, (err, updated) =>
-                return callback(null, true) if err # какие-то контакты могли обновиться - сохраняем на всякий случай
+                return callback(err) if err
                 contacts.updateSourceData(@_sourceName, accessToken, locale) #если все действительно обновилось поменяем дату обновления и токен
                 callback(null, updated)
             )
@@ -81,7 +81,10 @@ class GoogleContactsFactory extends ContactsFactory
 
     _updateFromSourceContacts: (accessToken, contacts, sourceContacts, callback) ->
         @_contactFetcher.getUserContactsAvatarsPath(contacts.id, (err, avatarsPath) =>
-            @_logger.error("Can not get avatars path for #{contacts.id}: #{err}") if err
+            @_logger.error("Can not get avatars path for #{contacts.id}", { err }) if err
+            if sourceContacts.error or not sourceContacts.feed
+                @_logger.error("Can not get source contacts data feed (Google)", { sourceContacts })
+                return callback(new Error('Can not get source contacts'))
             entry = sourceContacts.feed.entry
             return callback(null, accessToken != contacts.getSourceData(@_sourceName)?.accessToken) if not entry
             [toDelete, toFetchAvatar] = @_updateFromSourceContactFast(contacts, entry, avatarsPath)
@@ -103,7 +106,7 @@ class GoogleContactsFactory extends ContactsFactory
         @returns: [array - кто был удален, array - аватары]
         ###
         toDelete = []
-        toFetchAvarat = []
+        toFetchAvatar = []
         for sourceContact in entry
             email = @_getPrimaryEmail(sourceContact)
             continue if not email
@@ -115,8 +118,8 @@ class GoogleContactsFactory extends ContactsFactory
             contact.setName(@_getName(sourceContact))
             continue if not avatarsPath
             avatarUrl = @_getAvatarUrl(sourceContact)
-            toFetchAvarat.push({email, avatarUrl}) if avatarUrl
-        return [toDelete, toFetchAvarat]
+            toFetchAvatar.push({email, avatarUrl}) if avatarUrl
+        return [toDelete, toFetchAvatar]
 
     _getPrimaryEmail: (sourceContact) ->
         ###
@@ -178,7 +181,7 @@ class FacebookContactsFactory extends ContactsFactory
     Фабрика контактов для facebook.
     ###
     constructor: () ->
-        super('facebook', FaceboockContactsFetcher)
+        super('facebook', FacebookContactsFetcher)
 
     _updateFromSourceContacts: (accessToken, contacts, sourceContacts, callback) ->
         sourceContacts = sourceContacts.data

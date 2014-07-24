@@ -138,8 +138,8 @@ class ContactsController
         tasks = [
             async.apply(@_getContacts, contactsId)
             (contacts, callback) =>
-                @_updateContactsByAccessToken(sourceName, accessToken, contacts, locale, () ->
-                    callback(null, contacts)
+                @_updateContactsByAccessToken(sourceName, accessToken, contacts, locale, (err) ->
+                    callback(err, contacts)
                 )
         ]
         async.waterfall(tasks, (err, contacts) ->
@@ -162,8 +162,8 @@ class ContactsController
         contactsReturned = false
         contactsReturningTimer = null
         tasks = [
-            (nextTack) ->
-                contactsFactory.updateContacts(accessToken, contacts, locale, nextTack)
+            (nextTask) ->
+                contactsFactory.updateContacts(accessToken, contacts, locale, nextTask)
                 onTimeout = () ->
                     contactsReturned = true
                     callback(null)
@@ -171,10 +171,10 @@ class ContactsController
             (updated, callback) =>
                 @_saveContacts(contacts, updated, callback)
         ]
-        async.waterfall(tasks, () ->
+        async.waterfall(tasks, (err) ->
             return if contactsReturned
             clearTimeout(contactsReturningTimer)
-            callback(null)
+            callback(err)
         )
 
     _getContacts: (id, callback) =>

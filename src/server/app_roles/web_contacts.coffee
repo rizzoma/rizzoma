@@ -12,7 +12,7 @@ ContactsController = require('../contacts/controller').ContactsController
 
 BASE_URL = Conf.get('baseUrl')
 UPDATE_URL = contactsConf.updateUrl
-REDIREC_URI = contactsConf.redirectUri
+REDIRECT_URI = contactsConf.redirectUri
 INTERNAL_AVATARS_URL = contactsConf.internalAvatarsUrl
 AVATARS_PATH = contactsConf.avatarsPath
 
@@ -59,7 +59,7 @@ app.get '/contacts/update/', (req, res) ->
     ###
     res.redirect('/contacts/google/update/')
 
-app.get(REDIREC_URI, (req, res) ->
+app.get(REDIRECT_URI, (req, res) ->
     ###
     Обработчик запроса от провайдера авторизации. Здесь у нас есть код, но еще нет токена - надо получить и работать дальше.
     ###
@@ -79,7 +79,11 @@ app.get(REDIREC_URI, (req, res) ->
     async.waterfall(tasks, (err) ->
         return if not err
         logger.warn("Got error when updating user #{user.id} contacts", err)
-        res.end(renderTemplate(errorTemplate, {message: 'You should allow access to synchronize contact list.'}))
+        if err == 'access_denied'
+            message = 'You should allow access to synchronize contact list.'
+        else
+            message = 'Update error. Please try again.'
+        res.end(renderTemplate(errorTemplate, {message: message}))
     )
 )
 

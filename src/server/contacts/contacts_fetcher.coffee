@@ -86,7 +86,8 @@ class ContactsFetcher
 
     onAuthCodeGot: (req, res, params={}, callback) ->
         code = req.param('code')
-        return callback(true) if not code
+        return callback('access_denied') if not code and req.param('error') == 'access_denied'
+        return callback('no_code') if not code
         @_oauthConnector.getAccessToken(code, params, callback)
 
     fetchAllContacts: (accessToken, locale, callback) ->
@@ -276,7 +277,7 @@ class GoogleContactsFetcher extends ContactsFetcher
         return ["#{path}#{fileName}", fileName]
 
 
-class FaceboockContactsFetcher extends ContactsFetcher
+class FacebookContactsFetcher extends ContactsFetcher
     constructor: () ->
         super('facebook')
 
@@ -309,5 +310,5 @@ class FaceboockContactsFetcher extends ContactsFetcher
         super(requestParams, callback)
 
 module.exports=
-    FaceboockContactsFetcher: new FaceboockContactsFetcher()
+    FacebookContactsFetcher: new FacebookContactsFetcher()
     GoogleContactsFetcher: new GoogleContactsFetcher()
