@@ -42,7 +42,7 @@ In short:
 - Shindig for embedding OpenSocial gadgets
 - Google and Facebook oAuth and contacts, email notifications and reply by email, Android application, Hangouts, Google Calendar, Google Drive, Chrome extensions
 
-Other topics: [REST API](https://rizzoma.com/topic/4796b8d26f1258bf15da0a37ee82155f/), [Developing gadgets with OpenSocial](https://rizzoma.com/topic/ec233aca0354f039c71c3e38bb5a3c69/)
+Other topics: [REST API](https://rizzoma.com/topic/4796b8d26f1258bf15da0a37ee82155f/), [Developing gadgets with OpenSocial](https://rizzoma.com/topic/ec233aca0354f039c71c3e38bb5a3c69/), [Topic export (structure and converters)](https://rizzoma.com/topic/b0d6f7c66f7c784185a7e6f52f8ebb4c/)
 
 ## Make changes
 
