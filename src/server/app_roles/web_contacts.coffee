@@ -1,5 +1,5 @@
 ###
-Роль для запуска страницы, запрашивающей права и получающей из Google контакты пользователя
+Role for contacts: pages for ask for Google/Facebook Contacts API access, retrieve contacts, process avatars requests.
 ###
 async = require('async')
 accLangParser = require('acc-lang-parser')
@@ -20,8 +20,8 @@ successTemplate = Conf.getTemplate().compileFile('contacts_updated.html')
 errorTemplate = Conf.getTemplate().compileFile('contacts_update_error.html')
 renderTemplate = (template, context) ->
     ###
-    Рендерит шаблон (ошибка или удачное обновление).
-    @param tamplate: object
+    Render template (error or successful update).
+    @param template: object
     @param context: object
     ###
     try
@@ -30,12 +30,12 @@ renderTemplate = (template, context) ->
         logger.error(e)
         return "Error"
 
-#Раздаем аватарки.
+# Serve requests to avatar files (for downloaded Google contacts' avatars)
 app.get new RegExp("#{INTERNAL_AVATARS_URL}(.*)"), serveStatic(AVATARS_PATH)
 
 _getUserAndSource = (req, res) ->
     ###
-    Хэлпер для получения источника и пользователя. В случае ошибки завершит запрос
+    Helper to get signed in user and contacts source for request.
     @returns [UserModel, string]
     ###
     if not req.loggedIn
@@ -45,8 +45,8 @@ _getUserAndSource = (req, res) ->
 
 app.get(UPDATE_URL, (req, res) ->
     ###
-    Обработчик запроса обновления контактов. Здесь только инициируем получение токена.
-    Остальная логика в обработчике REDIRECT_URI.
+    Start page for contacts update. Initialize API access request.
+    Next steps are in REDIRECT_URI page handler.
     ###
     [user, source] = _getUserAndSource(req, res)
     return if not user
@@ -55,13 +55,13 @@ app.get(UPDATE_URL, (req, res) ->
 
 app.get '/contacts/update/', (req, res) ->
     ###
-    Редирект на всякий случай (legacy),
+    Legacy redirect,
     ###
     res.redirect('/contacts/google/update/')
 
 app.get(REDIRECT_URI, (req, res) ->
     ###
-    Обработчик запроса от провайдера авторизации. Здесь у нас есть код, но еще нет токена - надо получить и работать дальше.
+    Process API access request result: get accessToken from "code", retrieve contacts and return them to user.
     ###
     [user, source] = _getUserAndSource(req, res)
     return if not user
