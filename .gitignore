@@ -7,14 +7,21 @@
 # Local settings
 src/server/settings_local.coffee
 
+# Other repositories
+.svn
+src/pulse_index.coffee
+src/server/app_roles/web_payment.coffee
+src/server/app_roles/web_pulse.coffee
+src/pages/
+
 # Build
-build/*
 lib/*
 node_modules/compiled_modules/current
 src/server/version.coffee
 src/s
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
+
 # Data directiories
 data/*
 data/avatars/*

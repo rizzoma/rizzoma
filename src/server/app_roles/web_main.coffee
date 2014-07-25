@@ -21,19 +21,10 @@ app.get /\/s\/page(\/.*)/, serveStatic(__dirname + '/../../../src/pages/s/page')
 app.get /\/s(\/.*)/, serveStatic(__dirname + '/../../../lib/static')
 
 # routes
-# 1. index page (static file)
-app.get "/", serveStatic(__dirname + '/../../../src/pages', 'index.html')
-
-# 2. old index page (built with templates)
-#indexTemplate = Conf.getTemplate().compileFile('index.html')
-#app.get "/0/", (req, res) ->
-#    params =
-#        siteAnalytics: Conf.get('siteAnalytics')
-#    try
-#        res.send indexTemplate.render(params)
-#    catch e
-#        Conf.getLogger('http').error(e)
-#        res.send 500
+# 1. index page (static file or fallback - redirect to /topic/)
+app.get "/", serveStatic(__dirname + '/../../../src/pages', 'index.html'), (req, res) ->
+    # 2.no html found, just make /topic/ redirect
+    res.redirect('/topic/')
 
 # 3. static pages
 app.get /^\/[^\/]+\.html$/, serveStatic(__dirname + '/../../../src/pages')
