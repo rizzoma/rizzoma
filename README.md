@@ -3,10 +3,10 @@ Rizzoma Collaboration Platform
 
 Rizzoma is a powerful web-application for realtime collaboration. It was created with Google Wave principles in mind and features tree-structured discussions, gadget-form extensions and multimedia support. Rizzoma is an ultimate solution for team communication which can be used as knowledge-management and discussion platform at the same time. Watch short [video](http://youtu.be/77RYX1uDy_Q) or see it online - [Rizzoma.com](https://rizzoma.com/).
 
-## Just want to get hacking?
-Don't directly clone this repo, but instead get the [Rizzoma Skeleton](https://github.com/JonTheNiceGuy/rizzoma_skeleton), follow the steps and get hacking! :)
+## Just want to get hacking in a virtual machine?
+Don't directly clone this repo, but instead get the [Rizzoma Vagrant Skeleton](https://github.com/JonTheNiceGuy/rizzoma_skeleton), follow the steps and get hacking! :)
 
-Want to know how to do it properly - follow the steps below!
+Want to know how to do it properly on your local machine - follow the steps below!
 
 ## Build and run
 
