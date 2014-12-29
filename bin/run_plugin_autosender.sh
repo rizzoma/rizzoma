@@ -6,7 +6,7 @@ PREV_APP_PID=""
 while [ 1 ]; do
     date
     echo "PREV_APP_PID: $PREV_APP_PID"
-    APP_PID=`pgrep -fl "node" | grep -P "\---(app|sockapi)$"
+    APP_PID=`ps -ax -o pid,user,command | grep "/app.js ---sockapi$"`
     echo "APP_PID: $APP_PID";
     if [ -n "$APP_PID" ]; then
         if [ -z "$PREV_APP_PID" -o "$APP_PID" == "$PREV_APP_PID" ]; then

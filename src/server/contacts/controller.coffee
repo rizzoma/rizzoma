@@ -12,15 +12,15 @@ SUPPORT_EMAIL = require('../conf').Conf.get('supportEmail')
 
 class ContactsController
     ###
-    Класс-контроллер контактов пользователя.
+    User contacts controller.
     ###
     constructor: () ->
         @_logger = Conf.getLogger('contacts')
 
     getContacts: (user, callback) ->
         ###
-        Возвращает список контактов пользователя.
-        Вызывается при загрузге интерфейса пользователем (1 раз).
+        Return user contacts data.
+        Called by client code via API.
         @param user: UserModel
         @param callback: function
         ###
@@ -54,7 +54,7 @@ class ContactsController
 
     addContacts: (user, usersToAdd, callback) ->
         ###
-        Добавляет в контакты user пользователей usersToAdd.
+        Add usersToAdd to user contacts model.
         @param user: UserModel
         @param usersToAdd: array [UserModel, ...]
         @param callback: function
@@ -91,7 +91,8 @@ class ContactsController
 
     addEachOther: (user, usersToAdd, callback) ->
         ###
-        Добавляет контакт user в контакты всех usersToAdd и контакты всех usersToAdd в контакты user.
+        Add user info to contacts of usersToAdd and usersToAdd info to the user contacts.
+        Used when user invites usersToAdd to some topic so both parties have exchanged their contacts.
         @param user: UserModel
         @param usersToAdd: array [UserModel, ...]
         @param callback: function
@@ -127,8 +128,8 @@ class ContactsController
 
     updateContacts: (sourceName, accessToken, user, locale, callback) ->
         ###
-        Обновляет контакты из указанного источника.
-        @param sourceName: string
+        Update contacts from the source.
+        @param sourceName: string ('google', 'facebook')
         @params accessToken: string
         @param user: UserModel
         @param locale: string
@@ -138,8 +139,8 @@ class ContactsController
         tasks = [
             async.apply(@_getContacts, contactsId)
             (contacts, callback) =>
-                @_updateContactsByAccessToken(sourceName, accessToken, contacts, locale, () ->
-                    callback(null, contacts)
+                @_updateContactsByAccessToken(sourceName, accessToken, contacts, locale, (err) ->
+                    callback(err, contacts)
                 )
         ]
         async.waterfall(tasks, (err, contacts) ->
@@ -148,8 +149,10 @@ class ContactsController
 
     _updateContactsByAccessToken: (sourceName, accessToken, contacts, locale, callback) ->
         ###
-        Собственно, выбор нужной фабрики и сохранение.
-        Если фабрика работает слишком долго отдаем хотя бы что-то (все фабрики, должны работать с contacts по ссылке).
+        Update contacts using factory.
+        Returns response not later than CONTACTS_RETURNING_TIMEOUT (for example, Google contacts factory retrieves
+        avatars sequentially, it's better to return response soon with only some avatars and fetch remaining in background).
+        All fabrics should work with contacts model by link.
         @param sourceName; string
         @param accessToken: string
         @param contacts: ContactListModel
@@ -162,8 +165,8 @@ class ContactsController
         contactsReturned = false
         contactsReturningTimer = null
         tasks = [
-            (nextTack) ->
-                contactsFactory.updateContacts(accessToken, contacts, locale, nextTack)
+            (nextTask) ->
+                contactsFactory.updateContacts(accessToken, contacts, locale, nextTask)
                 onTimeout = () ->
                     contactsReturned = true
                     callback(null)
@@ -171,10 +174,10 @@ class ContactsController
             (updated, callback) =>
                 @_saveContacts(contacts, updated, callback)
         ]
-        async.waterfall(tasks, () ->
+        async.waterfall(tasks, (err) ->
             return if contactsReturned
             clearTimeout(contactsReturningTimer)
-            callback(null)
+            callback(err)
         )
 
     _getContacts: (id, callback) =>

@@ -3,14 +3,14 @@ async = require('async')
 
 Conf = require('../conf').Conf
 NotImplementedError = require('../../share/exceptions').NotImplementedError
-{GoogleContactsFetcher, FaceboockContactsFetcher} = require('./contacts_fetcher')
+{GoogleContactsFetcher, FacebookContactsFetcher} = require('./contacts_fetcher')
 DateUtils = require('../utils/date_utils').DateUtils
 
 UPDATE_THRESHOLD = Conf.get('contacts').updateThreshold
 
 class ContactsFactory
     ###
-    Базовый класс фабрики контактов пользователя.
+    User contacts factory base class
     ###
     constructor: (@_sourceName, @_contactFetcher) ->
         @_conf = Conf.getContactsConfForSource(@_sourceName)
@@ -34,7 +34,7 @@ class ContactsFactory
 
     updateContacts: (accessToken, contacts, locale, callback) =>
         ###
-        Обновляет существующий или заполняет список контактов полностью, данными из источника.
+        Update existing or create new contacts list from source.
         @param accessToken: string
         @param contacts: ContactListModel
         @param locale: string
@@ -47,7 +47,7 @@ class ContactsFactory
                 contacts.removeAccessTocken(@_sourceName)
                 return callback(null, true) #нужно сохранить удаленный токен и отдать те контакты, которые есть
             @_updateFromSourceContacts(accessToken, contacts, sourceContacts, (err, updated) =>
-                return callback(null, true) if err # какие-то контакты могли обновиться - сохраняем на всякий случай
+                return callback(err) if err
                 contacts.updateSourceData(@_sourceName, accessToken, locale) #если все действительно обновилось поменяем дату обновления и токен
                 callback(null, updated)
             )
@@ -58,10 +58,10 @@ class ContactsFactory
 
     _updateFromSourceContacts: (accessToken, contacts, sourceContacts, callback) ->
         ###
-        Парсит данные о контактах и заполняет модель.
+        Parse data for contacts source, update model.
         @param accessToken: string
-        @param contacts: ContactListModel - модель для обновления/заполениня
-        @param sourceContacts: object - произвольный объект, представляющий данные от источника контактов.
+        @param contacts: ContactListModel - model for updating
+        @param sourceContacts: object - raw data from contacts provider.
         @param callback: function
         ###
         throw new NotImplementedError()
@@ -70,10 +70,10 @@ SOURCE_NAME_GOOGLE = require('../../share/contacts/constants').SOURCE_NAME_GOOGL
 
 class GoogleContactsFactory extends ContactsFactory
     ###
-    Фабрика контактов для google.
-    Т.к. в гугле работают одни пидорасы и ссылки на юзерпики нельзя напрямую вставлять в HTML (обязательно нужен accessToken),
-    то придется скачивать их для изменившихся пользователей себе и раздавать самостоятельно.
-    Структура каталогово AVATAR_PATH->[contactsId -> [SHA1(contactEmail)...], ...]
+    Contacts fabric for Google.
+    User pics (avatars) URLs can't be used directly in HTML because URLs should contain accessToken,
+    we have to fetch avatars and serve requests to them ourselves.
+    Directory structure: AVATAR_PATH->[contactsId -> [SHA1(contactEmail)...], ...]
     ###
     constructor: () ->
         @_internalAvatarsUrl = Conf.get('contacts').internalAvatarsUrl
@@ -81,7 +81,10 @@ class GoogleContactsFactory extends ContactsFactory
 
     _updateFromSourceContacts: (accessToken, contacts, sourceContacts, callback) ->
         @_contactFetcher.getUserContactsAvatarsPath(contacts.id, (err, avatarsPath) =>
-            @_logger.error("Can not get avatars path for #{contacts.id}: #{err}") if err
+            @_logger.error("Can not get avatars path for #{contacts.id}", { err }) if err
+            if sourceContacts.error or not sourceContacts.feed
+                @_logger.error("Can not get source contacts data feed (Google)", { sourceContacts })
+                return callback(new Error('Can not get source contacts'))
             entry = sourceContacts.feed.entry
             return callback(null, accessToken != contacts.getSourceData(@_sourceName)?.accessToken) if not entry
             [toDelete, toFetchAvatar] = @_updateFromSourceContactFast(contacts, entry, avatarsPath)
@@ -96,14 +99,14 @@ class GoogleContactsFactory extends ContactsFactory
 
     _updateFromSourceContactFast: (contacts, entry, avatarsPath) ->
         ###
-        Обновляет те поля, которые не требуют io вызовов.
+        Update model properties which don't require I/O calls.
         @param contacts: ContactListModel
         @param entry: array
         @param avatarPath: string
         @returns: [array - кто был удален, array - аватары]
         ###
         toDelete = []
-        toFetchAvarat = []
+        toFetchAvatar = []
         for sourceContact in entry
             email = @_getPrimaryEmail(sourceContact)
             continue if not email
@@ -115,12 +118,12 @@ class GoogleContactsFactory extends ContactsFactory
             contact.setName(@_getName(sourceContact))
             continue if not avatarsPath
             avatarUrl = @_getAvatarUrl(sourceContact)
-            toFetchAvarat.push({email, avatarUrl}) if avatarUrl
-        return [toDelete, toFetchAvarat]
+            toFetchAvatar.push({email, avatarUrl}) if avatarUrl
+        return [toDelete, toFetchAvatar]
 
     _getPrimaryEmail: (sourceContact) ->
         ###
-        Получает email.
+        Retrieve email.
         @param sourceContact: object
         @returns: string
         ###
@@ -134,7 +137,7 @@ class GoogleContactsFactory extends ContactsFactory
 
     _isDeleted: (sourceContact) ->
         ###
-        Определяет удален или нет контакт из всех групп.
+        Check if contact is deleted from al groups.
         @param sourceContact: object
         @returns: bool
         ###
@@ -144,7 +147,7 @@ class GoogleContactsFactory extends ContactsFactory
 
     _getName: (sourceContact) ->
         ###
-        Получает имя контакта.
+        Retrieve contact name.
         @param sourceContact: object
         @returns: string
         ###
@@ -159,7 +162,7 @@ class GoogleContactsFactory extends ContactsFactory
 
     _getAvatarUrl: (sourceContact) ->
         ###
-        Получает ссылку на автар
+        Retrieve avatar URL
         @param sourceContact: object
         @returns: string
         ###
@@ -175,10 +178,10 @@ class GoogleContactsFactory extends ContactsFactory
 
 class FacebookContactsFactory extends ContactsFactory
     ###
-    Фабрика контактов для facebook.
+    Contacts fabric for Facebook.
     ###
     constructor: () ->
-        super('facebook', FaceboockContactsFetcher)
+        super('facebook', FacebookContactsFetcher)
 
     _updateFromSourceContacts: (accessToken, contacts, sourceContacts, callback) ->
         sourceContacts = sourceContacts.data
@@ -218,13 +221,18 @@ SOURCE_NAME_MANUALLY = require('../../share/contacts/constants').SOURCE_NAME_MAN
 LOCAL_UPDATE_THRESHOLD = 600
 
 class LocalContactsFactory extends ContactsFactory
+    ###
+    Contacts fabric for "local" contacts: predefined support contacts and contacts added automatically
+    when user invites someone to topic.
+    ###
 
     constructor: () ->
         super('local', null)
 
     autoUpdateContacts: (contacts, callback) ->
         updateDate = contacts.sources?[@_sourceName]?.updateDate
-        #не нужно обновлять, если прошло меньше 10 минут (клиент запрашивает контакты 2 раза с интервалом 5 минут)
+        # minimum update frequency once per 10 minutes (client code fetches contacts twice: just after /topic/ page
+        # loaded and 5 minutes later for additionally loaded/updated contacts or avatars)
         if updateDate and DateUtils.getCurrentTimestamp() - updateDate < LOCAL_UPDATE_THRESHOLD
             return callback(null, false)
         @updateContacts(contacts, callback)

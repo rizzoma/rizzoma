@@ -16,13 +16,13 @@ MAX_CONTACTS_COUNT = ContactsConf.maxContactsCount
 
 class OAuthUtils
     ###
-    Утилита для OAuth авторизации.
+    OAuth utils.
     ###
     constructor: (@_clientId, @_clientSecret, @_apiUrl, @_codeUrl, @_tokenUrl) ->
 
     getAuthorizeUrl: (params={}) ->
         ###
-        Возвращает url для получения авторизационного кода.
+        Generate url for access code request.
         @returns: string
         ###
         params.client_id = @_clientId
@@ -35,7 +35,7 @@ class OAuthUtils
 
     getAccessToken: (code, params={}, callback) ->
         ###
-        Возвращает токен.
+        Retrieve accessToken by code.
         @param code: string
         @param params: object
         @param callback: function(err, string)
@@ -60,7 +60,7 @@ class OAuthUtils
 
 class ContactsFetcher
     ###
-    Базовый класс-загрузчик контактов.
+    Fetch data from source contacts API (base class).
     ###
     constructor: (@_sourceName) ->
         @_conf = Conf.getContactsConfForSource(@_sourceName)
@@ -86,12 +86,13 @@ class ContactsFetcher
 
     onAuthCodeGot: (req, res, params={}, callback) ->
         code = req.param('code')
-        return callback(true) if not code
+        return callback('access_denied') if not code and req.param('error') == 'access_denied'
+        return callback('no_code') if not code
         @_oauthConnector.getAccessToken(code, params, callback)
 
     fetchAllContacts: (accessToken, locale, callback) ->
         ###
-        Получает все контакты пользователя.
+        Retrieve all user contacts.
         @param accessToken: string
         @param locale: string
         @param callback: function
@@ -100,9 +101,9 @@ class ContactsFetcher
 
     fetchContactsFromDate: (accessToken, date, locale, callback) ->
         ###
-        Получает контакты изменившиеся с указанной даты.
+        Retrieve only contacts that were changed after the specified date.
         @param accessToken: string
-        @param date: int
+        @param date: int (unix time in seconds)
         @param locale: string
         @param callback: function
         ###
@@ -110,7 +111,7 @@ class ContactsFetcher
 
     _doContactsRequest: (requestParams, callback) ->
         ###
-        Выполняет запрос контактов у API источника.
+        Request contacts from source API.
         @param requestParams: object
         @param callback: function
         ###
@@ -171,9 +172,9 @@ class GoogleContactsFetcher extends ContactsFetcher
 
     getUserContactsAvatarsPath: (contactsId, callback) ->
         ###
-        Возвращает (если нету, то создает) папку с аватарами для контактв пользователя.
-        @param contactsId: string
-        @param callback: fucntion
+        Create directory for user contacts' avatars and return path.
+        @param contactsId: string (id property of user ContactsList model)
+        @param callback: function
         ###
         path = "#{@_avatarsPath}#{contactsId}/"
         pathExists(path, (exists) ->
@@ -184,12 +185,12 @@ class GoogleContactsFetcher extends ContactsFetcher
         )
     fetchAvatars: (accessToken, toFetch, path, onAvatarLoad, callback) =>
         ###
-        Загружает аватары по списку.
+        Retrieve the list of avatars.
         @param accessToken: string
         @param toFetch: array [{email, avatarUrl},...]
         @param path string - куда сохранить:
-        @param onAvatarLoad function(err, email, fileName) - буд вызван после удачной загрузк одного аватара
-        @param callback: function(err) - будет вызван после завершения скачивания всех аватар.
+        @param onAvatarLoad function(err, email, fileName) - will be called after each avatar load
+        @param callback: function(err) - will be called after all avatars have been loaded
         ###
         @_clearRequestInterval()
         tasks = []
@@ -222,7 +223,7 @@ class GoogleContactsFetcher extends ContactsFetcher
 
     _fetchAvatarWorker: (args, callback) =>
         ###
-        Скачивает аватар и сохраняет его (@see: GoogleContactsFactory).
+        Retrieve one avatar and write to disk (@see: GoogleContactsFactory).
         @params accessToken: string
         @param avatarUrl: string
         @params path: string
@@ -254,7 +255,7 @@ class GoogleContactsFetcher extends ContactsFetcher
 
     removeContactsAvatar: (path, emails) ->
         ###
-        Удаляет аватары.
+        Remove avatars from disk.
         @param path: string
         @param emails: array
         ###
@@ -262,7 +263,7 @@ class GoogleContactsFetcher extends ContactsFetcher
         tasks = []
         for email in emails
             [path, fileName] = @_getFullAvatarPath(path, email)
-            tasks.puhs(do(path) =>
+            tasks.push(do(path) =>
                 return (callback) =>
                     fs.unlink(path, (err) =>
                         @_logger.warn("Can not remove avatar #{path}: #{err}")
@@ -276,7 +277,7 @@ class GoogleContactsFetcher extends ContactsFetcher
         return ["#{path}#{fileName}", fileName]
 
 
-class FaceboockContactsFetcher extends ContactsFetcher
+class FacebookContactsFetcher extends ContactsFetcher
     constructor: () ->
         super('facebook')
 
@@ -309,5 +310,5 @@ class FaceboockContactsFetcher extends ContactsFetcher
         super(requestParams, callback)
 
 module.exports=
-    FaceboockContactsFetcher: new FaceboockContactsFetcher()
+    FacebookContactsFetcher: new FacebookContactsFetcher()
     GoogleContactsFetcher: new GoogleContactsFetcher()

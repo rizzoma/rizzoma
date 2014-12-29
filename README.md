@@ -3,6 +3,11 @@ Rizzoma Collaboration Platform
 
 Rizzoma is a powerful web-application for realtime collaboration. It was created with Google Wave principles in mind and features tree-structured discussions, gadget-form extensions and multimedia support. Rizzoma is an ultimate solution for team communication which can be used as knowledge-management and discussion platform at the same time. Watch short [video](http://youtu.be/77RYX1uDy_Q) or see it online - [Rizzoma.com](https://rizzoma.com/).
 
+## Just want to get hacking in a virtual machine?
+Don't directly clone this repo, but instead get the [Rizzoma Vagrant Skeleton](https://github.com/JonTheNiceGuy/rizzoma_skeleton), follow the steps and get hacking! :)
+
+Want to know how to do it properly on your local machine - follow the steps below!
+
 ## Build and run
 
 **Install requirements:**
@@ -42,7 +47,7 @@ In short:
 - Shindig for embedding OpenSocial gadgets
 - Google and Facebook oAuth and contacts, email notifications and reply by email, Android application, Hangouts, Google Calendar, Google Drive, Chrome extensions
 
-Other topics: [REST API](https://rizzoma.com/topic/4796b8d26f1258bf15da0a37ee82155f/), [Developing gadgets with OpenSocial](https://rizzoma.com/topic/ec233aca0354f039c71c3e38bb5a3c69/)
+Other topics: [REST API](https://rizzoma.com/topic/4796b8d26f1258bf15da0a37ee82155f/), [Developing gadgets with OpenSocial](https://rizzoma.com/topic/ec233aca0354f039c71c3e38bb5a3c69/), [Topic export (structure and converters)](https://rizzoma.com/topic/b0d6f7c66f7c784185a7e6f52f8ebb4c/)
 
 ## Make changes
 
