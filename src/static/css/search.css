@@ -33,7 +33,15 @@
     top: 0;
     z-index: 3;
 }
-
+.search.public-search-container {
+    padding-top: 60px;
+}
+.search.public-search-container .status-bar {
+    top: 51px;
+}
+.search.public-search-container .tags-block a {
+    padding-right: 5px;
+}
 .search-query-container, .message-list-query-container,
 .task-list-query-container, .public-search-query-container,
 .search-header .search-menu {
