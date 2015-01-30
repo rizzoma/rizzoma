@@ -33,7 +33,18 @@
     top: 0;
     z-index: 3;
 }
-
+.search.public-search-container {
+    padding-top: 70px;
+}
+.search.public-search-container .status-bar {
+    top: 61px;
+}
+.search.public-search-container .tags-block {
+    margin-top: 5px;
+}
+.search.public-search-container .tags-block a {
+    padding-right: 10px;
+}
 .search-query-container, .message-list-query-container,
 .task-list-query-container, .public-search-query-container,
 .search-header .search-menu {

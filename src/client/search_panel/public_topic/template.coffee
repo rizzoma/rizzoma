@@ -5,6 +5,11 @@ publicSearchPanelTmpl = ->
         div '.public-search-query-container', ->
             input '#js-public-search-query.public-search-query', type: 'text'
             div '#js-run-public-search.search-icon', ''
+            div '.js-tags-block tags-block', ->
+                a {href: '#', 'data-tag': '#Education'}, "#Education"
+                a {href: '#', 'data-tag': '#Rizzoma'}, "#Rizzoma"
+                a {href: '#', 'data-tag': '#Velocar'}, "#Velocar"
+                a {href: '#', 'data-tag': '#Ukraine'}, "#Ukraine"
     div '#js-public-search-results.search-results', ''
 
 publicSearchTopicTmpl = ->
