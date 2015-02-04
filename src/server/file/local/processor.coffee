@@ -47,9 +47,34 @@ class LocalStorageProcessor extends StorageProcessor
         rd.pipe(wr)
 
     deleteFile: (storagePath, callback) ->
-        # TODO(Robin): delete empty directories?
+        # TODO(Robin): Find out why its even called wihtout callback?
+        if not callback?
+            callback = ->
         complete_storage_path = "data/uploaded-files/#{storagePath}"
-        fs.unlink(complete_storage_path, callback)
+        # Delete file and possibly delete resulting empty directories
+        fs.unlink(complete_storage_path, (err) ->
+            if err then return callback(err)
+            directory = path_module.dirname(complete_storage_path)
+            deleteEmptyDirectoryAndEmptyParents(directory, callback)
+        )
+    
+    deleteEmptyDirectoryAndEmptyParents = (directory, callback) ->
+        # Check if directory is empty, then delete it
+        # and possibly its parents if they are empty too
+        fs.readdir(directory, (err, contents) ->
+            if err then return callback(err)
+            dirEmpty = contents.length == 0
+            if (dirEmpty)
+                fs.rmdir(directory, (err) ->
+                    if err then return callback(err)
+                    # go recursively upwards to (maybe) delete empty parent dirs
+                    parts = directory.split(path_module.sep)
+                    parent_dir = path_module.join.apply(null, parts.slice(0, -1))
+                    deleteEmptyDirectoryAndEmptyParents(parent_dir, callback)
+                )
+            else
+                callback(null)
+        )
   
     getLink: (storagePath, notProtected=false) ->
         #  files accessible trough /f/... defined in src/server/app_roles/web_main.coffee
