@@ -5,9 +5,6 @@ sudo add-apt-repository --yes ppa:chris-lea/node.js
 sudo apt-get update
 sudo apt-get --yes install nodejs couchdb rabbitmq-server sphinxsearch redis-server imagemagick libicu-dev
 
-# Configure rizzoma (maybe unnecessary since also happens in cake init?)
-cp src/server/settings_local.coffee.template src/server/settings_local.coffee
-
 # Configure Sphinxsearch
 sudo sed -i "s/START=no/START=yes/" /etc/default/sphinxsearch
 ./bin/edit_sudoers_for_sphinxsearch.sh

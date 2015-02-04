@@ -19,6 +19,9 @@ if Conf.get('app')?.dynamicBrowserify
 {serveStatic} = require('../utils/express')
 app.get /\/s\/page(\/.*)/, serveStatic(__dirname + '/../../../src/pages/s/page')
 app.get /\/s(\/.*)/, serveStatic(__dirname + '/../../../lib/static')
+# for local file processor/storage
+# TODO: get from conf
+app.get /\/f(\/.*)/, serveStatic(__dirname + '/../../../data/uploaded-files')
 
 # routes
 # 1. index page (static file or fallback - redirect to /topic/)
