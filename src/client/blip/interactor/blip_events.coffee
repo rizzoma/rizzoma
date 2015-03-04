@@ -26,6 +26,7 @@ BlipEventTypes =
     PASTE_AT_CURSOR: '_pasteAtCursor'
     PASTE_AS_REPLY: '_pasteAsReply'
     SHOW_BLIP_URL: '_showBlipUrl'
+    PLAYBACK: '_playback'
 
 trackMakeTextEvent = (name) -> _gaq.push(['_trackEvent', 'Blip usage', "Make text #{name}"])
 
@@ -129,6 +130,11 @@ class EventProcessor
     _showBlipUrl: (blipInteractor, args) ->
         _gaq.push(['_trackEvent', 'Blip usage', 'Copy blip link'])
         blipInteractor.showBlipUrl(args.event?.target)
+
+    _playback: (blipInteractor) ->
+        _gaq.push(['_trackEvent', 'Blip usage', 'Playback'])
+        blipInteractor.runPlayback()
+
 
 module.exports =
     BlipEventTypes: BlipEventTypes

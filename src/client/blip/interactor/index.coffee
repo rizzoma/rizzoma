@@ -221,6 +221,8 @@ class BlipEventInteractor
 
     setCanEdit: (canEdit) -> @_blipMenu?.setCanEdit(canEdit)
 
+    runPlayback: () ->
+
     enableIdDependantButtons: -> @_blipMenu?.enableIdDependantButtons()
 
     attach: (interactable) -> @_attach(interactable)
