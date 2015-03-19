@@ -237,5 +237,10 @@ class OtProcessorFrontend
             else
                 listener.send(op) if listenerId != op.listenerId
 
+    getOpRange: (docId, start, end, callback) ->
+        OperationCouchProcessor.getOpRange(docId, start, end, callback)
+
+    getOpRangeForMultipleDocs: (ranges, callback) ->
+        OperationCouchProcessor.getOpRangeForMultipleDocs(ranges, callback)
 
 module.exports.OtProcessorFrontend = new OtProcessorFrontend()

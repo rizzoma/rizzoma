@@ -67,6 +67,12 @@ class BlipProcessor
         ###
         @createBlip(waveId, user, null, title, yes, no, no, no, null, no, callback)
 
+    _getContainerBlipContent: (rootBlipId) ->
+        return [
+            {t: ' ', params: {__TYPE: 'LINE'}}
+            {t: ' ', params: {__TYPE: 'BLIP', __ID: rootBlipId, RANDOM: Math.random()}}
+        ]
+
     createContainerBlip: (waveId, user, rootBlipId, callback) ->
         ###
         Создает блипп-контейнер.
@@ -75,11 +81,18 @@ class BlipProcessor
         @param rootBlipId: string - id корневого блипа для вставки в контейнер
         @param callback: function
         ###
-        content = [
-            {t: ' ', params: {__TYPE: 'LINE'}}
-            {t: ' ', params: {__TYPE: 'BLIP', __ID: rootBlipId, RANDOM: Math.random()}}
-        ]
+        content = @_getContainerBlipContent(rootBlipId)
         @createBlip(waveId, user, null, content, no, yes, no, no, null, no, callback)
+
+    getContainerModel: (id, waveId, rootBlipId, user) ->
+        blip = new BlipModel(id)
+        blip.content = @_getContainerBlipContent(rootBlipId)
+        blip.waveId = waveId
+        @_initContributors(blip, user, [])
+        blip.readers[user.id] = blip.contentVersion
+        blip.isRootBlip = no
+        blip.isContainer = yes
+        return blip
 
     _initContributors: (blip, author, contributors) ->
         ###
@@ -225,6 +238,9 @@ class BlipProcessor
 
     getChildBlips: (blip, ids, callback) ->
         CouchBlipProcessor.getWithChildsByIdAsDict(ids, blip.waveId, callback)
+
+    getChidBlipsByWaveId: (waveId, ids, callback) ->
+        CouchBlipProcessor.getWithChildsByIdAsDict(ids, waveId, callback)
 
     _getOpsParam: (blip, ops) ->
         iterator = (op, fieldName) ->

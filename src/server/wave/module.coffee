@@ -52,6 +52,29 @@ class WaveModule extends BaseModule
         WaveController.getClientWaveWithBlipsByUrl(waveId, user, referalEmailHash, callback)
     @::v('getWaveWithBlips', ['waveId'])
 
+    getPlaybackData: (request, args, callback) ->
+        ###
+        Возвращает волну и все блипы.
+        ###
+        waveId = args.waveId
+        blipId = args.blipId
+        user = request.user
+        WaveController.getPlaybackData(waveId, blipId, user, callback)
+    @::v('getWaveWithBlips', ['waveId(not_null)', 'blipId(not_null)'])
+
+    getBlipForPlayback: (request, args, callback) ->
+        ###
+        Возвращает волну и все блипы.
+        ###
+        blipId = args.blipId
+        BlipController.getBlipForPlayback(blipId, request.user, (err, blip, ops) ->
+            return callback(err) if err
+            blip = BlipOtConverter.toClient(blip, request.user)
+            blip.meta.ops = (OperationOtConverter.toClient(op) for op in ops)
+            callback(null, blip)
+        )
+    @::v('getBlip', ['blipId(not_null)'])
+
     subscribeWaveWithBlips: (request, args, callback) ->
         ###
         Подписывается на изменение волны и всех ее блипов.
