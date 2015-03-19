@@ -59,7 +59,7 @@ class WaveView extends WaveViewBase
         @_isAnonymous = !window.userInfo?.id?
         @_model = waveViewModel.getModel()
         @_editable = BrowserSupport.isSupported() and not @_isAnonymous
-        @_createDOM()
+        @_createDOM(renderWave)
         @_initWaveHeader(waveViewModel, participants)
         @_initEditingMenu()
         @_updateParticipantsManagement()
@@ -524,12 +524,14 @@ class WaveView extends WaveViewBase
         Инициализирует корневой блип
         ###
         processor = require('../blip/processor').instance
-        processor.openBlip waveViewModel, @_model.getContainerBlipId(), @blipNode, null, (err, @rootBlip) =>
-            return @_waveProcessor.showPageError(err) if err
-            @_initRangeChangeEvent()
+        processor.openBlip waveViewModel, @_model.getContainerBlipId(), @blipNode, null, @_onRootBlipGot
         @on 'range-change', (range, blip) =>
             if blip
                 @markActiveBlip(blip)
+
+    _onRootBlipGot: (err, @rootBlip) =>
+        return @_waveProcessor.showPageError(err) if err
+        @_initRangeChangeEvent()
 
     _disableEditingButtons: -> @_editingButtonsEnabled = no
 
@@ -629,7 +631,7 @@ class WaveView extends WaveViewBase
             event.stopPropagation()
             func(event)
 
-    _createDOM: () ->
+    _createDOM: (renderWave) ->
         ###
         Создает DOM для отображения документа
         ###

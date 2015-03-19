@@ -294,7 +294,7 @@ class WaveViewModel
         blipId = blip.getModel().serverId
         return if blipId of @_loadedBlips
         @_loadedBlips[blipId] = blip
-        @__blipProcessor.subscribeBlip(blip.getModel(), @_subscriptionCallId) if @_state is STATE_LOADED
+        @_subscribeBlip(blip)
         @_totalBlipsCount += 1
         @__updateTotalBlipsCount()
         @_unloadBlipsCount -= 1
@@ -310,6 +310,9 @@ class WaveViewModel
         return if not (blipId of @_loadBlipsCallbacks)
         callback(blip) for callback in @_loadBlipsCallbacks[blipId]
         delete @_loadBlipsCallbacks[blipId]
+
+    _subscribeBlip: (blip) ->
+        @__blipProcessor.subscribeBlip(blip.getModel(), @_subscriptionCallId) if @_state is STATE_LOADED
 
     __initLoadedWave: ->
         # implement if needed

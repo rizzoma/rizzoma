@@ -99,10 +99,13 @@ class BlipView extends BlipViewBase
         $(@_blipContainer).find('.js-finish-edit').click => # TODO: move it to right place
             @_setEditable(no, yes)
         @_initEditor(@_model.getSnapshotContent())
-        @_interactor = new BlipEventInteractor(@_blipViewModel, @)
+        @_initBlipEventsInteractor()
         @_setPermission()
         @_setEditable(@_waveViewModel.getView().isEditMode(), no)
         @updateReadState()
+
+    _initBlipEventsInteractor: () ->
+        @_interactor = new BlipEventInteractor(@_blipViewModel, @)
 
     renderRecursively: ->
         @_render()
@@ -993,6 +996,9 @@ class BlipView extends BlipViewBase
         rect
 
     _updateUndoRedoState: -> @_interactor.updateUndoRedoState()
+
+    showPlaybackView: () ->
+        @_blipProcessor.showPlaybackView(@_waveViewModel.getServerId(), @_model.serverId)
 
 MicroEvent.mixin(BlipView)
 module.exports = {BlipView}

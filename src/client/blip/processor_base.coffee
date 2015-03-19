@@ -75,6 +75,9 @@ class BlipProcessorBase
             blipViewModel = @__constructBlip(blipData, waveViewModel, container, parentBlip)
             setBlipAsLoaded(blipViewModel)
         request.setProperty('recallOnDisconnect', true)
+        @_sendGetBlipRequest(waveViewModel, request)
+
+    _sendGetBlipRequest: (waveViewModel, request) ->
         @_rootRouter.handle('network.wave.getBlip', request)
 
     subscribeBlip: (blip, callId) ->
@@ -161,5 +164,9 @@ class BlipProcessorBase
         console.error err.stack
         showErrRequest = new Request({error: err}, ->)
         @_rootRouter.handle('pageError.showError', showErrRequest)
+
+    showPlaybackView: (waveId, blipId) ->
+        request = new Request({waveId, blipId})
+        @_rootRouter.handle('playback.showPlaybackView', request)
 
 module.exports.BlipProcessorBase = BlipProcessorBase
