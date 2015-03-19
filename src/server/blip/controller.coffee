@@ -5,7 +5,6 @@ BlipProcessor = require('./processor').BlipProcessor
 WaveProcessor = require('../wave/processor').WaveProcessor
 UserCouchProcessor = require('../user/couch_processor').UserCouchProcessor
 DriveController = require('../gdrive/controller')
-OtProcessorFrontend = require('../ot/processor_frontend').OtProcessorFrontend
 Conf = require('../conf').Conf
 IdUtils = require('../utils/id_utils').IdUtils
 
@@ -97,18 +96,6 @@ class BlipController
             return callback(err, null) if err
             callback(null, blip)
         )
-
-    getBlipForPlayback: (blipId, user, callback) ->
-        tasks = [
-            async.apply(@getBlip, blipId, user)
-            (blip, callback) ->
-                versionFrom = blip.version - 100
-                versionFrom = 0 if versionFrom < 0
-                OtProcessorFrontend.getOpRange(blip.id, versionFrom, blip.version, (err, ops) ->
-                    callback(err, blip, ops)
-                )
-        ]
-        async.waterfall(tasks, callback)
 
     subscribeBlip: (blipId, user, version, listenerId, callback) ->
         ###

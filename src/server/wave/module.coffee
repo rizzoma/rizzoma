@@ -8,6 +8,7 @@ OperationOtConverter = require('../ot/operation_ot_converter').OperationOtConver
 BlipSearchController = require('../blip/search_controller').BlipSearchController
 WaveNotificator = require('./notificator').WaveNotificator
 IdUtils = require('../utils/id_utils').IdUtils
+PlaybackController = require('../playback/controller').PlaybackController
 
 class WaveModule extends BaseModule
     ###
@@ -59,7 +60,7 @@ class WaveModule extends BaseModule
         waveId = args.waveId
         blipId = args.blipId
         user = request.user
-        WaveController.getPlaybackData(waveId, blipId, user, callback)
+        PlaybackController.getPlaybackData(waveId, blipId, user, callback)
     @::v('getWaveWithBlips', ['waveId(not_null)', 'blipId(not_null)'])
 
     getBlipForPlayback: (request, args, callback) ->
@@ -67,7 +68,7 @@ class WaveModule extends BaseModule
         Возвращает волну и все блипы.
         ###
         blipId = args.blipId
-        BlipController.getBlipForPlayback(blipId, request.user, (err, blip, ops) ->
+        PlaybackController.getBlipForPlayback(blipId, request.user, (err, blip, ops) ->
             return callback(err) if err
             blip = BlipOtConverter.toClient(blip, request.user)
             blip.meta.ops = (OperationOtConverter.toClient(op) for op in ops)
