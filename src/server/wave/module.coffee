@@ -68,12 +68,7 @@ class WaveModule extends BaseModule
         Возвращает волну и все блипы.
         ###
         blipId = args.blipId
-        PlaybackController.getBlipForPlayback(blipId, request.user, (err, blip, ops) ->
-            return callback(err) if err
-            blip = BlipOtConverter.toClient(blip, request.user)
-            blip.meta.ops = (OperationOtConverter.toClient(op) for op in ops)
-            callback(null, blip)
-        )
+        PlaybackController.getBlipForPlayback(blipId, request.user, callback)
     @::v('getBlip', ['blipId(not_null)'])
 
     subscribeWaveWithBlips: (request, args, callback) ->
