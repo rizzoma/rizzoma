@@ -508,7 +508,7 @@
     box-sizing: border-box;
 }
 
-.read-only-menu .delimitered-right {
+.read-only-menu .delimitered-right, .playback-menu .delimitered-right {
     border-right: 1px solid #C5C9CD;
 }
 
