@@ -7,6 +7,7 @@ DomUtils = require('../utils/dom')
 {Collection} = require('../collection/module')
 {ActiveTopicControls} = require('../active_topic_controls/module')
 {ErrorLogger} = require('../error_logger/module')
+{Playback} = require('../playback/module')
 
 
 class RootRouter extends BaseRootRouter
@@ -39,6 +40,7 @@ class RootRouter extends BaseRootRouter
             require('../collection/module').instance = collection
             @_addModule('collection', collection)
             @_addModule('activeTopicControls', new ActiveTopicControls(@))
+            @_addModule('playback', new Playback(@))
 
             tagProcessor.requestTags()
             if window.showSuccessfulMergePopup

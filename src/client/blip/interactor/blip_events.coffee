@@ -133,7 +133,7 @@ class EventProcessor
 
     _playback: (blipInteractor) ->
         _gaq.push(['_trackEvent', 'Blip usage', 'Playback'])
-        blipInteractor.runPlayback()
+        blipInteractor.showPlaybackView()
 
 
 module.exports =
