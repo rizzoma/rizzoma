@@ -1,13 +1,13 @@
 async = require('async')
 OtProcessorFrontend = require('../ot/processor_frontend').OtProcessorFrontend
 OperationOtConverter = require('../ot/operation_ot_converter').OperationOtConverter
-WaveProcessor = require('./processor').WaveProcessor
+WaveProcessor = require('../wave/processor').WaveProcessor
+WaveOtConverter = require('../wave/ot_converter').WaveOtConverter
 BlipProcessor = require('../blip/processor').BlipProcessor
-WaveOtConverter = require('./ot_converter').WaveOtConverter
 BlipOtConverter = require('../blip/ot_converter').BlipOtConverter
 
 
-ACTIONS = require('./constants').ACTIONS
+ACTIONS = require('../wave/constants').ACTIONS
 
 
 class PlaybackController
@@ -19,8 +19,8 @@ class PlaybackController
                     err = wave.checkPermission(user, ACTIONS.ACTION_WRITE)
                     callback(err, wave)
                 )
-            (wave, callback) ->
-                BlipProcessor.getChidBlipsByWaveId(wave.id, [blipId], (err, blips) ->
+            (wave, callback) =>
+                BlipProcessor.getChidBlipsByWaveId(wave.id, [blipId], (err, blips) =>
                     return callback(err) if err
                     containerBlip = BlipProcessor.getContainerModel('playback_container', wave.id, blipId, user)
                     @_attachContainerBlipToWave(containerBlip, wave, blipId)
@@ -29,7 +29,7 @@ class PlaybackController
                 )
             (wave, blips, opRanges, callback) =>
                 OtProcessorFrontend.getOpRangeForMultipleDocs(opRanges, (err, ops) =>
-                    callback(err, @_getPlaybackData(wave, blipd, ops))
+                    callback(err, @_getPlaybackData(wave, blips, ops, user))
                 )
         ]
         async.waterfall(tasks, callback)
@@ -49,7 +49,7 @@ class PlaybackController
             opRanges[id] = [versionFrom, blip.version+1]
         return opRanges
 
-    _getPlaybackData: (wave, blips, ops) ->
+    _getPlaybackData: (wave, blips, ops, user) ->
         data = {wave: WaveOtConverter.toClient(wave), blips: []}
         currentBlip = null
         for op in ops
@@ -73,7 +73,12 @@ class PlaybackController
 
     getBlipForPlayback: (blipId, user, callback) ->
         tasks = [
-            async.apply(@getBlip, blipId, user)
+            (callback) ->
+                BlipProcessor.getBlip(blipId, (err, blip) ->
+                    return callback(err) if err
+                    err = blip.checkPermission(user, ACTIONS.ACTION_WRITE)
+                    callback(err, blip)
+                )
             (blip, callback) ->
                 versionFrom = blip.version - 100
                 versionFrom = 0 if versionFrom < 0
@@ -86,4 +91,4 @@ class PlaybackController
         async.waterfall(tasks, callback)
 
 
-module.exports.PlaybackController = PlaybackController
+module.exports.PlaybackController = new PlaybackController()
