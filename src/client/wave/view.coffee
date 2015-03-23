@@ -1006,7 +1006,7 @@ class WaveView extends WaveViewBase
         @_$addButtonSelect?.selectBox('destroy')
         @_addParticipantForm?.destroy()
         delete @_insertGadgetPopup
-        @_participants.destroy()
+        @_participants?.destroy()
         delete @_participants
         @_destroySavingMessage()
         require('../editor/file/upload_form').removeInstance()

@@ -19,7 +19,7 @@ class PlaybackWaveView extends WaveView
         @_reservedHeaderSpace = 0
         @_$wavePanel = $(@container).find('.js-wave-panel')
 
-        @_initEditingMenu()
+        #@_initEditingMenu()
         #@_updateParticipantsManagement()
         @_initRootBlip(waveViewModel)
         #@_updateReplyButtonState()
@@ -31,6 +31,9 @@ class PlaybackWaveView extends WaveView
             $(window).on 'resize resizeTopicByResizer', @_resizerRepositionMenu
         )
         @_initBuffer()
+
+    _deinitActiveBlipControls: () ->
+        #Because i disable editing menu initialization.
 
 #@_$wavePanel.addClass('visible') if not BrowserSupport.isSupported() and not @_isAnonymous
 module.exports.PlaybackWaveView = PlaybackWaveView
