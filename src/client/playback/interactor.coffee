@@ -100,10 +100,8 @@ class PlaybackInteractor
         return if not originalBlip
         originalBlipView = originalBlip.getView()
         @_blipView.renderRecursively()
-#        opsToInsert = @_blipView.getParent().getEditor().getCopyElement(@_blipView.getContainer())
-#        originalBlipView.getEditor().pasteBlipOpAfter(originalBlip.getContainer(), opsToInsert)
-        @_blipView.getParent().getEditor().copyElementToBuffer(@_blipView.getContainer())
-        originalBlipView.getEditor().pasteBlipFromBufferAfter(originalBlip.getContainer())
+        opToInsert = @_blipView.getParent().getEditor().getCopyElementOp(@_blipView.getContainer())
+        originalBlipView.getParent().getEditor().pasteBlipOpAfter(originalBlip.getContainer(), opToInsert)
 
 
 
