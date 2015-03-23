@@ -30,7 +30,7 @@ class EventProcessor
         interactor.copy()
 
     _replace: (interactor) ->
-        console.log 'replace'
+        interactor.replace()
 
 
 module.exports =

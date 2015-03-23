@@ -998,7 +998,7 @@ class BlipView extends BlipViewBase
     _updateUndoRedoState: -> @_interactor.updateUndoRedoState()
 
     showPlaybackView: () ->
-        @_blipProcessor.showPlaybackView(@_waveViewModel.getServerId(), @_model.serverId)
+        @_blipProcessor.showPlaybackView(@_waveViewModel.getServerId(), @_model.serverId, @_waveViewModel)
 
 MicroEvent.mixin(BlipView)
 module.exports = {BlipView}

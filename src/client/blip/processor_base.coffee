@@ -165,8 +165,8 @@ class BlipProcessorBase
         showErrRequest = new Request({error: err}, ->)
         @_rootRouter.handle('pageError.showError', showErrRequest)
 
-    showPlaybackView: (waveId, blipId) ->
-        request = new Request({waveId, blipId})
+    showPlaybackView: (waveId, blipId, waveViewModel) ->
+        request = new Request({waveId, blipId, waveViewModel})
         @_rootRouter.handle('playback.showPlaybackView', request)
 
 module.exports.BlipProcessorBase = BlipProcessorBase

@@ -441,6 +441,9 @@ class WaveViewModel
     showError: (err) ->
         @_parent.showWaveError(err)
 
+    getBlipByServerId: (id) ->
+        return @_loadedBlips[id]
+
 MicroEvent.mixin(WaveViewModel)
 
 

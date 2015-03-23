@@ -18,4 +18,7 @@ class PlaybackBlipViewModel extends BlipViewModel
     back: () ->
         @_model.back()
 
+    getOriginalBlip: () ->
+        return @_waveViewModel.getOriginalBlip(@getServerId())
+
 module.exports = {PlaybackBlipViewModel}

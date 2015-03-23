@@ -4,7 +4,7 @@
 
 class PlaybackWaveViewModel extends WaveViewModel
 
-    constructor: (args...) ->
+    constructor: (args..., @_originalWaveViewModel) ->
         super(args...)
         @_blipMenu = new PlaybackBlipMenu()
 
@@ -14,5 +14,8 @@ class PlaybackWaveViewModel extends WaveViewModel
     _subscribe: () ->
 
     _subscribeBlip: (blip) ->
+
+    getOriginalBlip: (id) ->
+        return @_originalWaveViewModel.getBlipByServerId(id)
 
 exports.PlaybackWaveViewModel = PlaybackWaveViewModel

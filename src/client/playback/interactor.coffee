@@ -95,6 +95,16 @@ class PlaybackInteractor
         popup.render(calendarPopup, target)
         popup.show()
 
+    replace: () ->
+        originalBlip = @_blipViewModel.getOriginalBlip()
+        return if not originalBlip
+        originalBlipView = originalBlip.getView()
+        @_blipView.renderRecursively()
+#        opsToInsert = @_blipView.getParent().getEditor().getCopyElement(@_blipView.getContainer())
+#        originalBlipView.getEditor().pasteBlipOpAfter(originalBlip.getContainer(), opsToInsert)
+        @_blipView.getParent().getEditor().copyElementToBuffer(@_blipView.getContainer())
+        originalBlipView.getEditor().pasteBlipFromBufferAfter(originalBlip.getContainer())
+
 
 
 renderCalendarPopup = ck.compile ->
