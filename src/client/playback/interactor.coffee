@@ -103,7 +103,11 @@ class PlaybackInteractor
         opToInsert = @_blipView.getParent().getEditor().getCopyElementOp(@_blipView.getContainer())
         originalBlipView.getParent().getEditor().pasteBlipOpAfter(originalBlip.getContainer(), opToInsert)
 
+    showOperationLoadingSpinner: () ->
+        @_blipMenu.showOperationLoadingSpinner()
 
+    hideOperationLoadingSpinner: () ->
+        @_blipMenu.hideOperationLoadingSpinner()
 
 renderCalendarPopup = ck.compile ->
     div '.playback-calendar-popup', ->

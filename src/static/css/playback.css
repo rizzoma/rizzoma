@@ -29,20 +29,29 @@
     background-color: #BDC5CA;
 }
 
+.playback-menu .icon {
+    width: 30px;
+}
+
 .playback-menu .fast-back-button .icon {
     background-position: -648px 0;
 }
 
 .playback-menu .back-button .icon {
-    background-position: -623px 0;
+    background-position: -620px 0;
 }
 
 .playback-menu .forward-button .icon {
-    background-position: -568px 0;
+    background-position: -564px 0;
 }
 
 .playback-menu .fast-forward-button .icon {
     background-position: -592px 0;
+}
+
+.playback-menu .back-button.loading .icon {
+    background-position: 0 0;
+    background: url(/s/img/playback_loading.gif) no-repeat;
 }
 
 .playback-menu .calendar-button,

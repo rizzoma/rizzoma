@@ -21,12 +21,14 @@ class PlaybackBlipViewModel extends BlipViewModel
     back: () ->
         offset = @_model.back()
         return if offset < 0
+        view = @getView()
+        view.showOperationLoadingSpinner()
         @_blipProcessor.getPlaybackOps(@_model.getServerId(), offset, (err, ops) =>
             return if err
             @appendOps(ops)
             @back()
+            view.hideOperationLoadingSpinner()
         )
-
 
     getOriginalBlip: () ->
         return @_waveViewModel.getOriginalBlip(@getServerId())

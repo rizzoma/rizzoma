@@ -23,4 +23,10 @@ class PlaybackBlipView extends BlipView
         return if @_isPlaybackRoot
         super()
 
+    showOperationLoadingSpinner: () ->
+        @_interactor.showOperationLoadingSpinner()
+
+    hideOperationLoadingSpinner: () ->
+        @_interactor.hideOperationLoadingSpinner()
+
 module.exports = {PlaybackBlipView}

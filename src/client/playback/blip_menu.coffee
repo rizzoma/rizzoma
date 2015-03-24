@@ -65,6 +65,10 @@ class PlaybackBlipMenu extends Interactable
         @_hiddenEditButtons = []
         @_container = getMenuDom()
         @_$container = $(@_container)
+        @_$fastBackButton = @_$container.find('.js-fast-back-button')
+        @_$backButton = @_$container.find('.js-back-button')
+        @_$forwardButton = @_$container.find('.js-forward-button')
+        @_$fastForwardButton = @_$container.find('.js-fast-forward-button')
         @_initButtons()
         BrowserEvents.addBlocker(@_container, BrowserEvents.MOUSE_DOWN_EVENT)
         BrowserEvents.addBlocker(@_container, BrowserEvents.MOUSE_UP_EVENT)
@@ -131,15 +135,23 @@ class PlaybackBlipMenu extends Interactable
 
     getContainer: -> @_container
 
-#
-#    detach: ->
-#        # TODO: do not use it. Should be removed
-#        $(window).off('resize resizeTopicByResizer', @_resizeMenu)
-
     destroy: ->
-        #@detach()
+        delete @_$fastBackButton
+        delete @_$backButton
+        delete @_$forwardButton
+        delete @_$fastForwardButton
         delete @_container
         @_$container.remove()
         delete @_$container
+
+    showOperationLoadingSpinner: () ->
+        for button in [@_$fastBackButton, @_$backButton, @_$forwardButton, @_$fastForwardButton]
+            button.attr('disabled', true)
+        @_$backButton.addClass('loading')
+
+    hideOperationLoadingSpinner: () ->
+        for button in [@_$fastBackButton, @_$backButton, @_$forwardButton, @_$fastForwardButton]
+            button.attr('disabled', false)
+        @_$backButton.removeClass('loading')
 
 module.exports = {PlaybackBlipMenu}
