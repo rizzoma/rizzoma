@@ -2,6 +2,7 @@
 {BlipViewModel} = require('./')
 {PlaybackBlipViewModel} = require('../playback/blip_view_model')
 {PlaybackWaveViewModel} = require('../playback/wave_view_model')
+{Request} = require('../../share/communication')
 
 class BlipProcessor extends BlipProcessorBase
 
@@ -23,6 +24,13 @@ class BlipProcessor extends BlipProcessorBase
             @_rootRouter.handle('network.wave.getBlipForPlayback', request)
         else
             super(waveViewModel, request)
+
+    getPlaybackOps: (blipId, offset, callback) ->
+        request = new Request({blipId, offset}, (err, ops) =>
+            @showPageError(err) if err
+            callback(err, ops)
+        )
+        @_rootRouter.handle('network.wave.getPlaybackOps', request)
 
 module.exports.BlipProcessor = BlipProcessor
 module.exports.instance = null

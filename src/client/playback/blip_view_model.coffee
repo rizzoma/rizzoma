@@ -3,6 +3,9 @@
 {PlaybackBlipModel} = require('./blip_model')
 
 class PlaybackBlipViewModel extends BlipViewModel
+    _init: (waveViewModel, @_blipProcessor, blipData, container, parentBlip, isRead, waveId, timestamp, title) ->
+        super(waveViewModel, @_blipProcessor, blipData, container, parentBlip, isRead, waveId, timestamp, title)
+
     __initView: (waveViewModel, blipProcessor, model, timestamp, container, parentBlip, isRead) ->
         @__view = new PlaybackBlipView(waveViewModel, blipProcessor, @, model, timestamp, container, parentBlip, isRead)
 
@@ -16,7 +19,14 @@ class PlaybackBlipViewModel extends BlipViewModel
         @_model.forward()
 
     back: () ->
-        @_model.back()
+        offset = @_model.back()
+        return if offset < 0
+        @_blipProcessor.getPlaybackOps(@_model.getServerId(), offset, (err, ops) =>
+            return if err
+            @appendOps(ops)
+            @back()
+        )
+
 
     getOriginalBlip: () ->
         return @_waveViewModel.getOriginalBlip(@getServerId())

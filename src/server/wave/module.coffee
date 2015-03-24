@@ -71,6 +71,12 @@ class WaveModule extends BaseModule
         PlaybackController.getBlipForPlayback(blipId, request.user, callback)
     @::v('getBlip', ['blipId(not_null)'])
 
+    getPlaybackOps: (request, args, callback) ->
+        blipId = args.blipId
+        offset = args.offset
+        PlaybackController.getPlaybackOps(blipId, offset, request.user, callback)
+    @::v('getPlaybackOps', ['blipId(not_null)', 'offset(not_null)'])
+
     subscribeWaveWithBlips: (request, args, callback) ->
         ###
         Подписывается на изменение волны и всех ее блипов.

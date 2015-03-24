@@ -8,9 +8,10 @@ BlipOtConverter = require('../blip/ot_converter').BlipOtConverter
 
 
 ACTIONS = require('../wave/constants').ACTIONS
-
+MAX_OPS_COUNT_PER_BLIP = 100
 
 class PlaybackController
+
     getPlaybackData: (url, blipId, user, callback) ->
         tasks = [
             (callback) ->
@@ -44,7 +45,7 @@ class PlaybackController
             #it shouldn't be in this method, but i wouldn't iterate blips again
             blip.setWave(wave)
             continue if id == containerBlipId
-            versionFrom = blip.version - 100
+            versionFrom = blip.version - MAX_OPS_COUNT_PER_BLIP
             versionFrom = 0 if versionFrom < 0
             opRanges[id] = [versionFrom, blip.version+1]
         return opRanges
@@ -80,7 +81,7 @@ class PlaybackController
                     callback(err, blip)
                 )
             (blip, callback) ->
-                versionFrom = blip.version - 100
+                versionFrom = blip.version - MAX_OPS_COUNT_PER_BLIP
                 versionFrom = 0 if versionFrom < 0
                 OtProcessorFrontend.getOpRange(blip.id, versionFrom, blip.version, (err, ops) ->
                     blipInClientRepr = BlipOtConverter.toClient(blip, user)
@@ -90,5 +91,22 @@ class PlaybackController
         ]
         async.waterfall(tasks, callback)
 
+    getPlaybackOps: (blipId, offset, user, callback) ->
+        tasks = [
+            (callback) ->
+                BlipProcessor.getBlip(blipId, (err, blip) ->
+                    return callback(err) if err
+                    err = blip.checkPermission(user, ACTIONS.ACTION_WRITE)
+                    callback(err, blip)
+                )
+            (blip, callback) ->
+                versionTo = blip.version - offset
+                versionFrom = versionTo - MAX_OPS_COUNT_PER_BLIP
+                versionFrom = 0 if versionFrom < 0
+                OtProcessorFrontend.getOpRange(blip.id, versionFrom, versionTo, (err, ops) ->
+                    callback(err, (OperationOtConverter.toClient(op) for op in ops))
+                )
+        ]
+        async.waterfall(tasks, callback)
 
 module.exports.PlaybackController = new PlaybackController()
