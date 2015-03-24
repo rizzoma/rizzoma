@@ -4,6 +4,10 @@
 
 class PlaybackWaveView extends WaveView
 
+    constructor: (args..., originalView, @_blipWithPermanentMenu) ->
+        originalView.clearActiveBlip()
+        super(args...)
+
     _init: (waveViewModel, participants) ->
         ###
         @param waveViewModel: WaveViewModel
@@ -14,16 +18,9 @@ class PlaybackWaveView extends WaveView
         @_model = waveViewModel.getModel()
         @_editable = no
         @_createDOM(renderWave)
-        #@_initWaveHeader(waveViewModel, participants)
-
         @_reservedHeaderSpace = 0
         @_$wavePanel = $(@container).find('.js-wave-panel')
-
-        #@_initEditingMenu()
-        #@_updateParticipantsManagement()
         @_initRootBlip(waveViewModel)
-        #@_updateReplyButtonState()
-        #@_initTips()
         @_initDragScroll()
         waveViewModel.on('waveLoaded', =>
             $(@_waveBlips).on 'scroll', @_setOnScrollMenuPosition
@@ -33,7 +30,6 @@ class PlaybackWaveView extends WaveView
         @_initBuffer()
 
     _deinitActiveBlipControls: () ->
-        #Because i disable editing menu initialization.
+        #Because i disable editing menu initialization
 
-#@_$wavePanel.addClass('visible') if not BrowserSupport.isSupported() and not @_isAnonymous
 module.exports.PlaybackWaveView = PlaybackWaveView

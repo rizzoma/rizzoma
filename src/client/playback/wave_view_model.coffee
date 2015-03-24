@@ -4,12 +4,12 @@
 
 class PlaybackWaveViewModel extends WaveViewModel
 
-    constructor: (args..., @_originalWaveViewModel) ->
+    constructor: (args..., @_originalWaveViewModel, @_rootBlipId) ->
         super(args...)
         @_blipMenu = new PlaybackBlipMenu()
 
     __initView: (processor, participants, container) ->
-        @__view = new PlaybackWaveView(@, processor, participants, container)
+        @__view = new PlaybackWaveView(@, processor, participants, container, @_originalWaveViewModel.getView(), @_rootBlipId)
 
     _subscribe: () ->
 
@@ -17,5 +17,15 @@ class PlaybackWaveViewModel extends WaveViewModel
 
     getOriginalBlip: (id) ->
         return @_originalWaveViewModel.getBlipByServerId(id)
+
+    setBlipAsLoaded: (blip) ->
+        super(blip)
+        if blip.getServerId() == @_rootBlipId
+            view = blip.getView()
+            view.markAsPlaybackRoot()
+            view.attachPlaybackRootMenu(new PlaybackBlipMenu())
+            view.setCursor()
+            view.setCursorToStart()
+            @getView().runCheckRange()
 
 exports.PlaybackWaveViewModel = PlaybackWaveViewModel

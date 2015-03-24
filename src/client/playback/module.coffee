@@ -22,7 +22,7 @@ class Playback extends BaseModule
         @_waveProcessor.getPlaybackData(waveId, blipId, (err, waveData, waveBlips) =>
             return console.log(err) if err
             request = new Request({container: @_container})
-            @_viewModel = new PlaybackWaveViewModel(@_waveProcessor, waveData, waveBlips, no, @, waveViewModel)
+            @_viewModel = new PlaybackWaveViewModel(@_waveProcessor, waveData, waveBlips, no, @, waveViewModel, blipId)
             @_rootRouter.handle('navigation.showPlaybackView', request)
             $('.js-resizer').addClass('playback')
         )

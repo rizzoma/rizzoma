@@ -673,15 +673,18 @@ class WaveView extends WaveViewBase
         ###
         # TODO: work with BlipViewModel only
         return blip.updateCursor() if @_activeBlip is blip
-        if @_activeBlip
-            @_activeBlip.clearCursor()
-            @_activeBlip.unmarkActive()
+        @clearActiveBlip()
         @_activeBlip = blip
         @_activeBlip.setCursor()
         @_activeBlip.markActive()
         @_activeBlip.setReadState(true)
         @_model.setActiveBlip(blip.getViewModel())
         @_setOnScrollMenuPosition()
+
+    clearActiveBlip: () ->
+        return if not @_activeBlip
+        @_activeBlip.clearCursor()
+        @_activeBlip.unmarkActive()
 
     _resizerRepositionMenu: =>
         RangeMenu.get().hide()
