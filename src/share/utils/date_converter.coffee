@@ -34,14 +34,21 @@ exports.convertDateTimeToClient = (date, datetime) ->
         return [formatAsClientDate(convertDate(date))]
     else return []
 
-exports.convertDateTimeToServer = (date, time) ->
-    return [] if not date and not time
+
+fromClientToDatetime = exports.fromClientToDatetime = (date, time) ->
     [day, month, year] = date.split('.')
     month -= 1
     if date and time
         [hour, minute] = time.split(':')
-        localtime = new Date(year, month, day, hour, minute)
+        return new Date(year, month, day, hour, minute)
+    else if date
+        return new Date(year, month, day)
+
+
+exports.convertDateTimeToServer = (date, time) ->
+    return [] if not date and not time
+    localtime = fromClientToDatetime(date, time)
+    if date and time
         return [undefined, Math.floor(localtime.getTime()/1000)]
     else if date
-        localtime = new Date(year, month, day)
         return [localtime.toYMD()]

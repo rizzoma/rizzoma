@@ -19,6 +19,9 @@ class PlaybackBlipModel extends BlipModel
         @_ops = ops.concat(@_ops)
         @_playbackPointer += ops.length
 
+    getCurrentDate: () ->
+        return new Date(@_ops[@_playbackPointer].meta.ts*1000)
+
     back: () ->
         return [@_ops.length, null] if @_playbackPointer < 0
         op = @_ops[@_playbackPointer]

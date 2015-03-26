@@ -2,7 +2,7 @@
 {EventProcessor} = require('./events')
 {PopupContent, popup} = require('../popup')
 {DateTimePicker} = require('../utils/date_time_picker')
-{formatAsClientDate, formatAsClientTime} = require('../../share/utils/date_converter')
+{formatAsClientDate, formatAsClientTime, fromClientToDatetime} = require('../../share/utils/date_converter')
 ck = window.CoffeeKup
 
 
@@ -92,7 +92,7 @@ class PlaybackInteractor
         @_blipViewModel.back()
 
     _onCalendarChange: (date) =>
-        console.log date
+        @_blipViewModel.setToDate(date)
 
     calendar: (target) ->
         return if popup.getContainer()
@@ -155,7 +155,7 @@ class CalendarPopup extends PopupContent
         $container.find('.js-date-icon').click => $(dateInput).focus()
         $container.find('.js-time-icon').click => $(timeInput).focus()
         @_dateTimePicker.on 'change', (date, time) =>
-            @_onChange(new Date("#{date} #{time}"))
+            @_onChange(fromClientToDatetime(date, time))
 
     destroy: ->
         @_dateTimePicker?.destroy()

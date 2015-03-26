@@ -15,24 +15,35 @@ class PlaybackBlipViewModel extends BlipViewModel
     appendOps: (ops) ->
         @_model.appendOps(ops or [])
 
-    forward: () ->
+    forward: (date) ->
         [isEnd, ts] = @_model.forward()
         view = @getView()
         view.switchForwardButtonsState(yes) if isEnd
         view.setCalendarDate(new Date(ts*1000))
+        if date and date > @_model.getCurrentDate() and not isEnd
+            @forward(date)
 
-    back: () ->
+    back: (date) ->
         [offset, ts] = @_model.back()
         view = @getView()
         view.switchForwardButtonsState(no)
-        return view.setCalendarDate(new Date(ts*1000)) if offset < 0
+        view.setCalendarDate(new Date(ts*1000))
+        if offset < 0
+            @back(date) if date and date < @_model.getCurrentDate()
+            return
         view.showOperationLoadingSpinner()
         @_blipProcessor.getPlaybackOps(@_model.getServerId(), offset, (err, ops) =>
             return if err
             @appendOps(ops)
-            @back()
+            @back(date)
             view.hideOperationLoadingSpinner()
         )
+
+    setToDate: (date) ->
+        if date > @_model.getCurrentDate()
+            @forward(date)
+        else
+            @back(date)
 
     getOriginalBlip: () ->
         return @_waveViewModel.getOriginalBlip(@getServerId())
