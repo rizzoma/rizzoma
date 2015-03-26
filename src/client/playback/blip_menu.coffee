@@ -68,6 +68,7 @@ class PlaybackBlipMenu extends Interactable
         @_$backButton = @_$container.find('.js-back-button')
         @_$forwardButton = @_$container.find('.js-forward-button')
         @_$fastForwardButton = @_$container.find('.js-fast-forward-button')
+        @_$replaceButton = @_$container.find('.js-replace-button')
         @_initButtons()
         BrowserEvents.addBlocker(@_container, BrowserEvents.MOUSE_DOWN_EVENT)
         BrowserEvents.addBlocker(@_container, BrowserEvents.MOUSE_UP_EVENT)
@@ -136,6 +137,7 @@ class PlaybackBlipMenu extends Interactable
 
     destroy: ->
         delete @_$calendarButton
+        delete @_$replaceButton
         delete @_$fastBackButton
         delete @_$backButton
         delete @_$forwardButton
@@ -162,5 +164,8 @@ class PlaybackBlipMenu extends Interactable
     switchForwardButtonsState: (isDisable) ->
         @_$forwardButton.attr('disabled', isDisable)
         @_$fastForwardButton.attr('disabled', isDisable)
+
+    disableReplaceButton: () ->
+        @_$replaceButton.attr('disabled', true)
 
 module.exports = {PlaybackBlipMenu}

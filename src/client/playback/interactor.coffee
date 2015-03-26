@@ -38,6 +38,7 @@ class PlaybackInteractor
         @_blipMenu = blipMenu
         #@_updateEditingModifiers()
         #@_updateUndoRedoState()
+        @_blipMenu.disableReplaceButton() if not @_blipViewModel.getOriginalBlip()
 
     _detachMenu: ->
         #@_keyInteractor.detach() # TODO: do not detach when keyInteractor -> editorInteractor
