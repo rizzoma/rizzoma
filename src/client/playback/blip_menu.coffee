@@ -38,9 +38,7 @@ TOTAL_WIDTH = null
 getMenuDom = ->
     tmpEl = document.createElement('span')
     tmpEl.className = 'blip-menu'
-    tmpEl.appendChild(DomUtils.parseFromString(
-        renderBlipMenu({currentDate: formatAsShortenedDateTime(new Date())})
-    ))
+    tmpEl.appendChild(DomUtils.parseFromString(renderBlipMenu({})))
     return tmpEl
 
 getTotalWidth = ->
@@ -65,6 +63,7 @@ class PlaybackBlipMenu extends Interactable
         @_hiddenEditButtons = []
         @_container = getMenuDom()
         @_$container = $(@_container)
+        @_$calendarButton = @_$container.find('.js-calendar-button')
         @_$fastBackButton = @_$container.find('.js-fast-back-button')
         @_$backButton = @_$container.find('.js-back-button')
         @_$forwardButton = @_$container.find('.js-forward-button')
@@ -136,6 +135,7 @@ class PlaybackBlipMenu extends Interactable
     getContainer: -> @_container
 
     destroy: ->
+        delete @_$calendarButton
         delete @_$fastBackButton
         delete @_$backButton
         delete @_$forwardButton
@@ -153,5 +153,14 @@ class PlaybackBlipMenu extends Interactable
         for button in [@_$fastBackButton, @_$backButton, @_$forwardButton, @_$fastForwardButton]
             button.attr('disabled', false)
         @_$backButton.removeClass('loading')
+
+    setCalendarDate: (date) ->
+        formattedDate = formatAsShortenedDateTime(date)
+        @_$calendarButton.attr('title', "Topic state at #{formattedDate}")
+        @_$calendarButton.text(formattedDate)
+
+    switchForwardButtonsState: (isDisable) ->
+        @_$forwardButton.attr('disabled', isDisable)
+        @_$fastForwardButton.attr('disabled', isDisable)
 
 module.exports = {PlaybackBlipMenu}

@@ -117,3 +117,13 @@
 .playback-calendar-popup .time-input {
     width: 68px;
 }
+
+.playback-calendar-popup .time-icon {
+    margin-right: 8px;
+    margin-left: 0;
+}
+
+.playback-calendar-popup .date-icon {
+    margin-right: 6px;
+    margin-left: 0;
+}

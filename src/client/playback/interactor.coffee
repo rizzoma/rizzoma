@@ -104,21 +104,32 @@ class PlaybackInteractor
         originalBlipView.getParent().getEditor().pasteBlipOpAfter(originalBlip.getContainer(), opToInsert)
 
     showOperationLoadingSpinner: () ->
+        return if not @_blipMenu
         @_blipMenu.showOperationLoadingSpinner()
 
     hideOperationLoadingSpinner: () ->
+        return if not @_blipMenu
         @_blipMenu.hideOperationLoadingSpinner()
+
+    setCalendarDate: (date) ->
+        return if not @_blipMenu
+        @_blipMenu.setCalendarDate(date)
+
+    switchForwardButtonsState: (isDisable) ->
+        return if not @_blipMenu
+        @_blipMenu.switchForwardButtonsState(isDisable)
+
 
 renderCalendarPopup = ck.compile ->
     div '.playback-calendar-popup', ->
-        date = '13.03.2015'
-        time = '12:15'
-        dateParams = {type: 'text', tabindex: '1', value: date}
-        timeParams = {type: 'text', tabindex: '2', value: time}
-        div '.date-icon.js-date-icon', ''
-        input '.js-date-input', dateParams
-        div '.time-icon.js-time-icon', ''
-        input '.js-time-input', timeParams
+        dateParams = {type: 'text', tabindex: '1', value: @date}
+        timeParams = {type: 'text', tabindex: '2', value: @time}
+        div '', ->
+            div '.date-icon.js-date-icon', ''
+            input '.js-date-input', dateParams
+        div '', ->
+            div '.time-icon.js-time-icon', ''
+            input '.js-time-input', timeParams
 
 
 class CalendarPopup extends PopupContent
@@ -128,7 +139,7 @@ class CalendarPopup extends PopupContent
 
     _render: () ->
         @_container = document.createElement('span')
-        $(@_container).append(renderCalendarPopup({}))
+        $(@_container).append(renderCalendarPopup({date: '13.03.2015', time: '12:15'}))
         $container = $(@_container)
         dateInput = $container.find('.js-date-input')[0]
         timeInput = $container.find('.js-time-input')[0]

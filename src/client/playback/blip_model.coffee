@@ -10,25 +10,36 @@ class PlaybackBlipModel extends BlipModel
         @_ops = []
         @_playbackPointer = -1
 
+    getLastOpDate: () ->
+        return if @_ops.length == 0
+        return new Date(@_ops[@_ops.length-1].meta.ts*1000)
+
     appendOps: (ops) ->
         return if not ops.length
         @_ops = ops.concat(@_ops)
         @_playbackPointer += ops.length
 
     back: () ->
-        return @_ops.length if @_playbackPointer < 0
+        return [@_ops.length, null] if @_playbackPointer < 0
         op = @_ops[@_playbackPointer]
         properType = if ftextShareType.isFormattedTextOperation(op.op[0]) then ftextShareType else jsonShareType
         invertedOp = properType.invert(op.op)
         @_doc._onOpReceived(@_convertOp(invertedOp))
         @_playbackPointer--
-        return -1
+        if @_playbackPointer < 0
+            return [@_ops.length, null]
+        else
+            return [-1, @_ops[@_playbackPointer].meta.ts]
 
     forward: () ->
-        return if @_playbackPointer == @_ops.length-1
-        op = @_ops[@_playbackPointer+1]
-        @_doc._onOpReceived(@_convertOp(op.op))
+        return [true, null] if @_playbackPointer == @_ops.length-1
         @_playbackPointer++
+        op = @_ops[@_playbackPointer]
+        @_doc._onOpReceived(@_convertOp(op.op))
+        if @_playbackPointer == @_ops.length-1
+            return [true, op.meta.ts]
+        else
+            return [false, op.meta.ts]
 
     _convertOp: (op) ->
         return {

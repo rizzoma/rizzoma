@@ -16,12 +16,16 @@ class PlaybackBlipViewModel extends BlipViewModel
         @_model.appendOps(ops or [])
 
     forward: () ->
-        @_model.forward()
+        [isEnd, ts] = @_model.forward()
+        view = @getView()
+        view.switchForwardButtonsState(yes) if isEnd
+        view.setCalendarDate(new Date(ts*1000))
 
     back: () ->
-        offset = @_model.back()
-        return if offset < 0
+        [offset, ts] = @_model.back()
         view = @getView()
+        view.switchForwardButtonsState(no)
+        return view.setCalendarDate(new Date(ts*1000)) if offset < 0
         view.showOperationLoadingSpinner()
         @_blipProcessor.getPlaybackOps(@_model.getServerId(), offset, (err, ops) =>
             return if err
