@@ -2,6 +2,7 @@
 {EventProcessor} = require('./events')
 {PopupContent, popup} = require('../popup')
 {DateTimePicker} = require('../utils/date_time_picker')
+{formatAsClientDate, formatAsClientTime} = require('../../share/utils/date_converter')
 ck = window.CoffeeKup
 
 
@@ -89,9 +90,12 @@ class PlaybackInteractor
     back: () ->
         @_blipViewModel.back()
 
+    _onCalendarChange: (date) =>
+        console.log date
+
     calendar: (target) ->
         return if popup.getContainer()
-        calendarPopup = new CalendarPopup()
+        calendarPopup = new CalendarPopup(@_currentCalendarDate or new Date(), @_onCalendarChange)
         popup.render(calendarPopup, target)
         popup.show()
 
@@ -113,6 +117,7 @@ class PlaybackInteractor
 
     setCalendarDate: (date) ->
         return if not @_blipMenu
+        @_currentCalendarDate = date
         @_blipMenu.setCalendarDate(date)
 
     switchForwardButtonsState: (isDisable) ->
@@ -133,13 +138,15 @@ renderCalendarPopup = ck.compile ->
 
 
 class CalendarPopup extends PopupContent
-    constructor: () ->
+    constructor: (@_currentDate, @_onChange) ->
         @_dateTimePicker = new DateTimePicker()
         @_render()
 
     _render: () ->
         @_container = document.createElement('span')
-        $(@_container).append(renderCalendarPopup({date: '13.03.2015', time: '12:15'}))
+        date = formatAsClientDate(@_currentDate)
+        time = formatAsClientTime(@_currentDate)
+        $(@_container).append(renderCalendarPopup({date, time}))
         $container = $(@_container)
         dateInput = $container.find('.js-date-input')[0]
         timeInput = $container.find('.js-time-input')[0]
@@ -147,7 +154,7 @@ class CalendarPopup extends PopupContent
         $container.find('.js-date-icon').click => $(dateInput).focus()
         $container.find('.js-time-icon').click => $(timeInput).focus()
         @_dateTimePicker.on 'change', (date, time) =>
-            console.log date, time
+            @_onChange(new Date("#{date} #{time}"))
 
     destroy: ->
         @_dateTimePicker?.destroy()
