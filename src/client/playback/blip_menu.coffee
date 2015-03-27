@@ -35,14 +35,14 @@ OVERFLOW_MENU_ADDITIONAL_WIDTH = 60
 ADDITIONAL_MENU_WIDTH = 15 # adding space for changing Hide to Hidden
 TOTAL_WIDTH = null
 
-getMenuDom = ->
+getMenuDom = (params) ->
     tmpEl = document.createElement('span')
     tmpEl.className = 'blip-menu'
-    tmpEl.appendChild(DomUtils.parseFromString(renderBlipMenu({})))
+    tmpEl.appendChild(DomUtils.parseFromString(renderBlipMenu(params)))
     return tmpEl
 
-getTotalWidth = ->
-    tmpEl = getMenuDom()
+getTotalWidth = (params) ->
+    tmpEl = getMenuDom(params)
     document.body.appendChild(tmpEl)
     editBlock = tmpEl.getElementsByClassName('js-playback-menu')[0]
     buttons = editBlock.children
@@ -52,16 +52,16 @@ getTotalWidth = ->
     document.body.removeChild(tmpEl)
     total + ADDITIONAL_MENU_WIDTH
 
-getEditBlockTotalWidth = ->
+getEditBlockTotalWidth = (params) ->
     return TOTAL_WIDTH if TOTAL_WIDTH
     return 1 unless DomUtils.isCssReady()
-    TOTAL_WIDTH = getTotalWidth()
+    TOTAL_WIDTH = getTotalWidth(params)
 
 class PlaybackBlipMenu extends Interactable
-    constructor: ->
+    constructor: (@_params) ->
         super()
         @_hiddenEditButtons = []
-        @_container = getMenuDom()
+        @_container = getMenuDom(@_params)
         @_$container = $(@_container)
         @_$calendarButton = @_$container.find('.js-calendar-button')
         @_$fastBackButton = @_$container.find('.js-fast-back-button')
@@ -89,7 +89,7 @@ class PlaybackBlipMenu extends Interactable
         return @__dispatchEvent(button.event, {event: e}) if button.event
 
     _resizeMenu: =>
-        menuWidth = getEditBlockTotalWidth()
+        menuWidth = getEditBlockTotalWidth(@_params)
         blipWidth = @_container.parentNode?.parentNode?.offsetWidth || 0
         if menuWidth > blipWidth
             @_fitEditMenu(menuWidth - blipWidth)

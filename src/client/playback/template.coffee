@@ -26,15 +26,16 @@ waveTmpl = ->
 
 blipMenuTmpl = ->
     div "js-playback-menu playback-menu", ->
-        button 'js-calendar-button calendar-button delimitered-right', ->
-        button 'js-fast-back-button fast-back-button icon-button delimitered-right', {title: 'Fast back'}, ->
-            div 'icon', ''
-        button 'js-back-button back-button icon-button delimitered-right', {title: 'Back'}, ->
-            div 'icon', ''
-        button 'js-forward-button forward-button icon-button delimitered-right', {title: 'Forward', disabled: true}, ->
-            div 'icon', ''
-        button 'js-fast-forward-button fast-forward-button icon-button delimitered-right', {title: 'Fast forward', disabled: true}, ->
-            div 'icon', ''
+        if @isRoot
+            button 'js-calendar-button calendar-button delimitered-right', ->
+            button 'js-fast-back-button fast-back-button icon-button delimitered-right', {title: 'Fast back'}, ->
+                div 'icon', ''
+            button 'js-back-button back-button icon-button delimitered-right', {title: 'Back'}, ->
+                div 'icon', ''
+            button 'js-forward-button forward-button icon-button delimitered-right', {title: 'Forward', disabled: true}, ->
+                div 'icon', ''
+            button 'js-fast-forward-button fast-forward-button icon-button delimitered-right', {title: 'Fast forward', disabled: true}, ->
+                div 'icon', ''
         button 'js-copy-button copy-button delimitered-right', {title: 'Copy'}, ->
             'Copy'
         button 'js-replace-button replace-button', {title: 'Replace'}, ->

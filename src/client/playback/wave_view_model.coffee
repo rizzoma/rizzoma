@@ -23,7 +23,7 @@ class PlaybackWaveViewModel extends WaveViewModel
         if blip.getServerId() == @_rootBlipId
             view = blip.getView()
             view.markAsPlaybackRoot()
-            view.attachPlaybackRootMenu(new PlaybackBlipMenu())
+            view.attachPlaybackRootMenu(new PlaybackBlipMenu({isRoot: true}))
             view.setCursor()
             view.setCursorToStart()
             @getView().runCheckRange()
