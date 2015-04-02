@@ -14,7 +14,7 @@ class BlipProcessor extends BlipProcessorBase
         BlipViewModelClass = if isPlaybackMode then PlaybackBlipViewModel else BlipViewModel
         viewModel = super(blipData, waveViewModel, container, parentBlip, BlipViewModelClass)
         if isPlaybackMode
-            viewModel.appendOps(blipData.meta?.ops)
+            viewModel.getModel().appendOps(blipData.meta?.ops)
         return viewModel
 
 

@@ -14,8 +14,6 @@ class PlaybackBlipView extends BlipView
         return if not @_isPlaybackRoot
         @_interactor.attachMenu(menu, @_menuContainer, {})
         DOM.addClass(@_menuContainer, 'active')
-        date = @_model.getLastOpDate()
-        @_interactor.setCalendarDate(date) if date
 
     markActive: ->
         return if @_isPlaybackRoot
@@ -28,6 +26,9 @@ class PlaybackBlipView extends BlipView
     setCalendarDate: (date) ->
         @_interactor.setCalendarDate(date)
 
+    setCalendarDateIfGreater: (date) ->
+        @_interactor.setCalendarDateIfGreater(date)
+
     showOperationLoadingSpinner: () ->
         @_interactor.showOperationLoadingSpinner()
 
@@ -36,5 +37,8 @@ class PlaybackBlipView extends BlipView
 
     switchForwardButtonsState: (isDisable) ->
         @_interactor.switchForwardButtonsState(isDisable)
+
+    switchBackButtonsState: (isDisable) ->
+        @_interactor.switchBackButtonsState(isDisable)
 
 module.exports = {PlaybackBlipView}

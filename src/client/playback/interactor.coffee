@@ -86,13 +86,19 @@ class PlaybackInteractor
         @_blipView.getParent().getEditor().copyElementToBuffer(@_blipView.getContainer())
 
     forward: () ->
-        @_blipViewModel.forward()
+        @_blipViewModel.getWave().forward()
 
     back: () ->
-        @_blipViewModel.back()
+        @_blipViewModel.getWave().back()
+
+    fastForward: () ->
+        @_blipViewModel.getWave().fastForward()
+
+    fastBack: () ->
+        @_blipViewModel.getWave().fastBack()
 
     _onCalendarChange: (date) =>
-        @_blipViewModel.setToDate(date)
+        @_blipViewModel.getWave().playToDate(date)
 
     calendar: (target) ->
         return if popup.getContainer()
@@ -117,13 +123,23 @@ class PlaybackInteractor
         @_blipMenu.hideOperationLoadingSpinner()
 
     setCalendarDate: (date) ->
-        return if not @_blipMenu
+        return if not date
         @_currentCalendarDate = date
+        return if not @_blipMenu
         @_blipMenu.setCalendarDate(date)
+
+    setCalendarDateIfGreater: (date) ->
+        return @setCalendarDate(date) if not @_currentCalendarDate
+        return if @_currentCalendarDate > date
+        @setCalendarDate(date)
 
     switchForwardButtonsState: (isDisable) ->
         return if not @_blipMenu
         @_blipMenu.switchForwardButtonsState(isDisable)
+
+    switchBackButtonsState: (isDisable) ->
+        return if not @_blipMenu
+        @_blipMenu.switchBackButtonsState(isDisable)
 
 
 renderCalendarPopup = ck.compile ->

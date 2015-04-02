@@ -15,7 +15,7 @@ class EventProcessor
         interactor.calendar(args.event?.target)
 
     _fast_back: (interactor) ->
-        console.log 'fast back'
+        interactor.fastBack()
 
     _back: (interactor) ->
         interactor.back()
@@ -24,7 +24,7 @@ class EventProcessor
         interactor.forward()
 
     _fast_forward: (interactor) ->
-        console.log 'fast forward'
+        interactor.fastForward()
 
     _copy: (interactor) ->
         interactor.copy()

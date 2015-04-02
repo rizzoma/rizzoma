@@ -165,6 +165,10 @@ class PlaybackBlipMenu extends Interactable
         @_$forwardButton.attr('disabled', isDisable)
         @_$fastForwardButton.attr('disabled', isDisable)
 
+    switchBackButtonsState: (isDisable) ->
+        @_$backButton.attr('disabled', isDisable)
+        @_$fastBackButton.attr('disabled', isDisable)
+
     disableReplaceButton: () ->
         @_$replaceButton.attr('disabled', true)
 
