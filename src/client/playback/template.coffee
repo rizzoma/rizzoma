@@ -36,10 +36,10 @@ blipMenuTmpl = ->
                 div 'icon', ''
             button 'js-fast-forward-button fast-forward-button icon-button delimitered-right', {title: 'Fast forward', disabled: true}, ->
                 div 'icon', ''
-        button 'js-copy-button copy-button delimitered-right', {title: 'Copy'}, ->
+        button 'js-copy-button copy-button delimitered-right', {title: 'Copy content'}, ->
             'Copy'
-        button 'js-replace-button replace-button', {title: 'Replace'}, ->
-            'Replace'
+        button 'js-replace-button replace-button', {title: 'Paste content to original topic'}, ->
+            'Paste as reply'
 
 
 module.exports =
