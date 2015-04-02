@@ -21,7 +21,7 @@ class BlipProcessor extends BlipProcessorBase
     _sendGetBlipRequest: (waveViewModel, request) ->
         isPlaybackMode = waveViewModel instanceof PlaybackWaveViewModel
         if isPlaybackMode
-            @_rootRouter.handle('network.wave.getBlipForPlayback', request)
+            @_rootRouter.handle('network.playback.getBlipForPlayback', request)
         else
             super(waveViewModel, request)
 
@@ -30,7 +30,7 @@ class BlipProcessor extends BlipProcessorBase
             @showPageError(err) if err
             callback(err, ops)
         )
-        @_rootRouter.handle('network.wave.getPlaybackOps', request)
+        @_rootRouter.handle('network.playback.getPlaybackOps', request)
 
 module.exports.BlipProcessor = BlipProcessor
 module.exports.instance = null

@@ -148,7 +148,7 @@ class WaveProcessor
             [err, shareDoc, shareBlips] = @_makeDocs(wave, blips)
             callback(err, shareDoc, shareBlips, wave.socialSharingUrl)
         )
-        @_rootRouter.handle('network.wave.getPlaybackData', request)
+        @_rootRouter.handle('network.playback.getPlaybackData', request)
 
     _makeDocs: (wave, blips) ->
         waveId = Math.random().toString()

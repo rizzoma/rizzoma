@@ -8,7 +8,6 @@ OperationOtConverter = require('../ot/operation_ot_converter').OperationOtConver
 BlipSearchController = require('../blip/search_controller').BlipSearchController
 WaveNotificator = require('./notificator').WaveNotificator
 IdUtils = require('../utils/id_utils').IdUtils
-PlaybackController = require('../playback/controller').PlaybackController
 
 class WaveModule extends BaseModule
     ###
@@ -52,30 +51,6 @@ class WaveModule extends BaseModule
         user = request.user
         WaveController.getClientWaveWithBlipsByUrl(waveId, user, referalEmailHash, callback)
     @::v('getWaveWithBlips', ['waveId'])
-
-    getPlaybackData: (request, args, callback) ->
-        ###
-        Возвращает волну и все блипы.
-        ###
-        waveId = args.waveId
-        blipId = args.blipId
-        user = request.user
-        PlaybackController.getPlaybackData(waveId, blipId, user, callback)
-    @::v('getPlaybackData', ['waveId(not_null)', 'blipId(not_null)'])
-
-    getBlipForPlayback: (request, args, callback) ->
-        ###
-        Возвращает волну и все блипы.
-        ###
-        blipId = args.blipId
-        PlaybackController.getBlipForPlayback(blipId, request.user, callback)
-    @::v('getBlipForPlayback', ['blipId(not_null)'])
-
-    getPlaybackOps: (request, args, callback) ->
-        blipId = args.blipId
-        offset = args.offset
-        PlaybackController.getPlaybackOps(blipId, offset, request.user, callback)
-    @::v('getPlaybackOps', ['blipId(not_null)', 'offset(not_null)'])
 
     subscribeWaveWithBlips: (request, args, callback) ->
         ###

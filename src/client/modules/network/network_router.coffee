@@ -289,7 +289,7 @@ class NetworkRouter extends BaseRouter
         super(args...)
         combined = new CombinedRemoteModule(@_rootRouter)
         @_transports = [combined]
-        @_addModule(name, [name, combined]) for name in ['wave', 'search', 'message', 'file', 'gtag', 'task', 'user', 'export', 'store', 'team', 'messaging']
+        @_addModule(name, [name, combined]) for name in ['wave', 'search', 'message', 'file', 'gtag', 'task', 'user', 'export', 'store', 'team', 'messaging', 'playback']
         @_initCloseCheck()
 
     _initCloseCheck: ->
