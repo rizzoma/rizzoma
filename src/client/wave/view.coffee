@@ -59,7 +59,7 @@ class WaveView extends WaveViewBase
         @_isAnonymous = !window.userInfo?.id?
         @_model = waveViewModel.getModel()
         @_editable = BrowserSupport.isSupported() and not @_isAnonymous
-        @_createDOM()
+        @_createDOM(renderWave)
         @_initWaveHeader(waveViewModel, participants)
         @_initEditingMenu()
         @_updateParticipantsManagement()
@@ -524,12 +524,14 @@ class WaveView extends WaveViewBase
         Инициализирует корневой блип
         ###
         processor = require('../blip/processor').instance
-        processor.openBlip waveViewModel, @_model.getContainerBlipId(), @blipNode, null, (err, @rootBlip) =>
-            return @_waveProcessor.showPageError(err) if err
-            @_initRangeChangeEvent()
+        processor.openBlip waveViewModel, @_model.getContainerBlipId(), @blipNode, null, @_onRootBlipGot
         @on 'range-change', (range, blip) =>
             if blip
                 @markActiveBlip(blip)
+
+    _onRootBlipGot: (err, @rootBlip) =>
+        return @_waveProcessor.showPageError(err) if err
+        @_initRangeChangeEvent()
 
     _disableEditingButtons: -> @_editingButtonsEnabled = no
 
@@ -629,7 +631,7 @@ class WaveView extends WaveViewBase
             event.stopPropagation()
             func(event)
 
-    _createDOM: () ->
+    _createDOM: (renderWave) ->
         ###
         Создает DOM для отображения документа
         ###
@@ -671,15 +673,18 @@ class WaveView extends WaveViewBase
         ###
         # TODO: work with BlipViewModel only
         return blip.updateCursor() if @_activeBlip is blip
-        if @_activeBlip
-            @_activeBlip.clearCursor()
-            @_activeBlip.unmarkActive()
+        @clearActiveBlip()
         @_activeBlip = blip
         @_activeBlip.setCursor()
         @_activeBlip.markActive()
         @_activeBlip.setReadState(true)
         @_model.setActiveBlip(blip.getViewModel())
         @_setOnScrollMenuPosition()
+
+    clearActiveBlip: () ->
+        return if not @_activeBlip
+        @_activeBlip.clearCursor()
+        @_activeBlip.unmarkActive()
 
     _resizerRepositionMenu: =>
         RangeMenu.get().hide()
@@ -1004,7 +1009,7 @@ class WaveView extends WaveViewBase
         @_$addButtonSelect?.selectBox('destroy')
         @_addParticipantForm?.destroy()
         delete @_insertGadgetPopup
-        @_participants.destroy()
+        @_participants?.destroy()
         delete @_participants
         @_destroySavingMessage()
         require('../editor/file/upload_form').removeInstance()

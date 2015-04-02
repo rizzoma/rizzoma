@@ -15,6 +15,7 @@ ExportModule = require('../export/module').ExportModule
 StoreModule = require('../store/module').StoreModule
 TeamModule = require('../team/module').TeamModule
 MessagingModule = require('../messaging/module').MessagingModule
+PlaybackModule = require('../playback/module').PlaybackModule
 
 class RootRouter extends BaseRouter
     ###
@@ -32,5 +33,6 @@ class RootRouter extends BaseRouter
         @_addModule('store', new StoreModule(@))
         @_addModule('team', new TeamModule(@))
         @_addModule('messaging', new MessagingModule(@))
+        @_addModule('playback', new PlaybackModule(@))
 
 module.exports = RootRouter

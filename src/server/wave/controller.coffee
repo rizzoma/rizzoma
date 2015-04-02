@@ -5,6 +5,7 @@ WaveProcessor = require('./processor').WaveProcessor
 WaveOtConverter = require('./ot_converter').WaveOtConverter
 BlipProcessor = require('../blip/processor').BlipProcessor
 BlipOtConverter = require('../blip/ot_converter').BlipOtConverter
+
 UserCouchProcessor = require('../user/couch_processor').UserCouchProcessor
 Conf = require('../conf').Conf
 IdUtils = require('../utils/id_utils').IdUtils

@@ -121,6 +121,9 @@ BUTTON_PARAMS =
     sendButton:
         selectionClass: 'js-send-button'
         event: BlipEventTypes.SEND
+    playbackButton:
+        selectionClass: 'js-playback-button'
+        event: BlipEventTypes.PLAYBACK
 
 # Дополнительная ширина меню, создаваемая всплывающим меню при нажатии на шестеренку
 OVERFLOW_MENU_ADDITIONAL_WIDTH = 60

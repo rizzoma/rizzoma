@@ -33,6 +33,14 @@ class OperationCouchProcessor extends CouchProcessor
         ids = (@_getOpId(docId, version) for version in [start...end])
         @getByIds(ids, callback)
 
+    getOpRangeForMultipleDocs: (ranges, callback) ->
+        ids = []
+        for own docId, range of ranges
+            [start, end] = range
+            continue if start == end
+            ids.push((@_getOpId(docId, version) for version in [start...end])...)
+        @getByIds(ids, callback)
+
     save: (model, callback) ->
         model.setId()
         super(model, callback)

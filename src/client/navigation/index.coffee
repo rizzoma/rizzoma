@@ -71,6 +71,10 @@ class NavigationPanel
         $(@_container).find('.js-lists-container').append(container)
         @_tabs['.js-collection'] = {container, name: 'collection'}
 
+    showPlaybackView: (container) ->
+        @_deactivateTabs()
+        $(@_container).find('.js-lists-container').append(container)
+
     _initTasksPanel: (isBusiness) =>
         return if not isBusiness
         require('../account_setup_wizard/processor').instance.removeListener('is-business-change', @_initTasksPanel)

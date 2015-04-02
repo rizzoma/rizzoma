@@ -221,6 +221,10 @@ class BlipEventInteractor
 
     setCanEdit: (canEdit) -> @_blipMenu?.setCanEdit(canEdit)
 
+    showPlaybackView: () ->
+        #@todo: call method of desktop blip view. Does it correct way?
+        @_blipView.showPlaybackView()
+
     enableIdDependantButtons: -> @_blipMenu?.enableIdDependantButtons()
 
     attach: (interactable) -> @_attach(interactable)

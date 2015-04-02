@@ -35,6 +35,8 @@ blipMenuTmpl = ->
                     button 'js-paste-at-cursor-button paste-at-cursor', {title: 'Paste at cursor'}, 'Paste at cursor'
                 div 'list-menu-button', ->
                     button 'js-copy-blip-link', {title: 'Copy link'}, 'Copy link'
+                div 'list-menu-button', ->
+                    button 'js-playback-button', {title: 'Playback'}, 'Playback'
 
     div 'js-edit-block edit-menu', ->
         button 'js-change-mode change-mode delimitered-right', {
@@ -121,6 +123,8 @@ blipMenuTmpl = ->
                     button 'js-delete-blip delete-blip hidden', 'Delete comment'
                 div 'list-menu-button', ->
                     button 'js-copy-blip-link', {title: 'Copy link'}, 'Copy link'
+                div 'list-menu-button', ->
+                    button 'js-playback-button', {title: 'Playback'}, 'Playback'
 
 copyBlipLinkPopup = ->
     div 'js-copy-blip-link.copy-blip-link', ->

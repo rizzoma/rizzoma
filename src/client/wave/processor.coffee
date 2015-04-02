@@ -125,14 +125,8 @@ class WaveProcessor
         processResponse = (err, data) =>
             return callback(err) if err
             {wave, blips} = data
-            waveId = Math.random().toString()
-            try
-                shareDoc = @_otProcessor.makeDoc(waveId, wave, waveId)
-            catch err
-                return callback(err)
-            shareBlips = {}
-            shareBlips[blip.docId] = blip for blip in blips
-            callback(null, shareDoc, shareBlips, wave.socialSharingUrl)
+            [err, shareDoc, shareBlips] = @_makeDocs(wave, blips)
+            callback(err, shareDoc, shareBlips, wave.socialSharingUrl)
         if window.getWaveWithBlipsResults?[serverWaveId]?
             {err, data} = window.getWaveWithBlipsResults[serverWaveId]
             delete window.getWaveWithBlipsResults[serverWaveId]
@@ -146,6 +140,25 @@ class WaveProcessor
         request = @_createRequest(args, processResponse, true)
         @_rootRouter.handle('network.wave.getWaveWithBlips', request)
         return request
+
+    getPlaybackData: (waveId, blipId, callback) ->
+        request = new Request({waveId, blipId}, (err, data) =>
+            return callback(err) if err
+            {wave, blips} = data
+            [err, shareDoc, shareBlips] = @_makeDocs(wave, blips)
+            callback(err, shareDoc, shareBlips, wave.socialSharingUrl)
+        )
+        @_rootRouter.handle('network.playback.getPlaybackData', request)
+
+    _makeDocs: (wave, blips) ->
+        waveId = Math.random().toString()
+        try
+            unpackedWave = @_otProcessor.makeDoc(waveId, wave, waveId)
+        catch err
+            return [err, null, null]
+        unpackedBlips = {}
+        unpackedBlips[blip.docId] = blip for blip in blips
+        return [null, unpackedWave, unpackedBlips]
 
     markWaveAsSocialSharing: (serverWaveId, callback) ->
         ###

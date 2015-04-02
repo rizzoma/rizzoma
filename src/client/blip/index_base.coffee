@@ -13,10 +13,13 @@ class BlipViewModelBase
     _init: (@_waveViewModel, blipProcessor, blipData, container, parentBlip, isRead, waveId, timestamp, title) ->
         # TODO: save parent inside model
         @__parentBlip = parentBlip
-        @__model = @_model = new BlipModel(blipData, waveId, isRead, title)
+        @_initModel(blipData, waveId, isRead, title)
         @__initView(@_waveViewModel, blipProcessor, @_model, timestamp, container, @__parentBlip?.getView(), isRead)
         blipData.on('remoteop', @_processRemoteChanges)
         @_blipData = blipData
+
+    _initModel: (blipData, waveId, isRead, title) ->
+        @__model = @_model = new BlipModel(blipData, waveId, isRead, title)
 
     __initView: (waveViewModel, blipProcessor, model, timestamp, container, parentBlip, isRead) ->
         throw new Error('not implemented')
