@@ -61,7 +61,7 @@ class WaveModule extends BaseModule
         blipId = args.blipId
         user = request.user
         PlaybackController.getPlaybackData(waveId, blipId, user, callback)
-    @::v('getWaveWithBlips', ['waveId(not_null)', 'blipId(not_null)'])
+    @::v('getPlaybackData', ['waveId(not_null)', 'blipId(not_null)'])
 
     getBlipForPlayback: (request, args, callback) ->
         ###
@@ -69,7 +69,7 @@ class WaveModule extends BaseModule
         ###
         blipId = args.blipId
         PlaybackController.getBlipForPlayback(blipId, request.user, callback)
-    @::v('getBlip', ['blipId(not_null)'])
+    @::v('getBlipForPlayback', ['blipId(not_null)'])
 
     getPlaybackOps: (request, args, callback) ->
         blipId = args.blipId
