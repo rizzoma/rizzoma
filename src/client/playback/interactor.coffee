@@ -62,6 +62,8 @@ class PlaybackInteractor
 
     setSendable: () ->
 
+    updateLastSent: () ->
+
     getBlip: -> @_blipView
 
     attachMenu: (blipMenu, placeHolder, params) -> @_attachMenu(blipMenu, placeHolder, params)
