@@ -12,12 +12,12 @@
     -webkit-box-sizing: border-box;
 }
 
-.playback-container .playback-topic-container .message-container{
+.playback-container .message-container{
     text-align: center;
     display: block;
 }
 
-.playback-container .playback-topic-container .message-container .wait-icon{
+.playback-container .message-container .wait-icon{
     margin-top: 20px;
 }
 
