@@ -62,7 +62,7 @@ class PlaybackInteractor
 
     setSendable: () ->
 
-    updateLastSent: () ->
+    setLastSent: () ->
 
     getBlip: -> @_blipView
 
