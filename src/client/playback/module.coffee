@@ -26,8 +26,9 @@ class Playback extends BaseModule
         blipId = request.args.blipId
         waveViewModel = request.args.waveViewModel
         request = new Request({container: @_container})
+        @hidePlaybackView()
         @_rootRouter.handle('navigation.showPlaybackView', request)
-        @_$resizer.hide()
+        @_$resizer.hide(null, true)
         @_$messageContainer.show()
         @_waveProcessor.getPlaybackData(waveId, blipId, (err, waveData, waveBlips) =>
             @_$messageContainer.hide()
@@ -36,9 +37,10 @@ class Playback extends BaseModule
             @_viewModel = new PlaybackWaveViewModel(@_waveProcessor, waveData, waveBlips, no, @, waveViewModel, blipId)
         )
 
-    hidePlaybackView: (request) ->
-        @_viewModel.destroy() if @_viewModel
+    hidePlaybackView: (request, destroyOnly) ->
+        @_viewModel?.destroy()
         delete @_viewModel
+        return if destroyOnly
         $('.js-resizer').removeClass('playback')
         request = new Request(containerClass: '.js-playback-container')
         @_rootRouter.handle('navigation.hidePlaybackView', request)
