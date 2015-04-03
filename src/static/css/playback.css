@@ -12,6 +12,15 @@
     -webkit-box-sizing: border-box;
 }
 
+.playback-container .playback-topic-container .message-container{
+    text-align: center;
+    display: block;
+}
+
+.playback-container .playback-topic-container .message-container .wait-icon{
+    margin-top: 20px;
+}
+
 .playback-topic-container .wave-panel {
     top: 0;
     background-color: #ddd;

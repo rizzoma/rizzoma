@@ -4,7 +4,10 @@
 
 render = window.CoffeeKup.compile ->
     div '.playback-container search', ->
-        div '.js-playback-topic-container.playback-topic-container', ''
+        div '.js-playback-topic-container.playback-topic-container', ->
+            div '.message-container', ->
+                div 'Loading playback date'
+                div '.wait-icon', {title: 'Loading topic'}
 
 class Playback extends BaseModule
     constructor: (args...) ->
@@ -13,18 +16,21 @@ class Playback extends BaseModule
         @_createDOM()
 
     _createDOM: ->
-        @_container = $(render())[0]
+        @_$container = $(render())
+        @_container = @_$container[0]
+        @_$resizer = $('.js-resizer')
 
     showPlaybackView: (request) ->
         waveId = request.args.waveId
         blipId = request.args.blipId
         waveViewModel = request.args.waveViewModel
+        request = new Request({container: @_container})
+        @_rootRouter.handle('navigation.showPlaybackView', request)
+        @_$resizer.hide()
         @_waveProcessor.getPlaybackData(waveId, blipId, (err, waveData, waveBlips) =>
+            @_$resizer.show().addClass('playback')
             return console.log(err) if err
-            request = new Request({container: @_container})
             @_viewModel = new PlaybackWaveViewModel(@_waveProcessor, waveData, waveBlips, no, @, waveViewModel, blipId)
-            @_rootRouter.handle('navigation.showPlaybackView', request)
-            $('.js-resizer').addClass('playback')
         )
 
     hidePlaybackView: (request) ->
