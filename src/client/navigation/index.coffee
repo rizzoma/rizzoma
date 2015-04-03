@@ -75,6 +75,9 @@ class NavigationPanel
         @_deactivateTabs()
         $(@_container).find('.js-lists-container').append(container)
 
+    hidePlaybackView: (containerClass) ->
+        $(@_container).find('.js-lists-container').find(containerClass).remove()
+
     _initTasksPanel: (isBusiness) =>
         return if not isBusiness
         require('../account_setup_wizard/processor').instance.removeListener('is-business-change', @_initTasksPanel)

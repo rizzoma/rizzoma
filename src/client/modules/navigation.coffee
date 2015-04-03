@@ -68,6 +68,9 @@ class Navigation extends BaseModule
     showPlaybackView: (request) ->
         @_panel.showPlaybackView(request.args.container)
 
+    hidePlaybackView: (request) ->
+        @_panel.hidePlaybackView(request.args.containerClass)
+
     _processTabShow: (tabClass) =>
         @_rootRouter.handle('playback.hidePlaybackView', new Request())
         return if tabClass isnt '.js-collection'

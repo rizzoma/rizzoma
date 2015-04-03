@@ -3,7 +3,7 @@
 {PlaybackWaveViewModel} = require('./wave_view_model')
 
 render = window.CoffeeKup.compile ->
-    div '.playback-container search', ->
+    div '.playback-container js-playback-container search', ->
         div '.js-playback-topic-container.playback-topic-container', ->
             div '.message-container', ->
                 div 'Loading playback date'
@@ -37,6 +37,8 @@ class Playback extends BaseModule
         @_viewModel.destroy() if @_viewModel
         delete @_viewModel
         $('.js-resizer').removeClass('playback')
+        request = new Request(containerClass: '.js-playback-container')
+        @_rootRouter.handle('navigation.hidePlaybackView', request)
 
     getWaveContainer: -> $(@_container).find('.js-playback-topic-container')[0]
 
