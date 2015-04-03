@@ -63,9 +63,14 @@
     background: url(/s/img/playback_loading.gif) no-repeat;
 }
 
+.playback-menu .calendar-button {
+    width: 150px;
+    text-align: center;
+}
+
 .playback-menu .calendar-button,
 .playback-menu .copy-button,
-.playback-menu .replace-button{
+.playback-menu .replace-button {
     padding: 0 10px 0 10px;
 }
 
