@@ -64,6 +64,8 @@ class PlaybackInteractor
 
     setLastSent: () ->
 
+    updateFoldedByDefault: () ->
+
     getBlip: -> @_blipView
 
     attachMenu: (blipMenu, placeHolder, params) -> @_attachMenu(blipMenu, placeHolder, params)
