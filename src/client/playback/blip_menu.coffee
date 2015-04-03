@@ -147,12 +147,12 @@ class PlaybackBlipMenu extends Interactable
         delete @_$container
 
     showOperationLoadingSpinner: () ->
-        for button in [@_$fastBackButton, @_$backButton, @_$forwardButton, @_$fastForwardButton]
+        for button in [@_$calendarButton, @_$fastBackButton, @_$backButton, @_$forwardButton, @_$fastForwardButton]
             button.attr('disabled', true)
         @_$backButton.addClass('loading')
 
     hideOperationLoadingSpinner: () ->
-        for button in [@_$fastBackButton, @_$backButton, @_$forwardButton, @_$fastForwardButton]
+        for button in [@_$calendarButton, @_$fastBackButton, @_$backButton, @_$forwardButton, @_$fastForwardButton]
             button.attr('disabled', false)
         @_$backButton.removeClass('loading')
 

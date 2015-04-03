@@ -24,21 +24,21 @@ class PlaybackBlipView extends BlipView
         super()
 
     setCalendarDate: (date) ->
-        @_interactor.setCalendarDate(date)
+        @_interactor?.setCalendarDate(date)
 
     setCalendarDateIfGreater: (date) ->
-        @_interactor.setCalendarDateIfGreater(date)
+        @_interactor?.setCalendarDateIfGreater(date)
 
     showOperationLoadingSpinner: () ->
-        @_interactor.showOperationLoadingSpinner()
+        @_interactor?.showOperationLoadingSpinner()
 
     hideOperationLoadingSpinner: () ->
-        @_interactor.hideOperationLoadingSpinner()
+        @_interactor?.hideOperationLoadingSpinner()
 
     switchForwardButtonsState: (isDisable) ->
-        @_interactor.switchForwardButtonsState(isDisable)
+        @_interactor?.switchForwardButtonsState(isDisable)
 
     switchBackButtonsState: (isDisable) ->
-        @_interactor.switchBackButtonsState(isDisable)
+        @_interactor?.switchBackButtonsState(isDisable)
 
 module.exports = {PlaybackBlipView}
