@@ -38,8 +38,12 @@ class PlaybackBlipModel extends BlipModel
     back: () ->
         return if @_playbackPointer < 0
         op = @_ops[@_playbackPointer]
-        properType = if ftextShareType.isFormattedTextOperation(op.op[0]) then ftextShareType else jsonShareType
-        invertedOp = properType.invert(op.op)
+        #Very strange operation, but we can apply it
+        if op.op.length == 0
+            invertedOp = []
+        else
+            properType = if ftextShareType.isFormattedTextOperation(op.op[0]) then ftextShareType else jsonShareType
+            invertedOp = properType.invert(op.op)
         @_doc._onOpReceived(@_convertOp(invertedOp))
         @_playbackPointer--
 
