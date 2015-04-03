@@ -15,6 +15,8 @@ class PlaybackBlipView extends BlipView
         @_interactor.attachMenu(menu, @_menuContainer, {})
         DOM.addClass(@_menuContainer, 'active')
 
+    setReadState: () ->
+
     markActive: ->
         return if @_isPlaybackRoot
         super()
