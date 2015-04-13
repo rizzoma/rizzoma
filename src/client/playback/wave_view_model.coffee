@@ -33,6 +33,7 @@ class PlaybackWaveViewModel extends WaveViewModel
             view.setCursorToStart()
             @getView().runCheckRange()
             @_rootBlipView = view
+            @_originalWaveViewModel.getView().unlinkActiveBlip()
         @_initRootBlipCalendar()
 
     _initRootBlipCalendar: () =>

@@ -681,6 +681,9 @@ class WaveView extends WaveViewBase
         @_model.setActiveBlip(blip.getViewModel())
         @_setOnScrollMenuPosition()
 
+    unlinkActiveBlip: () ->
+        delete @_activeBlip
+
     clearActiveBlip: () ->
         return if not @_activeBlip
         @_activeBlip.clearCursor()
