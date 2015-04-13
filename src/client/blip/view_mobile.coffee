@@ -83,7 +83,13 @@ class BlipView extends BlipViewBase
         @_messagesProcessor = require('../search_panel/mention/processor').instance
         @_tasksProcessor = require('../search_panel/task/processor').instance
         if @_model.getServerId() is @_waveViewModel.getModel().getRootBlipId()
-            DOM.addClass(@_blipContainer, 'root-blip')
+            @_addRootBlipClasses()
+
+
+    _addRootBlipClasses: () ->
+        DOM.addClass(@_blipContainer, 'root-blip')
+        DOM.addClass(@_blipContainer, 'increase-first-line')
+        DOM.addClass(@_blipContainer, 'with-reserved-menu-space')
 
     _init: (isRead) ->
         ###

@@ -57,6 +57,9 @@ body.anonymous .blips-container {
 
 .root-blip {
     border-top: none;
+}
+
+.root-blip.with-reserved-menu-space {
     padding-top: 25px;
 }
 
@@ -73,7 +76,7 @@ body.anonymous .blips-container {
     border-bottom: none;
 }
 
-.root-blip > .editor-container > .editor > :first-child {
+.root-blip.increase-first-line > .editor-container > .editor > :first-child {
     font-size: 18px;
     font-weight: bold;
 }

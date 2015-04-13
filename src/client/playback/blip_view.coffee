@@ -4,6 +4,9 @@ DOM = require('../utils/dom')
 
 class PlaybackBlipView extends BlipView
 
+    _addRootBlipClasses: () ->
+        DOM.addClass(@_blipContainer, 'root-blip')
+
     _initBlipEventsInteractor: () ->
         @_interactor = new PlaybackInteractor(@_blipViewModel, @)
 

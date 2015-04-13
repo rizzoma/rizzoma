@@ -3,6 +3,10 @@
     height: 30px;
 }
 
+.playback-container {
+    line-height: 22px;
+}
+
 .playback-container .playback-topic-container {
     height: 100%;
     position: relative;
