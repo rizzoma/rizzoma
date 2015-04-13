@@ -74,9 +74,11 @@ class NavigationPanel
     showPlaybackView: (container) ->
         @_deactivateTabs()
         $(@_container).find('.js-lists-container').append(container)
+        @_resizer.setHalfScreenWidth()
 
     hidePlaybackView: (containerClass) ->
         $(@_container).find('.js-lists-container').find(containerClass).remove()
+        @_resizer.revertToPreviousWidth()
 
     _initTasksPanel: (isBusiness) =>
         return if not isBusiness

@@ -68,18 +68,28 @@ class Resizer
         @_$resizer.show()
         @emit 'activateCurrentTab'
 
+    setHalfScreenWidth: () ->
+        ncw = (@_$wc.width() + @_$nc.width()) / 2
+        @_applyNewWidth(ncw)
+
+    revertToPreviousWidth: () ->
+        @_applyNewWidth(@_lastWidth)
+
     _setWidth: (ncw) ->
         if ncw == 0 and @_lastWidth > 0
             @_hideNavPanel()
         else if ncw >= MIN_NAVIGATION_WIDTH and @_lastWidth <= 0
             @_showNavPanel()
         return if ncw is @_lastWidth
+        @_applyNewWidth(ncw)
+        @_lastWidth = ncw
+
+    _applyNewWidth: (ncw) ->
         @_$nc.width(ncw)
         @_$navPanel.width(ncw)
         @_setTaskTimeFiltersWidth(ncw)
         @_$wc.css('margin-left', "#{ncw+@_tabsContainerWidth}px")
         $(window).trigger('resizeTopicByResizer')
-        @_lastWidth = ncw
 
     _saveWidth: ->
         $.cookie(CURRENT_WIDTH_COOKIE_NAME, @_lastWidth, { path: '/', expires: 7 })
