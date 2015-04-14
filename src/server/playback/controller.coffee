@@ -1,3 +1,4 @@
+_ = require('underscore')
 async = require('async')
 OtProcessorFrontend = require('../ot/processor_frontend').OtProcessorFrontend
 OperationOtConverter = require('../ot/operation_ot_converter').OperationOtConverter
@@ -8,6 +9,7 @@ BlipOtConverter = require('../blip/ot_converter').BlipOtConverter
 
 
 ACTIONS = require('../wave/constants').ACTIONS
+MAX_OPS_COUNT = 1000
 MAX_OPS_COUNT_PER_BLIP = 100
 
 class PlaybackController
@@ -41,13 +43,17 @@ class PlaybackController
 
     _getOpRanges: (blips, wave, containerBlipId) ->
         opRanges = {}
-        for own id, blip of blips
+        blipsAsList = _.values(blips)
+        factor = (2*MAX_OPS_COUNT)/Math.pow(blipsAsList.length, 2)
+        # | 0 is like Math.floor
+        getOpsCount = (i) -> (factor * (blipsAsList.length-i) | 0) or 1
+        for blip, i in _.sortBy(blipsAsList, (blip) -> -blip.contentTimestamp)
             #it shouldn't be in this method, but i wouldn't iterate blips again
             blip.setWave(wave)
-            continue if id == containerBlipId
-            versionFrom = blip.version - MAX_OPS_COUNT_PER_BLIP
+            continue if blip.id == containerBlipId
+            versionFrom = blip.version - getOpsCount(i)
             versionFrom = 0 if versionFrom < 0
-            opRanges[id] = [versionFrom, blip.version+1]
+            opRanges[blip.id] = [versionFrom, blip.version]
         return opRanges
 
     _getPlaybackData: (wave, blips, ops, user) ->
