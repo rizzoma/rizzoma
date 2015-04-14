@@ -92,6 +92,7 @@ class BlipProcessorBase
             callId: callId
         request = new Request args, (err) =>
             return @showPageError(err) if err
+            @_otProcessor.onSubscribe(callId, blip.serverId)
         request.setProperty('recallOnDisconnect', true)
         @_rootRouter.handle('network.wave.subscribeBlip', request)
 

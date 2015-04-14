@@ -117,7 +117,17 @@ class OtProcessor
         connection = @_connections[groupId]
         connection.subscriptionCallId = subscriptionCallId
         @_groupIdByCallId[subscriptionCallId] = groupId
+        for own id, doc of @_docs[groupId].byId
+            doc.subscribed = true
         connection.tryFlushAllOps()
+
+    onSubscribe: (subscriptionCallId, serverId) ->
+        groupId = @_groupIdByCallId[subscriptionCallId]
+        return if not groupId
+        doc = @_docs[groupId].byServerId[serverId]
+        return if not doc
+        doc.subscribed = true
+        @_connections[groupId].tryFlushDocOps(doc.name)
 
     setDocServerId: (groupId, docId, serverId) ->
         group = @_docs[groupId]
@@ -129,6 +139,9 @@ class OtProcessor
     _getServerDocId: (groupId, docId) =>
         @_docs[groupId]?.byId[docId]?.serverId
 
+    _isSubscribed: (groupId, docId) =>
+        @_docs[groupId]?.byId[docId]?.subscribed
+
     _getClientDocId: (groupId, docServerId) =>
         @_docs[groupId]?.byServerId[docServerId]?.name
 
@@ -139,7 +152,7 @@ class OtProcessor
         @return: Object
         ###
         if groupId not of @_connections
-            connection = new ShareJSConnection(groupId, @_getServerDocId, @_getClientDocId, @_transportSend, @_removeDoc, @_errorCallback)
+            connection = new ShareJSConnection(groupId, @_getServerDocId, @_isSubscribed, @_getClientDocId, @_transportSend, @_removeDoc, @_errorCallback)
             connection.on('start-send', =>
                 @emit('start-send', groupId)
             )
@@ -150,7 +163,7 @@ class OtProcessor
         return @_connections[groupId]
 
 class ShareJSConnection
-    constructor: (@_groupId, @_getServerDocId, @_getClientDocId, @_transportSend, @_docOpProcessed, @_errorCallback) ->
+    constructor: (@_groupId, @_getServerDocId, @_isSubscribed, @_getClientDocId, @_transportSend, @_docOpProcessed, @_errorCallback) ->
         ###
         @param groupId: string, идентификатор группы документов, нужен для отправки операций на сервер
         @param getServerDocId: function
@@ -175,20 +188,20 @@ class ShareJSConnection
                 callback(args...)
             )
         serverDocId = @_getServerDocId(@_groupId, op.doc)
-        if serverDocId? and @subscriptionCallId?
+        if serverDocId? and @subscriptionCallId? and @_isSubscribed(@_groupId, op.doc)
             doSend()
         else
             @_buffer[op.doc] ?= []
             @_buffer[op.doc].push(doSend)
 
     tryFlushDocOps: (docId) ->
-        return if not @subscriptionCallId? or not @_getServerDocId(@_groupId, docId)
+        return if not @subscriptionCallId? or not @_getServerDocId(@_groupId, docId) or not @_isSubscribed(@_groupId, docId)
         @_flushBuffer(docId)
 
     tryFlushAllOps: ->
         return if not @subscriptionCallId?
         for docId of @_buffer
-            @_flushBuffer(docId) if @_getServerDocId(@_groupId, docId)
+            @_flushBuffer(docId) if @_getServerDocId(@_groupId, docId) and @_isSubscribed(@_groupId, docId)
 
     _flushBuffer: (docId) ->
         return if not @_buffer[docId]?
