@@ -10,22 +10,23 @@ class PlaybackBlipView extends BlipView
     _initBlipEventsInteractor: () ->
         @_interactor = new PlaybackInteractor(@_blipViewModel, @)
 
-    markAsPlaybackRoot: () ->
-        @_isPlaybackRoot = yes
+    _isFolded: (args...) ->
+        return false if @isRoot()
+        return super(args...)
 
     attachPlaybackRootMenu: (menu) ->
-        return if not @_isPlaybackRoot
+        return if not @isRoot()
         @_interactor.attachMenu(menu, @_menuContainer, {})
         DOM.addClass(@_menuContainer, 'active')
 
     setReadState: () ->
 
     markActive: ->
-        return if @_isPlaybackRoot
+        return if @isRoot()
         super()
 
     unmarkActive: ->
-        return if @_isPlaybackRoot
+        return if @isRoot()
         super()
 
     setCalendarDate: (date) ->

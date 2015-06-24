@@ -36,6 +36,12 @@ class BlipViewBase
         ###
         @__blipContainer.removeEventListener(BrowserEvents.C_BLIP_INSERT_EVENT, @__initFold, false)
         blipThread = BlipThread.getBlipThread(@__blipContainer)
+        if not @_isFolded(blipThread)
+            @_render()
+        else
+            blipThread.on('unfold', @_processUnfold)
+
+    _isFolded: (blipThread) =>
         isFolded = false
         if blipThread.isFirstInThread(@__blipContainer)
             # Блип является первым в треде, он определяет свернутость треда
@@ -43,10 +49,7 @@ class BlipViewBase
             blipThread.initFold(isFolded)
         else
             isFolded = blipThread.isFolded()
-        if not isFolded
-            @_render()
-        else
-            blipThread.on('unfold', @_processUnfold)
+        return isFolded
 
     __hideUnreadIndicator: (force=false) ->
         # TODO: think of storing @__unreadIndicatorHidden var in model
