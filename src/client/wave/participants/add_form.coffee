@@ -192,7 +192,7 @@ class AddParticipantForm
         contactSources = getContactSources(userContacts)
         @_$syncContactsButtonContainer.empty()
             .append(@_renderGoogleContactsSyncButton(contactSources, justRefreshedSource))
-            .append(@_renderFacebookContactsSyncButton(contactSources, justRefreshedSource))
+            # .append(@_renderFacebookContactsSyncButton(contactSources, justRefreshedSource))
 
     _renderGoogleContactsSyncButton: (contactSources, justRefreshedSource) ->
         params =
