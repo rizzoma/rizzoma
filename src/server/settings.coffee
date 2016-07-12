@@ -243,6 +243,8 @@ module.exports.dev =
             clientSecret: 'facebook-app-secret'
             callbackURL: '/auth/facebook/callback'
             scope: ['email']
+            # override profileURL instead of profileFields because updated_time and verified can be specified in it.
+            profileURL: 'https://graph.facebook.com/me?fields=id,email,first_name,gender,last_name,link,locale,name,picture,timezone,updated_time,verified'
         google:
             # application id and secret for http://localhost:8000
             # (can be obtained at https://console.developers.google.com/project "APIS&AUTH">"Credentials")

@@ -89,7 +89,7 @@ class AuthModel extends Model
             @_userCompilationParams = params
             return true
         return false
-        
+
     getSource: ->
         return @id.split('_')[0]
 
@@ -183,4 +183,3 @@ module.exports =
     FacebookAuth: FacebookAuth
     TwitterAuth: TwitterAuth
     AutoAuth: AutoAuth
-
