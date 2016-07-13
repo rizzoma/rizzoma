@@ -15,7 +15,7 @@ buttonTmpl = ->
         return if not window.userInfo?
         div '.avatar', {style: "background-image: url(#{h(window.userInfo.avatar)})"}
         div '.account-show-popup', ''
-        
+
 popupTmpl = ->
     isValueAlreadyExist = (where, value) ->
         for _, exist of where
@@ -70,9 +70,7 @@ popupTmpl = ->
                             li '.js-variant.email-variant', {'data-key': h(key)}, h(email)
             div '.skype-id-container', ->
                 input '.js-skype-id-input.skype-id-input', {placeholder: 'Fill in your skypeID', value: h(window.userInfo.skypeId or ''), title: 'Your skypeID'}
-                a '.js-skype-status-help.skype-status-help.hidden',
-                    {href: 'https://support.skype.com/en/faq/FA605/how-do-i-set-up-the-skype-button-to-show-my-status-on-the-web-in-skype-for-windows-desktop',
-                    target: '_blank'}, 'How to make my skype status visible'
+                span '.js-skype-status-help.skype-status-help.hidden', 'Enter your SkypeID so participants can call you'
             div '.signed-via-container', ->
                 authSource = window.userInfo.authSource
                 span ".signed-via.#{authSource}", ''
@@ -103,7 +101,7 @@ if BrowserSupport.isMozilla()
         orgRenderPopup(params)
 
 class AccountPopup extends PopupContent
-    
+
     constructor: (params, @_reinit) ->
         params ||= {}
         params.isBusiness = require('../account_setup_wizard/processor').instance.isBusinessUser()
@@ -116,7 +114,7 @@ class AccountPopup extends PopupContent
         @_initShowAvatarVariantsButton(container)
         @_initSkypeIdInput(container)
         @_initMergeButton(container)
-    
+
     _initContainer: (container) ->
         container.click (event) ->
             element = $(event.target)
@@ -126,7 +124,7 @@ class AccountPopup extends PopupContent
                 container.find('.js-email-variants').removeClass('visible')
             if not element.hasClass('js-show-avatar-variants')
                 container.find('.js-avatar-variants').removeClass('visible')
-    
+
     _getAuthId: (field) ->
         for key, info of window.userInfo.profile
             if info[field] is window.userInfo[field]
@@ -134,7 +132,7 @@ class AccountPopup extends PopupContent
             if field is 'avatar' and window.userInfo.avatar is '/s/img/user/unknown.png' and not info.avatar
                 return key
         return null
-        
+
     _changeProfileField: (name, authId) ->
         keys = {}
         for field in ['name', 'email', 'avatar']
@@ -151,7 +149,7 @@ class AccountPopup extends PopupContent
             @_reinit()
         router = require('../app').router
         router.handle('network.user.changeProfile', request)
-        
+
     _initShowNameVariantsButton: (container) ->
         button = container.find(".js-show-name-variants")
         return if not button.length
@@ -211,15 +209,15 @@ class AccountPopup extends PopupContent
         container.find('.js-merge-with-account').click ->
             popup.hide()
             (new AccountMergePopup()).show()
-        
+
     destroy: ->
-        
+
     getContainer: ->
         return @_container
 
-        
+
 class AccountMenu
-    
+
     _initButton: (container, params) ->
         button = container.find('.js-account-button')
         callback = ->
@@ -229,7 +227,7 @@ class AccountMenu
             popup.addExtendedClass('account-menu-popup')
             popup.show()
         button.click(callback)
-    
+
     render: (container, params) ->
         content = renderButton()
         container = $(container)

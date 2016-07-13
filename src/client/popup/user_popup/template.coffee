@@ -4,7 +4,7 @@ BrowserSupport = require('../../utils/browser_support')
 
 userComnonPopupTmpl = ->
     div '.js-user-popup-menu-top-block.user-popup-menu-top-block', ''
-        
+
 userTopPopupTmpl = ->
     div ->
         div '.wave-participant-avatar.avatar', {style:"background-image: url(#{h(@fixedAvatar || @avatar)})"}, h(@initials)# ->
@@ -13,9 +13,10 @@ userTopPopupTmpl = ->
             div '.wave-participant-email', h(@email)
             if @skypeId
                 skypeId = h(@skypeId)
-                a '.skype-call-link', {href: "skype:#{skypeId}?call", title: "Call skype", target: 'skype-call-iframe'}, ->
+                a '.skype-call-link', {href: "skype:#{skypeId}?call", title: "Call Skype", target: 'skype-call-iframe'}, ->
                     text skypeId
-                    img '.skype-status-ico', {src: "http://mystatus.skype.com/smallicon/#{skypeId}"}
+                    # the icon is from Font Awesome by Dave Gandy - http://fontawesome.io
+                    img '.skype-status-ico', {src: "/s/img/skype/skype.black.svg"}
             div '.js-user-popup-menu-remove-block.user-popup-menu-remove-block', ''
         div '.clearer', ''
 
