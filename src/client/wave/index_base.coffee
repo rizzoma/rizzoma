@@ -186,6 +186,8 @@ class WaveViewModel
 
     getRootBlipId: -> @__model.getRootBlipId()
 
+    getContainerBlipId: -> @__model.getContainerBlipId()
+
     showGrantAccessForm: (user, add) ->
         @__view.showGrantAccessForm(@getTitle(), user, @_model.getDefaultRole(), add)
 

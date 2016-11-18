@@ -5,7 +5,7 @@
 render = window.CoffeeKup.compile ->
     div '.playback-container js-playback-container search', ->
         div '.message-container js-message-container', ->
-            div 'Loading playback date'
+            div 'Loading playback data'
             div '.wait-icon', {title: 'Loading topic'}
         div '.js-playback-topic-container.playback-topic-container', ->
 

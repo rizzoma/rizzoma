@@ -1002,7 +1002,12 @@ class BlipView extends BlipViewBase
     _updateUndoRedoState: -> @_interactor.updateUndoRedoState()
 
     showPlaybackView: () ->
-        @_blipProcessor.showPlaybackView(@_waveViewModel.getServerId(), @_model.serverId, @_waveViewModel)
+        # special case when calling playback from root blip - call it from container blip
+        # so deleted blips in the main thread can be restored
+        playbackModelId = @_model.serverId
+        if @_waveViewModel.getRootBlipId() == playbackModelId
+            playbackModelId = @_waveViewModel.getContainerBlipId()
+        @_blipProcessor.showPlaybackView(@_waveViewModel.getServerId(), playbackModelId, @_waveViewModel)
 
 MicroEvent.mixin(BlipView)
 module.exports = {BlipView}
