@@ -115,7 +115,7 @@ class BlipProcessor
         ###
         onBlipGot = (err, blip) ->
             return callback(err) if err and err.message != 'not_found'
-            return callback(new BlipError('Requested blip not found', BLIP_DOCUMENT_DOES_NOT_EXISTS)) if err
+            return callback(new BlipError("Requested blip #{blipId} not found", BLIP_DOCUMENT_DOES_NOT_EXISTS)) if err
             callback(null, blip)
         CouchBlipProcessor.getById(blipId, onBlipGot, needCatchup, loadWave)
 
