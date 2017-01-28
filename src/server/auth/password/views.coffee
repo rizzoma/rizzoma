@@ -129,7 +129,9 @@ class AuthPasswordViews
         вьюшка для подтверждения регистрации
         ###
         key = req.param('key')
-        [email, confirmKey] = new Buffer(key, "base64").toString("utf-8").split('_')
+        # email may contain underscores for example 'a_b@yahoo.com'
+        [email..., confirmKey] = new Buffer(key, "base64").toString("utf-8").split('_')
+        email = email.join('_')
         email = email.trim()
         confirmKey = confirmKey.trim()
         tasks = [
