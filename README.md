@@ -75,8 +75,8 @@ Rizzoma Project was created and is developed by the [Tekliner](http://tekliner.c
 Rizzoma.com service is provided and supported by Tekliner. Write us a line - support@rizzoma.com
 
 ```
-Copyright 2011-2014 Tekliner, http://tekliner.com/
-Copyright 2011-2014 Rizzoma Project, https://rizzoma.com/
+Copyright 2011-2017 Tekliner, http://tekliner.com/
+Copyright 2011-2017 Rizzoma Project, https://rizzoma.com/
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this project files except in compliance with the License.
