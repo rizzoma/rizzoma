@@ -16,9 +16,16 @@ Node.js 0.10, CouchDB, RabbitMQ, SphinxSearch, Redis (optional), ImageMagick (op
 
 On Debian/Ubuntu:
 ```
-sudo apt-add-repository ppa:chris-lea/node.js
-sudo apt-get update
-sudo apt-get install nodejs couchdb rabbitmq-server sphinxsearch redis-server imagemagick libicu-dev
+sudo apt-get install build-essential libssl-dev couchdb rabbitmq-server sphinxsearch redis-server imagemagick libicu-dev
+```
+
+[Install](https://github.com/creationix/nvm#install-script) Node Version Manager or similar tool.
+Install Node.js 0.10.x:
+```
+nvm install v0.10
+nvm use v0.10
+# to check Node.js version run:
+node -v
 ```
 
 **Build:**
