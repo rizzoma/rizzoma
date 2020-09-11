@@ -23,7 +23,7 @@
     "express": "2.5.8",
     "eyes": "0.1.7",
     "fs-plus": "0.2.0",
-    "googleapis": "0.6.1",
+    "googleapis": "59.0.0",
     "iconv": "2.0.7",
     "imagemagick": "0.1.2",
     "imap": "0.4.1",
