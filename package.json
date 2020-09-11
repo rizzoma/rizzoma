@@ -20,7 +20,7 @@
     "cucumis": "v1.0.17",
     "cycle": "1.0.1",
     "date-utils": "1.2.11",
-    "express": "2.5.8",
+    "express": "4.17.1",
     "eyes": "0.1.7",
     "fs-plus": "0.2.0",
     "googleapis": "0.6.1",
