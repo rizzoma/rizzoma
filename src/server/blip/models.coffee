@@ -4,6 +4,7 @@ BlipSearchConverter = require('./search_converter').BlipSearchConverter
 DateUtils = require('../utils/date_utils').DateUtils
 Ptag = require('../ptag').Ptag
 BlipExportMarkupBuilder = require('../export/blip').BlipExportMarkupBuilder
+Conf = require('../conf').Conf
 
 MAX_SNIPPET_LENGTH = 100
 TEXT_TYPE = 'TEXT'
@@ -245,9 +246,11 @@ class BlipModel extends Model
                 for ptagId in participant.ptags
                     searchPtagId = Ptag.getSearchPtagId(participant.id, ptagId)
                     ptagIds.push(searchPtagId) if searchPtagId?
+        indexer_conf = Conf.getSearchIndexerConf() || {}
+        characterLimitForDocText = indexer_conf.characterLimitForDocText || 10000
         fields = [
             {name: 'title', value: @getTitle()}
-            {name: 'content', value: @getPureText()}
+            {name: 'content', value: @getPureText().substring(0, characterLimitForDocText)}
             {name: 'blip_id', value: @id}
             {name: 'wave_id', value: @waveId}
             {name: 'wave_url', value: wave.getUrl()}

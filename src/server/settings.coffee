@@ -82,6 +82,7 @@ module.exports.dev =
         ]
         indexesPath: '/var/lib/sphinxsearch/data'
         docsAtOnce: 10000
+        characterLimitForDocText: 10000
         indexCommand: path.join(__dirname, '/../../bin/run_sphinx_indexer.sh')
         mergeCommand: path.join(__dirname, '/../../bin/merge_sphinx_indexes.sh')
         # backup:
